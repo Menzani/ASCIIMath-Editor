@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css?family=Bitter');
+
+@font-face {
+	font-family: "Fira Code";
+    src: url("resources/fonts/FiraCode-Regular.otf") format("opentype");
+}
+
+@font-face {
+	font-family: "Fira Code";
+    font-style: italic;
+    src: url("resources/fonts/FiraCode-Light.otf") format("opentype");
+}
+
+@font-face {
+	font-family: "Fira Code";
+    font-weight: bold;
+    src: url("resources/fonts/FiraCode-Bold.otf") format("opentype");
+}
+
+@font-face {
+	font-family: "Latin Modern Math";
+    src: url("resources/fonts/latinmodern-math.otf") format("opentype");
+}
+
+body {
+	margin: 0px;
+	background-image: linear-gradient(to top, rgba(30, 144, 255, 0), rgba(30, 144, 255, 1));
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+p {
+	margin: 0px;
+}
+
+math {
+	color: #505050;
+	font-family: "Latin Modern Math", "Cambria Math";
+    font-size: 20px;
+}
+
+#message {
+	color: white;
+	font-family: "Times New Roman", Times, serif;
+	font-weight: bold;
+	text-align: center;
+	width: 100%;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+#message > a:link {
+	color: white;
+}
+
+#message > a:visited {
+	color: white;
+}
+
+#debug {
+	width: 450px;
+	height: 300px;
+	left: 50px;
+	top: 100px;
+}
+
+#debugInfo {
+	font-family: "Lucida Console", Monaco, monospace;
+}
+
+#debugVerbose {
+	position: absolute;
+	left: 10px;
+	bottom: 10px;
+}
+
+#debugReset {
+	position: absolute;
+	width: 150px;
+	height: 25px;
+	bottom: 10px;
+	right: 10px;
+}
+
+#presentation {
+	width: 350px;
+	height: 350px;
+}
+
+#instructions {
+	width: 200px;
+	height: 500px;
+	right: 2px;
+	top: 150px;
+}
+
+.workspaceLayer {
+	visibility: hidden;
+	position: fixed;
+	height: 100%;
+	width: 100%;
+}
+
+.workspaceLayerAnimation {
+	animation: 3s ease-out workspaceLayer;
+	animation-fill-mode: forwards;
+}
+
+.card {
+	background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.menu {
+	font-family: Bitter, Tahoma, sans-serif;
+	position: fixed;
+	padding: 10px;
+}
+
+.popup {
+	font-family: Bitter, Tahoma, sans-serif;
+	padding: 10px;
+	position: fixed;
+	visibility: hidden;
+	transform-origin: top left;
+	z-index: 1;
+}
+
+.popupAnimation {
+	animation: 0.1s popup;
+	animation-fill-mode: forwards;
+}
+
+.page {
+    margin: 40px auto 40px auto;
+    width: 800px;
+}
+
+.editor {
+	font-family: "Fira Code", "Lucida Console", Monaco, monospace;
+	width: 778px;
+	min-height: 150px;
+    height: 200px;
+	max-height: 250px;
+    border-style: none;
+    resize: vertical;
+	margin: 10px;
+}
+
+.view {
+	font-family: "Fira Code", "Lucida Console", Monaco, monospace;
+    font-size: 15px;
+	width: 780px;
+    height: 580px;
+    padding: 10px;
+    overflow: auto;
+}
+
+.noteparagraph {
+	margin: 15px 0px 15px 10px;
+}
+
+.mathparagraph > math {
+    font-size: 25px;
+}
+
+@keyframes workspaceLayer {
+	from {
+		filter: opacity(0%) blur(10px);
+	}
+	to {
+		visibility: visible;
+	}
+}
+
+@keyframes popup {
+	to {
+		transform: rotate3d(1, 0.3, 0, 20deg);
+		visibility: hidden;
+	}
+}
