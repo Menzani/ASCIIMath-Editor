@@ -1,6 +1,7 @@
 const WALLPAPERS = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"]
 const DEBUG_SESSION = true
 
+var message
 var workspaceLayer1
 var workspaceLayer2
 var debug
@@ -12,6 +13,7 @@ var currentLayer = false
 var currentWallpaper
 
 document.addEventListener("DOMContentLoaded", function() {
+	message = document.getElementById("message")
 	workspaceLayer1 = document.getElementById("workspaceLayer1")
 	workspaceLayer2 = document.getElementById("workspaceLayer2")
 	debug = document.getElementById("debug")
@@ -79,12 +81,7 @@ function format(key, value) {
 function createWorkspace() {
 	var isSupportedBrowser = navigator.userAgent.indexOf("Firefox") != -1
 	if (!isSupportedBrowser || DEBUG_SESSION) {
-		var message = document.createElement("p")
-		message.id = "message"
-		message.innerHTML = "This app is designed to run on <a href='\
-				https://www.mozilla.org/it/firefox/new'>Firefox</a> and likely won't support other browsers. \
-				<a onclick='showPresentation()' href='#'>Discover why</a>"
-		document.body.insertBefore(message, workspaceLayer1)
+		message.style.display = "block"
 	} else {
 		workspaceLayer1.style.top = "0px"
 		workspaceLayer2.style.top = "0px"

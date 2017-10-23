@@ -11,6 +11,10 @@
   <title>ASCIIMath Editor for Firefox</title>
 </head>
 <body onload="createWorkspace(); openDocument();" onkeypress="resolveShortcut(event)">
+	<p id="message">
+		This app is designed to run on <a href='https://www.mozilla.org/it/firefox/new'>Firefox</a>
+		and likely won't support other browsers. <a href='#' onclick='showPresentation()'>Find out why</a>
+	</p>
 	<img id="workspaceLayer1" class="workspaceLayer">
 	<img id="workspaceLayer2" class="workspaceLayer">
 	<div id="debug" class="card menu popup" onclick="hidePopup(event, this)">
