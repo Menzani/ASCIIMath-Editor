@@ -189,11 +189,3 @@ function deleteDocument() {
 	localStorage.clear()
 	location.reload()
 }
-
-function selectRandomly(array) {
-	return array[Math.floor(Math.random() * array.length)]
-}
-
-function nextRandomNumber(min, max) {
-	return min + Math.floor(Math.random() * max)
-}

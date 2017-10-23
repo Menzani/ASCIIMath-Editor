@@ -2,6 +2,9 @@ const DEBUG_SESSION = true
 
 const WALLPAPERS = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"]
 
+var currentLayer = false
+var currentWallpaper
+
 var message
 var workspaceLayer1
 var workspaceLayer2
@@ -10,9 +13,8 @@ var debugInfo
 var debugVerboseCheckbox
 var presentation
 var presentationDownload
-
-var currentLayer = false
-var currentWallpaper
+var reference
+var referenceFrame
 
 document.addEventListener("DOMContentLoaded", function() {
 	message = document.getElementById("message")
@@ -23,23 +25,76 @@ document.addEventListener("DOMContentLoaded", function() {
 	debugVerboseCheckbox = document.getElementById("debugVerboseCheckbox")
 	presentation = document.getElementById("presentation")
 	presentationDownload = document.getElementById("presentationDownload")
+	reference = document.getElementById("reference")
+	referenceFrame = document.getElementById("referenceFrame")
+})
+
+function createWorkspace() {
+	var isSupportedBrowser = navigator.userAgent.indexOf("Firefox") != -1
+	if (!isSupportedBrowser || DEBUG_SESSION) {
+		message.style.display = "block"
+	} else {
+		workspaceLayer1.style.top = "0px"
+		workspaceLayer2.style.top = "0px"
+	}
 	
-	workspaceLayer1.onload = function() { setTimeout(function() {
-		workspaceLayer1.classList.add("workspaceLayerAnimation")
-		workspaceLayer1.style.zIndex = -1
-		workspaceLayer2.style.zIndex = -2
-	}, 3000)}
-	workspaceLayer2.onload = function() { setTimeout(function() {
+	currentWallpaper = nextRandomNumber(0, WALLPAPERS.length)
+   	loadWallpaper()
+    setInterval(loadWallpaper, 5 * 60 * 1000)
+}
+
+function loadWallpaper() {
+	var wallpaper = "resources/wallpapers/" + WALLPAPERS[currentWallpaper]
+	if (++currentWallpaper == WALLPAPERS.length) {
+    	currentWallpaper = 0
+    }
+	if (currentLayer) {
+		workspaceLayer2.classList.remove("workspaceLayerAnimation")
+		workspaceLayer2.src = wallpaper
+	} else {
+		workspaceLayer1.classList.remove("workspaceLayerAnimation")
+		workspaceLayer1.src = wallpaper
+	}
+	currentLayer = !currentLayer
+}
+
+function showWallpaper() {
+	if (!currentLayer) {
 		workspaceLayer2.classList.add("workspaceLayerAnimation")
 		workspaceLayer2.style.zIndex = -1
 		workspaceLayer1.style.zIndex = -2
-	}, 3000)}
-	
+	} else {
+		workspaceLayer1.classList.add("workspaceLayerAnimation")
+		workspaceLayer1.style.zIndex = -1
+		workspaceLayer2.style.zIndex = -2
+	}
+}
+
+function setupDebugSession() {
 	if (DEBUG_SESSION) {
+		showReference()
 		showDebug()
 		showPresentation(true)
 	}
-})
+}
+
+function hidePopup(event, popup) {
+	if (event.target.dataset.interceptHide) {
+		return
+	}
+	popup.classList.add("popupAnimation")
+}
+
+function showPopup(popup) {
+	popup.classList.remove("popupAnimation")
+	popup.style.visibility = "visible"
+}
+
+function showDebug() {
+	updateDebugInfo()
+	showPopup(debug)
+	setInterval(updateDebugInfo, 100)
+}
 
 function updateDebugInfo() {
 	var result = ""
@@ -92,58 +147,15 @@ function updateDebugInfo() {
 	debugInfo.innerHTML = result
 }
 
-function createWorkspace() {
-	var isSupportedBrowser = navigator.userAgent.indexOf("Firefox") != -1
-	if (!isSupportedBrowser || DEBUG_SESSION) {
-		message.style.display = "block"
-	} else {
-		workspaceLayer1.style.top = "0px"
-		workspaceLayer2.style.top = "0px"
-	}
-	
-	currentWallpaper = nextRandomNumber(0, WALLPAPERS.length)
-   	loadWallpaper()
-    setInterval(loadWallpaper, 5 * 60 * 1000)
-}
-
-function loadWallpaper() {
-	var wallpaper = "resources/wallpapers/" + WALLPAPERS[currentWallpaper]
-	if (++currentWallpaper == WALLPAPERS.length) {
-    	currentWallpaper = 0
-    }
-	if (currentLayer) {
-		workspaceLayer2.classList.remove("workspaceLayerAnimation")
-		workspaceLayer2.src = wallpaper
-	} else {
-		workspaceLayer1.classList.remove("workspaceLayerAnimation")
-		workspaceLayer1.src = wallpaper
-	}
-	currentLayer = !currentLayer
-}
-
-function hidePopup(event, popup) {
-	if (event.target.dataset.interceptHide) {
-		return
-	}
-	popup.classList.add("popupAnimation")
-}
-
-function showPopup(popup) {
-	popup.classList.remove("popupAnimation")
-	popup.style.visibility = "visible"
-}
-
-function showDebug() {
-	showPopup(debug)
-	setInterval(updateDebugInfo, 100)
-}
-
 function showPresentation(includeDownload) {
-	presentation.style.top = nextRandomNumber(100, 300) + "px"
-	presentation.style.right = nextRandomNumber(50, 100) + "px"
 	presentationDownload.style.display = includeDownload ? "block" : "none"
 	showPopup(presentation)
 	return false
+}
+
+function showReference() {
+	referenceFrame.src = "http://asciimath.org/#syntax"
+	showPopup(reference)
 }
 
 function resolveShortcut(event) {
@@ -159,6 +171,8 @@ function resolveShortcut(event) {
 			case 100: doRemovePage()
 			break
 			case 115: doSavePageSource()
+			break
+			case 113: showReference()
 			break
 			case 116: showDebug()
 			break
@@ -186,11 +200,23 @@ function doSavePageSource() {
 }
 
 function doJumpPageUp() {
-	if (currentPageIndex == 0) return
+	if (currentPageIndex == 0) {
+		return
+	}
 	jumpTo(pages[currentPageIndex - 1])
 }
 
 function doJumpPageDown() {
-	if (currentPageIndex == pages.length - 1) return
+	if (currentPageIndex == pages.length - 1) {
+		return
+	}
 	jumpTo(pages[currentPageIndex + 1])
+}
+
+function selectRandomly(array) {
+	return array[Math.floor(Math.random() * array.length)]
+}
+
+function nextRandomNumber(min, max) {
+	return min + Math.floor(Math.random() * max)
 }

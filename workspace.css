@@ -25,40 +25,62 @@ body {
 
 #debug {
 	width: 450px;
-	height: 250px;
-	left: 50px;
-	top: 100px;
+	left: 40px;
+	top: 2px;
 }
 
 #debugInfo {
+	height: 300px;
+	overflow: auto;
 	font-family: "Lucida Console", Monaco, monospace;
 }
 
 #debugVerbose {
-	position: absolute;
-	left: 10px;
-	bottom: 10px;
+	float: left;
+}
+
+#debugVerboseCheckbox {
+	vertical-align: middle;
+}
+
+#debugVerboseLabel {
+	vertical-align: middle;
 }
 
 #debugReset {
-	position: absolute;
+	float: right;
 	width: 125px;
 	height: 25px;
-	bottom: 10px;
-	right: 10px;
 }
 
 #presentation {
+	margin: 2px auto;
+	left: 0px;
+	right: 0px;
 	width: 350px;
-	height: 350px;
 }
 
 #presentationDownload {
-	position: absolute;
-	bottom: 20px;
-	left: 108px;
+	margin: 20px auto;
+	left: 0px;
+	right: 0px;
 	width: 150px;
 	height: 40px;
+}
+
+#reference {
+	width: 500px;
+	height: 95%;
+	right: 20px;
+	top: 2px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+#referenceFrame {
+	width: 516px;
+	height: 100%;
+	border: none;
 }
 
 #commands {

@@ -10,18 +10,19 @@
   <link rel="icon" href="resources/favicon.ico" type="image/x-icon">
   <title>ASCIIMath Editor for Firefox</title>
 </head>
-<body onload="createWorkspace(); openDocument();" onkeypress="resolveShortcut(event)">
+<body onload="createWorkspace(); openDocument(); setupDebugSession()" onkeypress="resolveShortcut(event)">
 	<p id="message">
 		This app is designed to run on <a href="https://www.mozilla.org/it/firefox/new">Firefox</a>
 		and likely won't support other browsers. <a href="#" onclick="showPresentation(true)">Find out why</a>
 	</p>
-	<img id="workspaceLayer1" class="workspaceLayer">
-	<img id="workspaceLayer2" class="workspaceLayer">
+	<img id="workspaceLayer1" class="workspaceLayer" onload="setTimeout(showWallpaper, 3000)">
+	<img id="workspaceLayer2" class="workspaceLayer" onload="setTimeout(showWallpaper, 3000)">
+	
 	<div id="debug" class="card menu popup" onclick="hidePopup(event, this)">
 		<p id="debugInfo"></p>
 		<div id="debugVerbose">
 			<input id="debugVerboseCheckbox" type="checkbox" data-intercept-hide="true">
-			<label for="debugVerboseCheckbox" data-intercept-hide="true">Verbose key press</label>
+			<label id="debugVerboseLabel" for="debugVerboseCheckbox" data-intercept-hide="true">Verbose key press</label>
 		</div>
 		<input id="debugReset" type="button" value="Delete Document" data-intercept-hide="true" onclick="deleteDocument()">
 	</div>
@@ -31,6 +32,9 @@
 			so you get better results in less time.
 		</p>
 		<input id="presentationDownload" type="button" value="Download Firefox" data-intercept-hide="true" onclick="location.href='https://www.mozilla.org/it/firefox/new';">
+	</div>
+	<div id="reference" class="card menu popup" onclick="hidePopup(event, this)">
+		<iframe id="referenceFrame" sandbox="allow-scripts"></iframe>
 	</div>
 	<div id="commands" class="card menu">
 		<p>New Page</p>
