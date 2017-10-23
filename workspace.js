@@ -1,5 +1,10 @@
 const DEBUG_SESSION = true
 
+const BACKGROUNDS = [
+	"linear-gradient(to top, rgba(30, 144, 255, 0), rgba(30, 144, 255, 1))",
+	"linear-gradient(to top, rgba(255, 140, 0, 0), rgba(255, 127, 80, 1))",
+	"linear-gradient(to top, rgba(0, 250, 154, 0), rgba(46, 139, 87, 1))"
+]
 const WALLPAPERS = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"]
 
 var currentLayer = false
@@ -27,6 +32,8 @@ document.addEventListener("DOMContentLoaded", function() {
 	presentationDownload = document.getElementById("presentationDownload")
 	reference = document.getElementById("reference")
 	referenceFrame = document.getElementById("referenceFrame")
+	
+	document.body.style.backgroundImage = selectRandomly(BACKGROUNDS)
 })
 
 function createWorkspace() {
@@ -214,7 +221,7 @@ function doJumpPageDown() {
 }
 
 function selectRandomly(array) {
-	return array[Math.floor(Math.random() * array.length)]
+	return array[nextRandomNumber(0, array.length)]
 }
 
 function nextRandomNumber(min, max) {
