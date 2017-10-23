@@ -25,7 +25,7 @@ body {
 
 #debug {
 	width: 450px;
-	height: 300px;
+	height: 250px;
 	left: 50px;
 	top: 100px;
 }
@@ -56,7 +56,7 @@ body {
 #presentationDownload {
 	position: absolute;
 	bottom: 20px;
-	left: 109px;
+	left: 108px;
 	width: 150px;
 	height: 40px;
 }

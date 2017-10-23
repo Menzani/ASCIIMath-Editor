@@ -42,44 +42,54 @@ document.addEventListener("DOMContentLoaded", function() {
 })
 
 function updateDebugInfo() {
-	var temp = format("pageCount", pageCount)
-	temp += format("editorsValueData", editorsValueData)
-	temp += format("editorsHeightData", editorsHeightData)
-	temp += format("editorsSelectionStartData", editorsSelectionStartData)
-	temp += format("editorsSelectionEndData", editorsSelectionEndData)
-	temp += format("editorsScrollTopData", editorsScrollTopData)
-	temp += format("viewsScrollLeftData", viewsScrollLeftData)
-	temp += format("currentPageIndex", currentPageIndex)
-	temp += format("windowScrollY", windowScrollY)
-	var pageIndices = []
-	for (page of pages) {
-		pageIndices.push(page.index)
-	}
-	debugInfo.innerHTML = temp + format("pages (indices)", pageIndices)
-}
-
-function format(key, value) {
-	if (Array.isArray(value)) {
-		var temp = "["
-		for (e of value) {
-			if (e === null) {
-				temp += "null"
-			} else if (e === undefined) {
-				temp += "undefined"
-			} else if (typeof e === 'string' && e.length == 0) {
-				temp += '""'
-			} else {
-				temp += e.toString()
+	var result = ""
+	for ({key, value, valueFunction} of [
+			{ key: "pageCount", value: pageCount },
+			{ key: "editorsValueData", value: editorsValueData },
+			{ key: "editorsHeightData", value: editorsHeightData },
+			{ key: "editorsSelectionStartData", value: editorsSelectionStartData },
+			{ key: "editorsSelectionEndData", value: editorsSelectionEndData },
+			{ key: "editorsScrollTopData", value: editorsScrollTopData },
+			{ key: "viewsScrollLeftData", value: viewsScrollLeftData },
+			{ key: "currentPageIndex", value: currentPageIndex },
+			{ key: "windowScrollY", value: windowScrollY },
+			{ key: "pages (indices)", valueFunction: function() {
+				var pageIndices = []
+				for (page of pages) {
+					pageIndices.push(page.index)
+				}
+				return pageIndices
+			}},
+			{ key: "currentLayer", value: currentLayer },
+			{ key: "currentWallpaper", value: currentWallpaper }]) {
+		if (valueFunction) {
+			value = valueFunction()
+		}
+		if (Array.isArray(value)) {
+			var valueResult = "["
+			for (e of value) {
+				if (e === null) {
+					valueResult += "null"
+				} else if (e === undefined) {
+					valueResult += "undefined"
+				} else if (typeof e === "string" && e.length == 0) {
+					valueResult += '""'
+				} else {
+					valueResult += e.toString()
+				}
+				valueResult += ", "
 			}
-			temp += ", "
+			if (valueResult == "[") {
+				value = "[]"
+			} else {
+				value = valueResult.slice(0, valueResult.length - 2) + "]"
+			}
+		} else if (typeof value === "string" && value == "") {
+			value = '""'
 		}
-		if (temp == "[") {
-			value = "[]"
-		} else {
-			value = temp.slice(0, temp.length - 2) + "]"
-		}
+		result += (key + " = " + value + "<br>")
 	}
-	return key + ": " + value + "<br>"
+	debugInfo.innerHTML = result
 }
 
 function createWorkspace() {
