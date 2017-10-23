@@ -1,5 +1,6 @@
-const WALLPAPERS = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"]
 const DEBUG_SESSION = true
+
+const WALLPAPERS = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"]
 
 var message
 var workspaceLayer1
@@ -8,6 +9,7 @@ var debug
 var debugInfo
 var debugVerboseCheckbox
 var presentation
+var presentationDownload
 
 var currentLayer = false
 var currentWallpaper
@@ -20,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	debugInfo = document.getElementById("debugInfo")
 	debugVerboseCheckbox = document.getElementById("debugVerboseCheckbox")
 	presentation = document.getElementById("presentation")
+	presentationDownload = document.getElementById("presentationDownload")
 	
 	workspaceLayer1.onload = function() { setTimeout(function() {
 		workspaceLayer1.classList.add("workspaceLayerAnimation")
@@ -34,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	
 	if (DEBUG_SESSION) {
 		showDebug()
+		showPresentation(true)
 	}
 })
 
@@ -124,10 +128,11 @@ function showDebug() {
 	setInterval(updateDebugInfo, 100)
 }
 
-function showPresentation() {
-	showPopup(presentation)
+function showPresentation(includeDownload) {
 	presentation.style.top = nextRandomNumber(100, 300) + "px"
 	presentation.style.right = nextRandomNumber(50, 100) + "px"
+	presentationDownload.style.display = includeDownload ? "block" : "none"
+	showPopup(presentation)
 	return false
 }
 

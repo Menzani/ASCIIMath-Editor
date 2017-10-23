@@ -12,8 +12,8 @@
 </head>
 <body onload="createWorkspace(); openDocument();" onkeypress="resolveShortcut(event)">
 	<p id="message">
-		This app is designed to run on <a href='https://www.mozilla.org/it/firefox/new'>Firefox</a>
-		and likely won't support other browsers. <a href='#' onclick='showPresentation()'>Find out why</a>
+		This app is designed to run on <a href="https://www.mozilla.org/it/firefox/new">Firefox</a>
+		and likely won't support other browsers. <a href="#" onclick="showPresentation(true)">Find out why</a>
 	</p>
 	<img id="workspaceLayer1" class="workspaceLayer">
 	<img id="workspaceLayer2" class="workspaceLayer">
@@ -23,13 +23,14 @@
 			<input id="debugVerboseCheckbox" type="checkbox" data-intercept-hide="true">
 			<label for="debugVerboseCheckbox" data-intercept-hide="true">Verbose key press</label>
 		</div>
-		<input id="debugReset" type="button" value="Delete document" data-intercept-hide="true" onclick="deleteDocument()">
+		<input id="debugReset" type="button" value="Delete Document" data-intercept-hide="true" onclick="deleteDocument()">
 	</div>
 	<div id="presentation" class="card menu popup" onclick="hidePopup(event, this)">
 		<p>
 			ASCIIMath Editor relies on Firefox's near-perfect MathML engine to perform the rendering,
 			so you get better results in less time.
 		</p>
+		<input id="presentationDownload" type="button" value="Download Firefox" data-intercept-hide="true" onclick="location.href='https://www.mozilla.org/it/firefox/new';">
 	</div>
 	<div id="commands" class="card menu">
 		<p>New Page</p>
