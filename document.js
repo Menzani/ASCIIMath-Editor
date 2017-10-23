@@ -4,6 +4,7 @@ const DEFAULT_EDITOR_HEIGHT_DATA = '["200px"]', DEFAULT_EDITOR_HEIGHT = "200px"
 const DEFAULT_EDITOR_SELECTION_START_DATA = "[0]", DEFAULT_EDITOR_SELECTION_START = 0
 const DEFAULT_EDITOR_SELECTION_END_DATA = "[0]", DEFAULT_EDITOR_SELECTION_END = 0
 const DEFAULT_EDITOR_SCROLL_TOP_DATA = "[0]", DEFAULT_EDITOR_SCROLL_TOP = 0
+const DEFAULT_VIEW_SCROLL_TOP_DATA = "[0]", DEFAULT_VIEW_SCROLL_TOP = 0
 const DEFAULT_VIEW_SCROLL_LEFT_DATA = "[0]", DEFAULT_VIEW_SCROLL_LEFT = 0
 const DEFAULT_CURRENT_PAGE_INDEX = 0
 const DEFAULT_WINDOW_SCROLL_Y = 0
@@ -16,6 +17,7 @@ var editorsHeightData
 var editorsSelectionStartData
 var editorsSelectionEndData
 var editorsScrollTopData
+var viewsScrollTopData
 var viewsScrollLeftData
 var currentPageIndex
 var windowScrollY
@@ -32,6 +34,7 @@ function openDocument() {
 	editorsSelectionStartData = JSON.parse(localStorage.editorsSelectionStartData || DEFAULT_EDITOR_SELECTION_START_DATA)
 	editorsSelectionEndData = JSON.parse(localStorage.editorsSelectionEndData || DEFAULT_EDITOR_SELECTION_END_DATA)
 	editorsScrollTopData = JSON.parse(localStorage.editorsScrollTopData || DEFAULT_EDITOR_SCROLL_TOP_DATA)
+	viewsScrollTopData = JSON.parse(localStorage.viewsScrollTopData || DEFAULT_VIEW_SCROLL_TOP_DATA)
 	viewsScrollLeftData = JSON.parse(localStorage.viewsScrollLeftData || DEFAULT_VIEW_SCROLL_LEFT_DATA)
 	currentPageIndex = localStorage.currentPageIndex || DEFAULT_CURRENT_PAGE_INDEX
 	windowScrollY = localStorage.windowScrollY || DEFAULT_WINDOW_SCROLL_Y
@@ -63,6 +66,7 @@ function addPage(pageIndex) {
 	editor.selectionEnd = editorsSelectionEndData[page.index]
 	editor.scrollTop = editorsScrollTopData[page.index]
 	render(page)
+	view.scrollTop = viewsScrollTopData[page.index]
 	view.scrollLeft = viewsScrollLeftData[page.index]
 	
 	page.onclick = function() {
@@ -81,6 +85,7 @@ function addPage(pageIndex) {
 		saveDocument()
 	}
 	view.onscroll = function() {
+		viewsScrollTopData[page.index] = view.scrollTop
 		viewsScrollLeftData[page.index] = view.scrollLeft
 		saveDocument()
 	}
@@ -103,6 +108,7 @@ function doAddPage() {
 	editorsSelectionStartData.splice(currentPageIndex, 0, DEFAULT_EDITOR_SELECTION_START)
 	editorsSelectionEndData.splice(currentPageIndex, 0, DEFAULT_EDITOR_SELECTION_END)
 	editorsScrollTopData.splice(currentPageIndex, 0, DEFAULT_EDITOR_SCROLL_TOP)
+	viewsScrollTopData.splice(currentPageIndex, 0, DEFAULT_VIEW_SCROLL_TOP)
 	viewsScrollLeftData.splice(currentPageIndex, 0, DEFAULT_VIEW_SCROLL_LEFT)
 	
 	var page = addPage(currentPageIndex)
@@ -128,6 +134,7 @@ function doRemovePage() {
 	editorsSelectionStartData.splice(currentPageIndex, 1)
 	editorsSelectionEndData.splice(currentPageIndex, 1)
 	editorsScrollTopData.splice(currentPageIndex, 1)
+	viewsScrollTopData.splice(currentPageIndex, 1)
 	viewsScrollLeftData.splice(currentPageIndex, 1)
 	
 	removePage(currentPageIndex)
@@ -191,6 +198,7 @@ function saveDocument() {
 	localStorage.editorsSelectionStartData = JSON.stringify(editorsSelectionStartData)
 	localStorage.editorsSelectionEndData = JSON.stringify(editorsSelectionEndData)
 	localStorage.editorsScrollTopData = JSON.stringify(editorsScrollTopData)
+	localStorage.viewsScrollTopData = JSON.stringify(viewsScrollTopData)
 	localStorage.viewsScrollLeftData = JSON.stringify(viewsScrollLeftData)
 	localStorage.currentPageIndex = currentPageIndex
 	localStorage.windowScrollY = windowScrollY

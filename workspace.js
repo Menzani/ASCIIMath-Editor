@@ -120,6 +120,7 @@ function updateDebugInfo() {
 			{ key: "editorsSelectionStartData", value: editorsSelectionStartData },
 			{ key: "editorsSelectionEndData", value: editorsSelectionEndData },
 			{ key: "editorsScrollTopData", value: editorsScrollTopData },
+			{ key: "viewsScrollTopData", value: viewsScrollTopData },
 			{ key: "viewsScrollLeftData", value: viewsScrollLeftData },
 			{ key: "currentPageIndex", value: currentPageIndex },
 			{ key: "windowScrollY", value: windowScrollY },
