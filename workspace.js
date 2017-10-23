@@ -32,6 +32,9 @@ document.addEventListener("DOMContentLoaded", function() {
 	presentationDownload = document.getElementById("presentationDownload")
 	reference = document.getElementById("reference")
 	referenceFrame = document.getElementById("referenceFrame")
+	debug.popupOpen = false
+	presentation.popupOpen = false
+	reference.popupOpen = false
 	
 	document.body.style.backgroundImage = selectRandomly(BACKGROUNDS)
 })
@@ -79,16 +82,13 @@ function showWallpaper() {
 
 function setupDebugSession() {
 	if (DEBUG_SESSION) {
-		showReference()
-		showDebug()
-		showPresentation(true)
+		toggleDebug()
+		togglePresentation(true)
+		toggleReference()
 	}
 }
 
-function hidePopup(event, popup) {
-	if (event.target.dataset.interceptHide) {
-		return
-	}
+function hidePopup(popup) {
 	popup.classList.add("popupAnimation")
 }
 
@@ -97,10 +97,16 @@ function showPopup(popup) {
 	popup.style.visibility = "visible"
 }
 
-function showDebug() {
-	updateDebugInfo()
-	showPopup(debug)
-	setInterval(updateDebugInfo, 100)
+function toggleDebug() {
+	if (debug.popupOpen) {
+		clearInterval(debug.popupIntervalId)
+		hidePopup(debug)
+	} else {
+		updateDebugInfo()
+		showPopup(debug)
+		debug.popupIntervalId = setInterval(updateDebugInfo, 100)
+	}
+	debug.popupOpen = !debug.popupOpen
 }
 
 function updateDebugInfo() {
@@ -154,15 +160,31 @@ function updateDebugInfo() {
 	debugInfo.innerHTML = result
 }
 
-function showPresentation(includeDownload) {
-	presentationDownload.style.display = includeDownload ? "block" : "none"
-	showPopup(presentation)
+function togglePresentation(includeDownload) {
+	if (presentation.popupOpen) {
+		hidePopup(presentation)
+	} else {
+		if (includeDownload) {
+			presentationDownload.style.display = "block"
+		} else {
+			presentationDownload.style.display = "none"
+		}
+		showPopup(presentation)
+	}
+	presentation.popupOpen = !presentation.popupOpen
 	return false
 }
 
-function showReference() {
-	referenceFrame.src = "http://asciimath.org/#syntax"
-	showPopup(reference)
+function toggleReference() {
+	if (reference.popupOpen) {
+		hidePopup(reference)
+	} else {
+		if (!referenceFrame.src) {
+			referenceFrame.src = "http://asciimath.org/#syntax"
+		}
+		showPopup(reference)
+	}
+	reference.popupOpen = !reference.popupOpen
 }
 
 function resolveShortcut(event) {
@@ -179,9 +201,9 @@ function resolveShortcut(event) {
 			break
 			case 115: doSavePageSource()
 			break
-			case 113: showReference()
+			case 113: toggleReference()
 			break
-			case 116: showDebug()
+			case 116: toggleDebug()
 			break
 		}
 		switch (event.keyCode) {
