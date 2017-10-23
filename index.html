@@ -1,9 +1,10 @@
 <!DOCTYPE html><html>
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="index.css" type="text/css">
-  <script src="index.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="workspace.css" type="text/css">
+  <link rel="stylesheet" href="document.css" type="text/css">
   <script src="workspace.js" type="text/javascript"></script>
+  <script src="document.js" type="text/javascript"></script>
   <script src="ASCIIMathML.js" type="text/javascript"></script>
   
   <link rel="icon" href="resources/favicon.ico" type="image/x-icon">
@@ -12,30 +13,31 @@
 <body onload="createWorkspace(); openDocument();" onkeypress="resolveShortcut(event)">
 	<img id="workspaceLayer1" class="workspaceLayer">
 	<img id="workspaceLayer2" class="workspaceLayer">
-	<div id="debug" class="card popup" onclick="hidePopup(event, this)">
+	<div id="debug" class="card menu popup" onclick="hidePopup(event, this)">
 		<p id="debugInfo"></p>
 		<div id="debugVerbose">
-			<input id="debugVerboseCheckbox" type="checkbox">
-			<label for="debugVerboseCheckbox">Verbose key press</label>
+			<input id="debugVerboseCheckbox" type="checkbox" data-intercept-hide="true">
+			<label for="debugVerboseCheckbox" data-intercept-hide="true">Verbose key press</label>
 		</div>
-		<input id="debugReset" type="button" value="Delete document" onclick="deleteDocument()">
+		<input id="debugReset" type="button" value="Delete document" data-intercept-hide="true" onclick="deleteDocument()">
 	</div>
-	<div id="presentation" class="card popup" onclick="hidePopup(event, this)">
+	<div id="presentation" class="card menu popup" onclick="hidePopup(event, this)">
 		<p>
-			ASCIIMath Editor relies on Firefox's near-perfect MathML engine to perform its rendering,
-			so you get better results in less time. No MathJax overhead means more time for you to work on
-			your projects.
+			ASCIIMath Editor relies on Firefox's near-perfect MathML engine to perform the rendering,
+			so you get better results in less time.
 		</p>
 	</div>
-	<div id="instructions" class="card menu">
+	<div id="commands" class="card menu">
 		<p>New Page</p>
 		<pre>Ctrl + Alt + N</pre>
 		<p>Delete Page</p>
 		<pre>Ctrl + Alt + D</pre>
-		<p>Jump To Upper Page</p>
-		<pre>Ctrl + Alt + ⇧</pre>
-		<p>Jump To Lower Page</p>
-		<pre>Ctrl + Alt + ⇩</pre>
+		<p>Jump Page Up</p>
+		<pre>Ctrl + Alt + ⇑</pre>
+		<p>Jump Page Down</p>
+		<pre>Ctrl + Alt + ⇓</pre>
+		<p>Save Page Source</p>
+		<pre>Ctrl + Alt + S</pre>
 		<p>Activate Debug Tools</p>
 		<pre>Ctrl + Alt + T</pre>
 	</div>

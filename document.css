@@ -1,0 +1,60 @@
+@font-face {
+	font-family: "Fira Code";
+    src: url("resources/fonts/FiraCode-Regular.otf") format("opentype");
+}
+
+@font-face {
+	font-family: "Fira Code";
+    font-style: italic;
+    src: url("resources/fonts/FiraCode-Light.otf") format("opentype");
+}
+
+@font-face {
+	font-family: "Fira Code";
+    font-weight: bold;
+    src: url("resources/fonts/FiraCode-Bold.otf") format("opentype");
+}
+
+@font-face {
+	font-family: "Latin Modern Math";
+    src: url("resources/fonts/latinmodern-math.otf") format("opentype");
+}
+
+math {
+	color: #505050;
+	font-family: "Latin Modern Math", "Cambria Math";
+	font-size: 20px;
+}
+
+.page {
+    margin: 40px auto 40px auto;
+    width: 800px;
+}
+
+.editor {
+	font-family: "Fira Code", "Lucida Console", Monaco, monospace;
+	width: 778px;
+	min-height: 150px;
+    height: 200px;
+	max-height: 250px;
+    border-style: none;
+    resize: vertical;
+	margin: 10px;
+}
+
+.view {
+	font-family: "Fira Code", "Lucida Console", Monaco, monospace;
+    font-size: 15px;
+	width: 780px;
+    height: 580px;
+    padding: 10px;
+    overflow: auto;
+}
+
+.noteparagraph {
+	margin-left: 10px;
+}
+
+.mathparagraph > math {
+    font-size: 25px;
+}

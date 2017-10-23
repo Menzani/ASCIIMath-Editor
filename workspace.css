@@ -1,42 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Bitter');
 
-@font-face {
-	font-family: "Fira Code";
-    src: url("resources/fonts/FiraCode-Regular.otf") format("opentype");
-}
-
-@font-face {
-	font-family: "Fira Code";
-    font-style: italic;
-    src: url("resources/fonts/FiraCode-Light.otf") format("opentype");
-}
-
-@font-face {
-	font-family: "Fira Code";
-    font-weight: bold;
-    src: url("resources/fonts/FiraCode-Bold.otf") format("opentype");
-}
-
-@font-face {
-	font-family: "Latin Modern Math";
-    src: url("resources/fonts/latinmodern-math.otf") format("opentype");
-}
-
 body {
 	margin: 0px;
 	background-image: linear-gradient(to top, rgba(30, 144, 255, 0), rgba(30, 144, 255, 1));
     background-attachment: fixed;
-    background-size: cover;
-}
-
-p {
-	margin: 0px;
-}
-
-math {
-	color: #505050;
-	font-family: "Latin Modern Math", "Cambria Math";
-    font-size: 20px;
 }
 
 #message {
@@ -45,8 +12,6 @@ math {
 	font-weight: bold;
 	text-align: center;
 	width: 100%;
-	margin-top: 15px;
-	margin-bottom: 15px;
 }
 
 #message > a:link {
@@ -87,7 +52,7 @@ math {
 	height: 350px;
 }
 
-#instructions {
+#commands {
 	width: 200px;
 	height: 500px;
 	right: 2px;
@@ -117,51 +82,19 @@ math {
 	padding: 10px;
 }
 
+.menu > p {
+	margin: 0px;
+}
+
 .popup {
-	font-family: Bitter, Tahoma, sans-serif;
-	padding: 10px;
-	position: fixed;
 	visibility: hidden;
-	transform-origin: top left;
+	transform-origin: top;
 	z-index: 1;
 }
 
 .popupAnimation {
 	animation: 0.1s popup;
 	animation-fill-mode: forwards;
-}
-
-.page {
-    margin: 40px auto 40px auto;
-    width: 800px;
-}
-
-.editor {
-	font-family: "Fira Code", "Lucida Console", Monaco, monospace;
-	width: 778px;
-	min-height: 150px;
-    height: 200px;
-	max-height: 250px;
-    border-style: none;
-    resize: vertical;
-	margin: 10px;
-}
-
-.view {
-	font-family: "Fira Code", "Lucida Console", Monaco, monospace;
-    font-size: 15px;
-	width: 780px;
-    height: 580px;
-    padding: 10px;
-    overflow: auto;
-}
-
-.noteparagraph {
-	margin: 15px 0px 15px 10px;
-}
-
-.mathparagraph > math {
-    font-size: 25px;
 }
 
 @keyframes workspaceLayer {
@@ -175,7 +108,7 @@ math {
 
 @keyframes popup {
 	to {
-		transform: rotate3d(1, 0.3, 0, 20deg);
+		transform: rotate3d(1, 0, 0, 20deg);
 		visibility: hidden;
 	}
 }

@@ -23,12 +23,12 @@ document.addEventListener("DOMContentLoaded", function() {
 		workspaceLayer1.classList.add("workspaceLayerAnimation")
 		workspaceLayer1.style.zIndex = -1
 		workspaceLayer2.style.zIndex = -2
-	}, 2000)}
+	}, 3000)}
 	workspaceLayer2.onload = function() { setTimeout(function() {
 		workspaceLayer2.classList.add("workspaceLayerAnimation")
 		workspaceLayer2.style.zIndex = -1
 		workspaceLayer1.style.zIndex = -2
-	}, 2000)}
+	}, 3000)}
 	
 	if (DEBUG_SESSION) {
 		showDebug()
@@ -45,11 +45,11 @@ function updateDebugInfo() {
 	temp += format("viewsScrollLeftData", viewsScrollLeftData)
 	temp += format("currentPageIndex", currentPageIndex)
 	temp += format("windowScrollY", windowScrollY)
-	var pageIndeces = []
+	var pageIndices = []
 	for (page of pages) {
-		pageIndeces.push(page.index)
+		pageIndices.push(page.index)
 	}
-	debugInfo.innerHTML = temp + format("pages (indeces)", pageIndeces)
+	debugInfo.innerHTML = temp + format("pages (indices)", pageIndices)
 }
 
 function format(key, value) {
@@ -77,7 +77,7 @@ function format(key, value) {
 }
 
 function createWorkspace() {
-	var isSupportedBrowser = navigator.userAgent.indexOf("Firefox") == -1
+	var isSupportedBrowser = navigator.userAgent.indexOf("Firefox") != -1
 	if (!isSupportedBrowser || DEBUG_SESSION) {
 		var message = document.createElement("p")
 		message.id = "message"
@@ -111,7 +111,7 @@ function loadWallpaper() {
 }
 
 function hidePopup(event, popup) {
-	if (event && event.target != popup) {
+	if (event.target.dataset.interceptHide) {
 		return
 	}
 	popup.classList.add("popupAnimation")
@@ -146,24 +146,39 @@ function resolveShortcut(event) {
 			break
 			case 100: doRemovePage()
 			break
+			case 115: doSavePageSource()
+			break
 			case 116: showDebug()
 			break
 		}
 		switch (event.keyCode) {
-			case 38: doJumpUp()
+			case 38: doJumpPageUp()
 			break
-			case 40: doJumpDown()
+			case 40: doJumpPageDown()
 			break;
 		}
 	}
 }
 
-function doJumpUp() {
+function doSavePageSource() {
+	var link = document.createElement("a")
+	link.style.display = "none"
+	var url = URL.createObjectURL(new Blob([pages[currentPageIndex].editor.value], {type: "text/plain"}))
+	link.href = url
+	link.download = "ASCIIMath Source.txt"
+	
+	document.body.appendChild(link)
+	link.click()
+	document.body.removeChild(link)
+	URL.revokeObjectURL(url)
+}
+
+function doJumpPageUp() {
 	if (currentPageIndex == 0) return
 	jumpTo(pages[currentPageIndex - 1])
 }
 
-function doJumpDown() {
+function doJumpPageDown() {
 	if (currentPageIndex == pages.length - 1) return
 	jumpTo(pages[currentPageIndex + 1])
 }
