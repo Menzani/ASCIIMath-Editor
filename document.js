@@ -45,7 +45,7 @@ function openDocument() {
 
 function addPage(pageIndex) {
 	var page = document.createElement("div")
-	page.classList.add("card", "page")
+	page.classList.add("card", "page", "pageAppearAnimation")
 	var editor = document.createElement("textarea")
 	editor.className = "editor"
 	var view = document.createElement("div")
@@ -131,16 +131,27 @@ function doRemovePage() {
 	viewsScrollLeftData.splice(currentPageIndex, 1)
 	
 	removePage(currentPageIndex)
-	if (currentPageIndex == 0) {
-		if (pageCount == 0) {
-			currentPageIndex = -1
-		} else {
-			jumpTo(pages[0])
-		}
-	} else {
-		jumpTo(pages[--currentPageIndex])
-	}
 	saveDocument()
+
+	var placeHolder = document.createElement("div")
+	placeHolder.classList.add("card", "page", "pageDisappearAnimation")
+	placeHolder.onanimationend = function() {
+		document.body.removeChild(placeHolder)
+		document.body.style.overflowX = "auto"
+		
+		if (currentPageIndex == 0) {
+			if (pageCount == 0) {
+				currentPageIndex = -1
+			} else {
+				jumpTo(pages[0])
+			}
+		} else {
+			jumpTo(pages[--currentPageIndex])
+		}
+		saveDocument()
+	}
+	document.body.style.overflowX = "hidden"
+	document.body.appendChild(placeHolder)
 }
 
 function render(page) {

@@ -29,6 +29,15 @@ math {
 .page {
     margin: 40px auto 40px auto;
     width: 800px;
+	min-height: 820px;
+}
+
+.pageAppearAnimation {
+	animation: 2s pageAppear;
+}
+
+.pageDisappearAnimation {
+	animation: 0.5s pageDisappear;
 }
 
 .editor {
@@ -57,4 +66,16 @@ math {
 
 .mathparagraph > math {
     font-size: 25px;
+}
+
+@keyframes pageAppear {
+	from {
+		transform: translateY(30px);
+	}
+}
+
+@keyframes pageDisappear {
+	to {
+		transform: skew(90deg);
+	}
 }

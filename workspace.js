@@ -1,4 +1,4 @@
-const DEBUG_SESSION = false
+const DEBUG_SESSION = true
 
 const BACKGROUNDS = [
 	"linear-gradient(to top, rgba(30, 144, 255, 0), rgba(30, 144, 255, 1))",
