@@ -118,13 +118,18 @@ body {
 
 .popup {
 	visibility: hidden;
-	transform-origin: top;
 	z-index: 1;
+	transform-origin: top;
 }
 
-.popupAnimation {
-	animation: 0.1s popup;
-	animation-fill-mode: forwards;
+.popupAppearAnimation {
+	animation: 1s popupAppear;
+	animation-fill-mode: both;
+}
+
+.popupDisappearAnimation {
+	animation: 0.1s popupDisappear;
+	animation-fill-mode: both;
 }
 
 @keyframes workspaceLayer {
@@ -136,7 +141,20 @@ body {
 	}
 }
 
-@keyframes popup {
+@keyframes popupAppear {
+	from {
+		visibility: hidden;
+		transform: translateY(30px);
+	}
+	to {
+		visibility: visible;
+	}
+}
+
+@keyframes popupDisappear {
+	from {
+		visibility: visible;
+	}
 	to {
 		transform: rotate3d(1, 0, 0, 20deg);
 		visibility: hidden;

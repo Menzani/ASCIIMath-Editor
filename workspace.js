@@ -1,4 +1,4 @@
-const DEBUG_SESSION = true
+const DEBUG_SESSION = false
 
 const BACKGROUNDS = [
 	"linear-gradient(to top, rgba(30, 144, 255, 0), rgba(30, 144, 255, 1))",
@@ -32,11 +32,11 @@ document.addEventListener("DOMContentLoaded", function() {
 	presentationDownload = document.getElementById("presentationDownload")
 	reference = document.getElementById("reference")
 	referenceFrame = document.getElementById("referenceFrame")
+	
+	document.body.style.backgroundImage = selectRandomly(BACKGROUNDS)
 	debug.popupOpen = false
 	presentation.popupOpen = false
 	reference.popupOpen = false
-	
-	document.body.style.backgroundImage = selectRandomly(BACKGROUNDS)
 })
 
 function createWorkspace() {
@@ -89,12 +89,15 @@ function setupDebugSession() {
 }
 
 function hidePopup(popup) {
-	popup.classList.add("popupAnimation")
+	popup.classList.remove("popupAppearAnimation")
+	popup.classList.add("popupDisappearAnimation")
+	popup.popupOpen = false
 }
 
 function showPopup(popup) {
-	popup.classList.remove("popupAnimation")
-	popup.style.visibility = "visible"
+	popup.classList.remove("popupDisappearAnimation")
+	popup.classList.add("popupAppearAnimation")
+	popup.popupOpen = true
 }
 
 function toggleDebug() {
@@ -106,7 +109,6 @@ function toggleDebug() {
 		showPopup(debug)
 		debug.popupIntervalId = setInterval(updateDebugInfo, 100)
 	}
-	debug.popupOpen = !debug.popupOpen
 }
 
 function updateDebugInfo() {
@@ -171,7 +173,6 @@ function togglePresentation(includeDownload) {
 		}
 		showPopup(presentation)
 	}
-	presentation.popupOpen = !presentation.popupOpen
 	return false
 }
 
@@ -184,7 +185,6 @@ function toggleReference() {
 		}
 		showPopup(reference)
 	}
-	reference.popupOpen = !reference.popupOpen
 }
 
 function resolveShortcut(event) {
