@@ -121,7 +121,23 @@ function removePage(pageIndex) {
 	for (newPageIndex = 0; newPageIndex < pages.length; newPageIndex++) {
 		pages[newPageIndex].index = newPageIndex
 	}
-	document.body.removeChild(page)
+	
+	page.classList.remove("pageAppearAnimation")
+	page.classList.add("pageDisappearAnimation")
+	page.onanimationend = function() {
+		document.body.removeChild(page)
+		
+		if (currentPageIndex == 0) {
+			if (pageCount == 0) {
+				currentPageIndex = -1
+			} else {
+				jumpTo(pages[0])
+			}
+		} else {
+			jumpTo(pages[--currentPageIndex])
+		}
+		saveDocument()
+	}
 }
 
 function doRemovePage() {
@@ -139,26 +155,6 @@ function doRemovePage() {
 	
 	removePage(currentPageIndex)
 	saveDocument()
-
-	var placeHolder = document.createElement("div")
-	placeHolder.classList.add("card", "page", "pageDisappearAnimation")
-	placeHolder.onanimationend = function() {
-		document.body.removeChild(placeHolder)
-		document.body.style.overflowX = "auto"
-		
-		if (currentPageIndex == 0) {
-			if (pageCount == 0) {
-				currentPageIndex = -1
-			} else {
-				jumpTo(pages[0])
-			}
-		} else {
-			jumpTo(pages[--currentPageIndex])
-		}
-		saveDocument()
-	}
-	document.body.style.overflowX = "hidden"
-	document.body.appendChild(placeHolder)
 }
 
 function render(page) {

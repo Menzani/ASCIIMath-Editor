@@ -112,10 +112,6 @@ body {
 	padding: 10px;
 }
 
-.menu > p {
-	margin: 0px;
-}
-
 .popup {
 	visibility: hidden;
 	z-index: 1;

@@ -29,7 +29,6 @@ math {
 .page {
     margin: 40px auto 40px auto;
     width: 800px;
-	min-height: 820px;
 }
 
 .pageAppearAnimation {
@@ -37,6 +36,7 @@ math {
 }
 
 .pageDisappearAnimation {
+	pointer-events: none;
 	animation: 0.5s pageDisappear;
 }
 
@@ -76,6 +76,6 @@ math {
 
 @keyframes pageDisappear {
 	to {
-		transform: skew(90deg);
+		filter: opacity(0%) blur(10px);
 	}
 }
