@@ -24,7 +24,7 @@ body {
 
 #debug {
 	width: 450px;
-	left: 40px;
+	right: 45px;
 	top: 2px;
 }
 
@@ -70,7 +70,7 @@ body {
 #reference {
 	width: 500px;
 	height: 95%;
-	right: 20px;
+	left: 30px;
 	top: 2px;
 	padding: 0px;
 	overflow: hidden;

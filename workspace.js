@@ -13,30 +13,30 @@ var currentWallpaper
 var message
 var workspaceLayer1
 var workspaceLayer2
+var reference
+var referenceFrame
+var presentation
+var presentationDownload
 var debug
 var debugInfo
 var debugVerboseCheckbox
-var presentation
-var presentationDownload
-var reference
-var referenceFrame
 
 document.addEventListener("DOMContentLoaded", function() {
 	message = document.getElementById("message")
 	workspaceLayer1 = document.getElementById("workspaceLayer1")
 	workspaceLayer2 = document.getElementById("workspaceLayer2")
+	reference = document.getElementById("reference")
+	referenceFrame = document.getElementById("referenceFrame")
+	presentation = document.getElementById("presentation")
+	presentationDownload = document.getElementById("presentationDownload")
 	debug = document.getElementById("debug")
 	debugInfo = document.getElementById("debugInfo")
 	debugVerboseCheckbox = document.getElementById("debugVerboseCheckbox")
-	presentation = document.getElementById("presentation")
-	presentationDownload = document.getElementById("presentationDownload")
-	reference = document.getElementById("reference")
-	referenceFrame = document.getElementById("referenceFrame")
-	
-	document.body.style.backgroundImage = selectRandomly(BACKGROUNDS)
 	debug.popupOpen = false
 	presentation.popupOpen = false
 	reference.popupOpen = false
+	
+	document.body.style.backgroundImage = selectRandomly(BACKGROUNDS)
 })
 
 function createWorkspace() {
@@ -100,6 +100,31 @@ function showPopup(popup) {
 	popup.popupOpen = true
 }
 
+function toggleReference() {
+	if (reference.popupOpen) {
+		hidePopup(reference)
+	} else {
+		if (!referenceFrame.src) {
+			referenceFrame.src = "http://asciimath.org/#syntax"
+		}
+		showPopup(reference)
+	}
+}
+
+function togglePresentation(includeDownload) {
+	if (presentation.popupOpen) {
+		hidePopup(presentation)
+	} else {
+		if (includeDownload) {
+			presentationDownload.style.display = "block"
+		} else {
+			presentationDownload.style.display = "none"
+		}
+		showPopup(presentation)
+	}
+	return false
+}
+
 function toggleDebug() {
 	if (debug.popupOpen) {
 		clearInterval(debug.popupIntervalId)
@@ -161,31 +186,6 @@ function updateDebugInfo() {
 		result += (key + " = " + value + "<br>")
 	}
 	debugInfo.innerHTML = result
-}
-
-function togglePresentation(includeDownload) {
-	if (presentation.popupOpen) {
-		hidePopup(presentation)
-	} else {
-		if (includeDownload) {
-			presentationDownload.style.display = "block"
-		} else {
-			presentationDownload.style.display = "none"
-		}
-		showPopup(presentation)
-	}
-	return false
-}
-
-function toggleReference() {
-	if (reference.popupOpen) {
-		hidePopup(reference)
-	} else {
-		if (!referenceFrame.src) {
-			referenceFrame.src = "http://asciimath.org/#syntax"
-		}
-		showPopup(reference)
-	}
 }
 
 function resolveShortcut(event) {

@@ -18,13 +18,8 @@
 	<img id="workspaceLayer1" class="workspaceLayer" onload="setTimeout(showWallpaper, 3000)">
 	<img id="workspaceLayer2" class="workspaceLayer" onload="setTimeout(showWallpaper, 3000)">
 	
-	<div id="debug" class="card menu popup">
-		<p id="debugInfo"></p>
-		<div id="debugVerbose">
-			<input id="debugVerboseCheckbox" type="checkbox">
-			<label id="debugVerboseLabel" for="debugVerboseCheckbox">Verbose key press</label>
-		</div>
-		<input id="debugReset" type="button" value="Delete Document" onclick="deleteDocument()">
+	<div id="reference" class="card menu popup">
+		<iframe id="referenceFrame" sandbox="allow-scripts"></iframe>
 	</div>
 	<div id="presentation" class="card menu popup">
 		<p>
@@ -37,9 +32,15 @@
 		</p>
 		<input id="presentationDownload" type="button" value="Download Firefox" onclick="location.href='https://www.mozilla.org/it/firefox/new';">
 	</div>
-	<div id="reference" class="card menu popup">
-		<iframe id="referenceFrame" sandbox="allow-scripts"></iframe>
+	<div id="debug" class="card menu popup">
+		<p id="debugInfo"></p>
+		<div id="debugVerbose">
+			<input id="debugVerboseCheckbox" type="checkbox">
+			<label id="debugVerboseLabel" for="debugVerboseCheckbox">Verbose key press</label>
+		</div>
+		<input id="debugReset" type="button" value="Delete Document" onclick="deleteDocument()">
 	</div>
+	
 	<div id="commands" class="card menu">
 		<div>
 			<p>New Page</p>
