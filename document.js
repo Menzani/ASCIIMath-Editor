@@ -28,7 +28,7 @@ window.onscroll = function() {
 }
 
 function openDocument() {
-	pageCount = localStorage.pageCount || DEFAULT_PAGE_COUNT
+	pageCount = JSON.parse(localStorage.pageCount || DEFAULT_PAGE_COUNT)
 	editorsValueData = JSON.parse(localStorage.editorsValueData || DEFAULT_EDITOR_VALUE_DATA)
 	editorsHeightData = JSON.parse(localStorage.editorsHeightData || DEFAULT_EDITOR_HEIGHT_DATA)
 	editorsSelectionStartData = JSON.parse(localStorage.editorsSelectionStartData || DEFAULT_EDITOR_SELECTION_START_DATA)
@@ -36,19 +36,22 @@ function openDocument() {
 	editorsScrollTopData = JSON.parse(localStorage.editorsScrollTopData || DEFAULT_EDITOR_SCROLL_TOP_DATA)
 	viewsScrollTopData = JSON.parse(localStorage.viewsScrollTopData || DEFAULT_VIEW_SCROLL_TOP_DATA)
 	viewsScrollLeftData = JSON.parse(localStorage.viewsScrollLeftData || DEFAULT_VIEW_SCROLL_LEFT_DATA)
-	currentPageIndex = localStorage.currentPageIndex || DEFAULT_CURRENT_PAGE_INDEX
-	windowScrollY = localStorage.windowScrollY || DEFAULT_WINDOW_SCROLL_Y
+	currentPageIndex = JSON.parse(localStorage.currentPageIndex || DEFAULT_CURRENT_PAGE_INDEX)
+	windowScrollY = JSON.parse(localStorage.windowScrollY || DEFAULT_WINDOW_SCROLL_Y)
 	
 	for (let pageIndex = 0; pageIndex < pageCount; pageIndex++) {
-		addPage(pageIndex)
+		addPage(pageIndex, false)
 	}
 	jumpTo(pages[currentPageIndex])
     window.scrollTo(0, windowScrollY)
 }
 
-function addPage(pageIndex) {
+function addPage(pageIndex, animate) {
 	var page = document.createElement("div")
-	page.classList.add("card", "page", "pageAppearAnimation")
+	page.classList.add("card", "page")
+	if (animate) {
+		page.classList.add("pageAppearAnimation")
+	}
 	var editor = document.createElement("textarea")
 	editor.className = "editor"
 	var view = document.createElement("div")
@@ -113,7 +116,7 @@ function doAddPage() {
 	viewsScrollTopData.splice(currentPageIndex, 0, DEFAULT_VIEW_SCROLL_TOP)
 	viewsScrollLeftData.splice(currentPageIndex, 0, DEFAULT_VIEW_SCROLL_LEFT)
 	
-	var page = addPage(currentPageIndex)
+	var page = addPage(currentPageIndex, true)
 	jumpTo(page)
 	saveDocument()
 }
@@ -190,7 +193,7 @@ function jumpTo(page) {
 }
 
 function saveDocument() {
-	localStorage.pageCount = pageCount
+	localStorage.pageCount = JSON.stringify(pageCount)
 	localStorage.editorsValueData = JSON.stringify(editorsValueData)
 	localStorage.editorsHeightData = JSON.stringify(editorsHeightData)
 	localStorage.editorsSelectionStartData = JSON.stringify(editorsSelectionStartData)
@@ -198,8 +201,8 @@ function saveDocument() {
 	localStorage.editorsScrollTopData = JSON.stringify(editorsScrollTopData)
 	localStorage.viewsScrollTopData = JSON.stringify(viewsScrollTopData)
 	localStorage.viewsScrollLeftData = JSON.stringify(viewsScrollLeftData)
-	localStorage.currentPageIndex = currentPageIndex
-	localStorage.windowScrollY = windowScrollY
+	localStorage.currentPageIndex = JSON.stringify(currentPageIndex)
+	localStorage.windowScrollY = JSON.stringify(windowScrollY)
 }
 
 function deleteDocument() {

@@ -1,5 +1,3 @@
-const DEBUG_SESSION = true
-
 const BACKGROUNDS = [
 	"linear-gradient(to top, rgba(30, 144, 255, 0), rgba(30, 144, 255, 1))",
 	"linear-gradient(to top, rgba(255, 140, 0, 0), rgba(255, 127, 80, 1))",
@@ -40,8 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
 })
 
 function createWorkspace() {
-	var isSupportedBrowser = navigator.userAgent.indexOf("Firefox") != -1
-	if (!isSupportedBrowser || DEBUG_SESSION) {
+	if (navigator.userAgent.indexOf("Firefox") == -1) {
 		message.style.display = "block"
 	} else {
 		workspaceLayer1.style.top = "0px"
@@ -77,14 +74,6 @@ function showWallpaper() {
 		workspaceLayer1.classList.add("workspaceLayerAnimation")
 		workspaceLayer1.style.zIndex = -1
 		workspaceLayer2.style.zIndex = -2
-	}
-}
-
-function setupDebugSession() {
-	if (DEBUG_SESSION) {
-		toggleDebug()
-		togglePresentation(true)
-		toggleReference()
 	}
 }
 
@@ -161,31 +150,32 @@ function updateDebugInfo() {
 		if (valueFunction) {
 			value = valueFunction()
 		}
-		if (Array.isArray(value)) {
-			var valueResult = "["
-			for (e of value) {
-				if (e === null) {
-					valueResult += "null"
-				} else if (e === undefined) {
-					valueResult += "undefined"
-				} else if (typeof e === "string" && e.length == 0) {
-					valueResult += '""'
-				} else {
-					valueResult += e.toString()
-				}
-				valueResult += ", "
-			}
-			if (valueResult == "[") {
-				value = "[]"
-			} else {
-				value = valueResult.slice(0, valueResult.length - 2) + "]"
-			}
-		} else if (typeof value === "string" && value == "") {
-			value = '""'
-		}
-		result += (key + " = " + value + "<br>")
+		result += (key + " = " + format(value) + "<br>")
 	}
 	debugInfo.innerHTML = result
+}
+
+function format(value) {
+	if (value === null) {
+		return "null"
+	}
+	if (value === undefined) {
+		return "undefined"
+	}
+	if (typeof value === "string") {
+		return '"' + value + '"'
+	}
+	if (Array.isArray(value)) {
+		if (value.length == 0) {
+			return "[]"
+		}
+		var result = "["
+		for (e of value) {
+			result += (format(e) + ", ")
+		}
+		return result.slice(0, result.length - 2) + "]"
+	}
+	return value.toString()
 }
 
 function resolveShortcut(event) {

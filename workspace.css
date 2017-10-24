@@ -119,7 +119,7 @@ body {
 }
 
 .popupAppearAnimation {
-	animation: 1s popupAppear;
+	animation: 0.3s popupAppear;
 	animation-fill-mode: both;
 }
 
@@ -139,8 +139,8 @@ body {
 
 @keyframes popupAppear {
 	from {
+		transform: rotate3d(1, 0, 0, 90deg);
 		visibility: hidden;
-		transform: translateY(30px);
 	}
 	to {
 		visibility: visible;
@@ -152,7 +152,7 @@ body {
 		visibility: visible;
 	}
 	to {
-		transform: rotate3d(1, 0, 0, 20deg);
+		transform: rotate3d(1, 0, 0, 90deg);
 		visibility: hidden;
 	}
 }
