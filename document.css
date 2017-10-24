@@ -60,11 +60,11 @@ math {
     overflow: auto;
 }
 
-.noteparagraph {
+.noteParagraph {
 	margin-left: 10px;
 }
 
-.mathparagraph > math {
+.mathParagraph > math {
     font-size: 25px;
 }
 

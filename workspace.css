@@ -2,77 +2,36 @@
 
 body {
 	margin: 0px;
-    background-attachment: fixed;
 }
 
-#message {
+#browserWarning {
+	width: 100%;
+	height: 40px;
+	background-color: #0C090A;
+	top: 0px;
+}
+
+#browserWarning > p {
 	color: white;
 	font-family: "Times New Roman", Times, serif;
 	font-weight: bold;
 	text-align: center;
-	width: 100%;
-	display: none;
+	margin: 10px;
 }
 
-#message > a:link {
+#browserWarning > p > a:link {
 	color: white;
 }
 
-#message > a:visited {
+#browserWarning > p > a:visited {
 	color: white;
-}
-
-#debug {
-	width: 450px;
-	right: 45px;
-	top: 2px;
-}
-
-#debugInfo {
-	height: 300px;
-	overflow: auto;
-	font-family: "Lucida Console", Monaco, monospace;
-}
-
-#debugVerbose {
-	float: left;
-}
-
-#debugVerboseCheckbox {
-	vertical-align: middle;
-}
-
-#debugVerboseLabel {
-	vertical-align: middle;
-}
-
-#debugReset {
-	float: right;
-	width: 125px;
-	height: 25px;
-}
-
-#presentation {
-	margin: 2px auto;
-	left: 0px;
-	right: 0px;
-	width: 350px;
-}
-
-#presentationDownload {
-	margin: 20px auto;
-	left: 0px;
-	right: 0px;
-	width: 150px;
-	height: 40px;
 }
 
 #reference {
 	width: 500px;
-	height: 95%;
+	height: 98%;
 	left: 30px;
 	top: 2px;
-	padding: 0px;
 	overflow: hidden;
 }
 
@@ -82,11 +41,73 @@ body {
 	border: none;
 }
 
+#presentation {
+	margin: 2px auto;
+	left: 0px;
+	right: 0px;
+	width: 350px;
+	padding: 10px;
+}
+
+#presentation > p {
+	margin: 0px;
+}
+
+#presentationDownload {
+	margin: 20px auto 5px auto;
+	left: 0px;
+	right: 0px;
+	width: 150px;
+	height: 40px;
+}
+
+#presentationClose {
+	font-size: 13px;
+	text-align: center;
+}
+
+#presentationClose > a:link {
+	color: #0C090A;
+}
+
+#presentationClose > a:visited {
+	color: #0C090A;
+}
+
+#debug {
+	width: 450px;
+	right: 45px;
+	top: 2px;
+	padding: 10px;
+}
+
+#debugInfo {
+	margin: 0px;
+	height: 300px;
+	overflow: auto;
+	font-family: "Lucida Console", Monaco, monospace;
+}
+
+#debugVerboseLabel {
+	vertical-align: top;
+}
+
+#debug > input {
+	margin-top: 5px;
+	height: 25px;
+}
+
 #commands {
 	width: 200px;
-	height: 500px;
 	right: 2px;
 	top: 150px;
+	padding: 10px 5px 10px 5px;
+}
+
+#commands > fieldset > p {
+	font-size: 15px;
+	margin-top: 10px;
+	margin-bottom: 0px;
 }
 
 .workspaceLayer {
@@ -94,6 +115,7 @@ body {
 	position: fixed;
 	height: 100%;
 	width: 100%;
+	top: 0px;
 }
 
 .workspaceLayerAnimation {
@@ -109,7 +131,6 @@ body {
 .menu {
 	font-family: Bitter, Tahoma, sans-serif;
 	position: fixed;
-	padding: 10px;
 }
 
 .popup {

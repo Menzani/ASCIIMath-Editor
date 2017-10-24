@@ -8,9 +8,9 @@ const WALLPAPERS = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"]
 var currentLayer = false
 var currentWallpaper
 
-var message
 var workspaceLayer1
 var workspaceLayer2
+var browserWarning
 var reference
 var referenceFrame
 var presentation
@@ -20,9 +20,9 @@ var debugInfo
 var debugVerboseCheckbox
 
 document.addEventListener("DOMContentLoaded", function() {
-	message = document.getElementById("message")
 	workspaceLayer1 = document.getElementById("workspaceLayer1")
 	workspaceLayer2 = document.getElementById("workspaceLayer2")
+	browserWarning = document.getElementById("browserWarning")
 	reference = document.getElementById("reference")
 	referenceFrame = document.getElementById("referenceFrame")
 	presentation = document.getElementById("presentation")
@@ -30,19 +30,17 @@ document.addEventListener("DOMContentLoaded", function() {
 	debug = document.getElementById("debug")
 	debugInfo = document.getElementById("debugInfo")
 	debugVerboseCheckbox = document.getElementById("debugVerboseCheckbox")
-	debug.popupOpen = false
-	presentation.popupOpen = false
 	reference.popupOpen = false
+	presentation.popupOpen = false
+	debug.popupOpen = false
 	
-	document.body.style.backgroundImage = selectRandomly(BACKGROUNDS)
+	document.body.style.background = selectRandomly(BACKGROUNDS)
+	document.body.style.backgroundAttachment = "fixed"
 })
 
 function createWorkspace() {
 	if (navigator.userAgent.indexOf("Firefox") == -1) {
-		message.style.display = "block"
-	} else {
-		workspaceLayer1.style.top = "0px"
-		workspaceLayer2.style.top = "0px"
+		showBrowserWarning()
 	}
 	
 	currentWallpaper = nextRandomNumber(0, WALLPAPERS.length)
@@ -66,14 +64,14 @@ function loadWallpaper() {
 }
 
 function showWallpaper() {
-	if (!currentLayer) {
-		workspaceLayer2.classList.add("workspaceLayerAnimation")
-		workspaceLayer2.style.zIndex = -1
-		workspaceLayer1.style.zIndex = -2
-	} else {
+	if (currentLayer) {
 		workspaceLayer1.classList.add("workspaceLayerAnimation")
 		workspaceLayer1.style.zIndex = -1
 		workspaceLayer2.style.zIndex = -2
+	} else {
+		workspaceLayer2.classList.add("workspaceLayerAnimation")
+		workspaceLayer2.style.zIndex = -1
+		workspaceLayer1.style.zIndex = -2
 	}
 }
 
@@ -87,6 +85,10 @@ function showPopup(popup) {
 	popup.classList.remove("popupDisappearAnimation")
 	popup.classList.add("popupAppearAnimation")
 	popup.popupOpen = true
+}
+
+function showBrowserWarning() {
+	showPopup(browserWarning)
 }
 
 function toggleReference() {
@@ -192,15 +194,17 @@ function resolveShortcut(event) {
 			break
 			case 115: doSavePageSource()
 			break
+			case 116: toggleTutorial()
+			break
 			case 113: toggleReference()
 			break
-			case 116: toggleDebug()
+			case 105: toggleDebug()
 			break
 		}
 		switch (event.keyCode) {
-			case 38: doJumpPageUp()
+			case 38: doJumpUp()
 			break
-			case 40: doJumpPageDown()
+			case 40: doJumpDown()
 			break;
 		}
 	}
@@ -219,14 +223,14 @@ function doSavePageSource() {
 	URL.revokeObjectURL(url)
 }
 
-function doJumpPageUp() {
+function doJumpUp() {
 	if (currentPageIndex == 0) {
 		return
 	}
 	jumpTo(pages[currentPageIndex - 1])
 }
 
-function doJumpPageDown() {
+function doJumpDown() {
 	if (currentPageIndex == pages.length - 1) {
 		return
 	}

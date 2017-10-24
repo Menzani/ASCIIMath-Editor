@@ -69,6 +69,7 @@ function addPage(pageIndex, animate) {
 	editor.selectionEnd = editorsSelectionEndData[page.index]
 	editor.scrollTop = editorsScrollTopData[page.index]
 	render(page)
+	// Delay is needed because render may not have already ended
 	window.requestAnimationFrame(function() {
 		view.scrollTop = viewsScrollTopData[page.index]
 		view.scrollLeft = viewsScrollLeftData[page.index]
@@ -163,16 +164,17 @@ function doRemovePage() {
 }
 
 function render(page) {
-	page.view.innerHTML = ""
+	var result = ""
     for (line of page.editor.value.split(/\r?\n/)) {
     	if (line.startsWith("#")) {
-        	page.view.innerHTML += ("<p class='noteparagraph'><i>" + line.slice(1) + "</i></p>")
+        	result += ("<p class='noteParagraph'><i>" + line.slice(1) + "</i></p>")
         } else if (line.startsWith("*")) {
-            page.view.innerHTML += ("<p class='noteparagraph'><b>" + line.slice(1) + "</b></p>")
+            result += ("<p class='noteParagraph'><b>" + line.slice(1) + "</b></p>")
         } else if (line.trim().length > 0) {
-        	page.view.innerHTML += ("<div class='mathparagraph'>°" + line + "°</div>")
+        	result += ("<div class='mathParagraph'>°" + line + "°</div>")
         }
     }
+	page.view.innerHTML = result
  	asciimath.AMprocesssNode(page.view, false, null)
 }
 

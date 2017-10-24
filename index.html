@@ -11,13 +11,13 @@
   <title>ASCIIMath Editor for Firefox</title>
 </head>
 <body onload="createWorkspace(); openDocument();" onkeypress="resolveShortcut(event)">
-	<p id="message">
-		This app is designed to run on <a href="https://www.mozilla.org/it/firefox/new">Firefox</a>
-		and likely won't support other browsers. <a href="#" onclick="togglePresentation(true)">Find out why</a>
-	</p>
 	<img id="workspaceLayer1" class="workspaceLayer" onload="setTimeout(showWallpaper, 3000)">
 	<img id="workspaceLayer2" class="workspaceLayer" onload="setTimeout(showWallpaper, 3000)">
 	
+	<div id="browserWarning" class="card menu popup"><p>
+		This app is designed to run on <a href="https://www.mozilla.org/it/firefox/new">Firefox</a>
+		and likely won't support other browsers. <a href="#" onclick="togglePresentation(true)">Find out why</a>
+	</p></div>
 	<div id="reference" class="card menu popup">
 		<iframe id="referenceFrame" sandbox="allow-scripts"></iframe>
 	</div>
@@ -25,37 +25,45 @@
 		<p>
 			ASCIIMath Editor relies on Firefox's near-perfect MathML engine to perform the rendering,
 			so you get better results in less time.
-		</p>
-		<p>
+			<br>
 			ASCIIMath Editor also leverages Firefox's high-performance animation rendering engine
 			to delight the user with unintrusive, rich animations that are both fun and useful.
 		</p>
 		<input id="presentationDownload" type="button" value="Download Firefox" onclick="location.href='https://www.mozilla.org/it/firefox/new';">
+		<p id="presentationClose"><a href="#" onclick="togglePresentation()">Close</a></p>
 	</div>
 	<div id="debug" class="card menu popup">
 		<p id="debugInfo"></p>
-		<div id="debugVerbose">
+		<div>
 			<input id="debugVerboseCheckbox" type="checkbox">
 			<label id="debugVerboseLabel" for="debugVerboseCheckbox">Verbose key press</label>
 		</div>
-		<input id="debugReset" type="button" value="Delete Document" onclick="deleteDocument()">
+		<input type="button" value="Test Browser Warning" onclick="showBrowserWarning()">
+		<input type="button" value="Delete Document" onclick="deleteDocument()">
 	</div>
 	
 	<div id="commands" class="card menu">
-		<div>
+		<fieldset><legend>Page</legend>
 			<p>New Page</p>
 			<pre>Ctrl + Alt + N</pre>
 			<p>Delete Page</p>
 			<pre>Ctrl + Alt + D</pre>
-			<p>Jump Page Up</p>
-			<pre>Ctrl + Alt + ⇑</pre>
-			<p>Jump Page Down</p>
-			<pre>Ctrl + Alt + ⇓</pre>
-			<p>Save Page Source</p>
+			<p>Download Source</p>
 			<pre>Ctrl + Alt + S</pre>
-		</div>
-		<p>Quick ASCIIMath Reference</p>
-		<pre>Ctrl + Alt + Q</pre>
+		</fieldset>
+		<fieldset><legend>Navigate</legend>
+			<p>Page Up</p>
+			<pre>Ctrl + Alt + ⇑</pre>
+			<p>Page Down</p>
+			<pre>Ctrl + Alt + ⇓</pre>
+		</fieldset>
+		<fieldset><legend>Learn</legend>
+			<p>Tutorial</p>
+			<pre>Ctrl + Alt + T</pre>
+			<p>Quick ASCIIMath Reference</p>
+			<pre>Ctrl + Alt + Q</pre>
+			<p><small>Press again to close popups</small></p>
+		</fieldset>
 	</div>
 </body>
 </html>
