@@ -66,8 +66,10 @@ function addPage(pageIndex) {
 	editor.selectionEnd = editorsSelectionEndData[page.index]
 	editor.scrollTop = editorsScrollTopData[page.index]
 	render(page)
-	view.scrollTop = viewsScrollTopData[page.index]
-	view.scrollLeft = viewsScrollLeftData[page.index]
+	window.requestAnimationFrame(function() {
+		view.scrollTop = viewsScrollTopData[page.index]
+		view.scrollLeft = viewsScrollLeftData[page.index]
+	})
 	
 	page.onclick = function() {
 		jumpTo(page)
