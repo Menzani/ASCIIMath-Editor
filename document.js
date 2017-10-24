@@ -56,12 +56,15 @@ function addPage(pageIndex, animate) {
 	editor.className = "editor"
 	var view = document.createElement("div")
 	view.className = "view"
+	var mathmlOutput = document.createElement("div")
+	mathmlOutput.className = "mathmlOutput"
 	
+	view.appendChild(mathmlOutput)
 	page.appendChild(editor)
 	page.appendChild(view)
-	page.editor = editor
-	page.view = view
 	page.index = pageIndex
+	page.editor = editor
+	page.mathmlOutput = mathmlOutput
 	
 	editor.value = editorsValueData[page.index]
 	editor.style.height = editorsHeightData[page.index]
@@ -69,7 +72,7 @@ function addPage(pageIndex, animate) {
 	editor.selectionEnd = editorsSelectionEndData[page.index]
 	editor.scrollTop = editorsScrollTopData[page.index]
 	render(page)
-	// Delay is needed because render may not have already ended
+	// Delay is needed because rendering may not have finished
 	window.requestAnimationFrame(function() {
 		view.scrollTop = viewsScrollTopData[page.index]
 		view.scrollLeft = viewsScrollLeftData[page.index]
@@ -174,8 +177,8 @@ function render(page) {
         	result += ("<div class='mathParagraph'>°" + line + "°</div>")
         }
     }
-	page.view.innerHTML = result
- 	asciimath.AMprocesssNode(page.view, false, null)
+	page.mathmlOutput.innerHTML = result
+ 	asciimath.AMprocesssNode(page.mathmlOutput)
 }
 
 function onInteract(page) {

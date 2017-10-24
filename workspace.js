@@ -154,7 +154,7 @@ function updateDebugInfo() {
 		}
 		result += (key + " = " + format(value) + "<br>")
 	}
-	debugInfo.innerHTML = result
+	debugInfo.innerHTML = result + "<br><br>"
 }
 
 function format(value) {

@@ -54,14 +54,18 @@ math {
 .view {
 	font-family: "Fira Code", "Lucida Console", Monaco, monospace;
     font-size: 15px;
-	width: 780px;
-    height: 580px;
-    padding: 10px;
+	width: 800px;
+    height: 600px;
     overflow: auto;
 }
 
+.mathmlOutput {
+	padding: 0px 10px 0px 10px;
+}
+
 .noteParagraph {
-	margin-left: 10px;
+	margin: 0px;
+	padding: 10px 0px 10px 10px;
 }
 
 .mathParagraph > math {
