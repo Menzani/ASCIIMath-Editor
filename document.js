@@ -178,7 +178,7 @@ function render(page) {
         }
     }
 	page.mathmlOutput.innerHTML = result
- 	asciimath.AMprocesssNode(page.mathmlOutput)
+ 	asciimath.AMprocessNode(page.mathmlOutput)
 }
 
 function onInteract(page) {

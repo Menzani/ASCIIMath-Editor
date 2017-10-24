@@ -3,7 +3,7 @@ const BACKGROUNDS = [
 	"linear-gradient(to top, rgba(255, 140, 0, 0), rgba(255, 127, 80, 1))",
 	"linear-gradient(to top, rgba(0, 250, 154, 0), rgba(46, 139, 87, 1))"
 ]
-const WALLPAPERS = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"]
+const WALLPAPERS = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg", "7.jpg", "8.jpg"]
 
 var currentLayer = false
 var currentWallpaper
@@ -49,10 +49,13 @@ function createWorkspace() {
 }
 
 function loadWallpaper() {
-	var wallpaper = "resources/wallpapers/" + WALLPAPERS[currentWallpaper]
+	setWallpaper("resources/wallpapers/" + WALLPAPERS[currentWallpaper])
 	if (++currentWallpaper == WALLPAPERS.length) {
     	currentWallpaper = 0
     }
+}
+
+function setWallpaper(wallpaper) {
 	if (currentLayer) {
 		workspaceLayer2.classList.remove("workspaceLayerAnimation")
 		workspaceLayer2.src = wallpaper
@@ -61,6 +64,13 @@ function loadWallpaper() {
 		workspaceLayer1.src = wallpaper
 	}
 	currentLayer = !currentLayer
+}
+
+function userLoadWallpaper() {
+	var wallpaper = prompt("Please set URL of wallpaper file:", "resources/wallpapers/")
+	if (wallpaper) {
+		setWallpaper(wallpaper)
+	}
 }
 
 function showWallpaper() {
