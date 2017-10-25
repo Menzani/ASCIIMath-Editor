@@ -17,7 +17,8 @@ var presentation
 var presentationDownload
 var debug
 var debugInfo
-var debugVerboseCheckbox
+var debugLog
+var debugVerbose
 
 document.addEventListener("DOMContentLoaded", function() {
 	workspaceLayer1 = document.getElementById("workspaceLayer1")
@@ -29,7 +30,8 @@ document.addEventListener("DOMContentLoaded", function() {
 	presentationDownload = document.getElementById("presentationDownload")
 	debug = document.getElementById("debug")
 	debugInfo = document.getElementById("debugInfo")
-	debugVerboseCheckbox = document.getElementById("debugVerboseCheckbox")
+	debugLog = document.getElementById("debugLog")
+	debugVerbose = document.getElementById("debugVerbose")
 	reference.popupOpen = false
 	presentation.popupOpen = false
 	debug.popupOpen = false
@@ -66,7 +68,7 @@ function setWallpaper(wallpaper) {
 	currentLayer = !currentLayer
 }
 
-function userLoadWallpaper() {
+function loadWallpaperFromURL() {
 	var wallpaper = prompt("Please set URL of wallpaper file:", "resources/wallpapers/")
 	if (wallpaper) {
 		setWallpaper(wallpaper)
@@ -139,7 +141,7 @@ function toggleDebug() {
 
 function updateDebugInfo() {
 	var result = ""
-	for ({key, value, valueFunction} of [
+	for ({key, value} of [
 			{ key: "pageCount", value: pageCount },
 			{ key: "editorsValueData", value: editorsValueData },
 			{ key: "editorsHeightData", value: editorsHeightData },
@@ -150,18 +152,8 @@ function updateDebugInfo() {
 			{ key: "viewsScrollLeftData", value: viewsScrollLeftData },
 			{ key: "currentPageIndex", value: currentPageIndex },
 			{ key: "windowScrollY", value: windowScrollY },
-			{ key: "pages (indices)", valueFunction: function() {
-				var pageIndices = []
-				for (page of pages) {
-					pageIndices.push(page.index)
-				}
-				return pageIndices
-			}},
 			{ key: "currentLayer", value: currentLayer },
 			{ key: "currentWallpaper", value: currentWallpaper }]) {
-		if (valueFunction) {
-			value = valueFunction()
-		}
 		result += (key + " = " + format(value) + "<br>")
 	}
 	debugInfo.innerHTML = result + "<br><br>"
@@ -191,9 +183,9 @@ function format(value) {
 }
 
 function resolveShortcut(event) {
-	if (debugVerboseCheckbox.checked) {
+	if (debugVerbose.checked) {
 		console.group()
-		console.info("charcode = " + event.charCode)
+		console.info("charCode = " + event.charCode)
 		console.info("keyCode = " + event.keyCode)
 		console.groupEnd()
 	}

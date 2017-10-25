@@ -4,6 +4,10 @@ body {
 	margin: 0px;
 }
 
+div.checkbox > label {
+	vertical-align: top;
+}
+
 #browserWarning {
 	width: 100%;
 	height: 40px;
@@ -91,8 +95,9 @@ body {
 	font-family: "Lucida Console", Monaco, monospace;
 }
 
-#debugVerboseLabel {
-	vertical-align: top;
+#debug > div.checkbox {
+	margin-right: 10px;
+	float: left;
 }
 
 #debug > input {

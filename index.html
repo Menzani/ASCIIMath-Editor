@@ -34,11 +34,15 @@
 	</div>
 	<div id="debug" class="card menu popup">
 		<p id="debugInfo"></p>
-		<div>
-			<input id="debugVerboseCheckbox" type="checkbox">
-			<label id="debugVerboseLabel" for="debugVerboseCheckbox">Verbose key press</label>
+		<div class="checkbox">
+			<input id="debugLog" type="checkbox">
+			<label for="debugLogCheckbox">Log document events</label>
 		</div>
-		<input type="button" value="Load Wallpaper" onclick="userLoadWallpaper()">
+		<div class="checkbox">
+			<input id="debugVerbose" type="checkbox">
+			<label for="debugVerboseCheckbox">Verbose key press</label>
+		</div>
+		<input type="button" value="Load Wallpaper" onclick="loadWallpaperFromURL()">
 		<input type="button" value="Display Browser Warning" onclick="showBrowserWarning()">
 		<input type="button" value="Delete Document" onclick="deleteDocument()">
 	</div>

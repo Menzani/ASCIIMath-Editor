@@ -36,7 +36,6 @@ math {
 }
 
 .pageDisappearAnimation {
-	pointer-events: none;
 	animation: 0.5s pageDisappear;
 }
 
