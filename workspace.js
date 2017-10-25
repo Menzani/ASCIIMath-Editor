@@ -5,88 +5,100 @@ const BACKGROUNDS = [
 ]
 const WALLPAPERS = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg", "7.jpg", "8.jpg"]
 
-const ERROR_DOCUMENT_SAVE_OUT_OF_STORAGE_SPACE = 0
-const ERROR_DOCUMENT_SAVE_UNKNOWN = 1
+const ERROR_DOCUMENT_SAVE_STORAGE = "document_save_storage"
+const ERROR_DOCUMENT_SAVE = "document_save"
 
-var currentLayer = false
-var currentWallpaper
+var currentBackgroundLayer = false
+var currentWallpaperIndex
 
-var workspaceLayer1
-var workspaceLayer2
+var backgroundLayer1
+var backgroundLayer2
 var browserMessage
 var errorMessage
-var reference
-var referenceFrame
-var presentation
-var presentationDownload
+var errorMessageText
+var syntax
+var tour
+var tourDownload
+var about
+var tutorial
 var debug
-var debugInfo
-var debugLog
-var debugVerbose
+var debugConsole
+var debugDocumentEvents
+var debugKeyPress
 
 document.addEventListener("DOMContentLoaded", function() {
-	workspaceLayer1 = document.getElementById("workspaceLayer1")
-	workspaceLayer2 = document.getElementById("workspaceLayer2")
+	backgroundLayer1 = document.getElementById("backgroundLayer1")
+	backgroundLayer2 = document.getElementById("backgroundLayer2")
 	browserMessage = document.getElementById("browserMessage")
 	errorMessage = document.getElementById("errorMessage")
-	reference = document.getElementById("reference")
-	referenceFrame = document.getElementById("referenceFrame")
-	presentation = document.getElementById("presentation")
-	presentationDownload = document.getElementById("presentationDownload")
+	errorMessageText = document.getElementById("errorMessageText")
+	syntax = document.getElementById("syntax")
+	tour = document.getElementById("tour")
+	tourDownload = document.getElementById("tourDownload")
+	about = document.getElementById("about")
+	tutorial = document.getElementById("tutorial")
 	debug = document.getElementById("debug")
-	debugInfo = document.getElementById("debugInfo")
-	debugLog = document.getElementById("debugLog")
-	debugVerbose = document.getElementById("debugVerbose")
+	debugConsole = document.getElementById("debugConsole")
+	debugDocumentEvents = document.getElementById("debugDocumentEvents")
+	debugKeyPress = document.getElementById("debugKeyPress")
 	
 	document.body.style.background = selectRandomly(BACKGROUNDS)
 	document.body.style.backgroundAttachment = "fixed"
 })
 
-function createWorkspace() {
+function onBodyLoad() {
 	if (navigator.userAgent.indexOf("Firefox") == -1) {
 		showBrowserMessage()
 	}
 	
-	currentWallpaper = nextRandomNumber(0, WALLPAPERS.length)
+	currentWallpaperIndex = nextRandomNumber(0, WALLPAPERS.length)
    	loadWallpaper()
-    setInterval(loadWallpaper, 5 * 60 * 1000)
+    WALLPAPERS.loadTaskId = setInterval(loadWallpaper, 5 * 60 * 1000)
+
+	openDocument()
 }
 
 function loadWallpaper() {
-	setWallpaper("resources/wallpapers/" + WALLPAPERS[currentWallpaper])
-	if (++currentWallpaper == WALLPAPERS.length) {
-    	currentWallpaper = 0
+	setWallpaper("resources/wallpapers/" + WALLPAPERS[currentWallpaperIndex])
+	if (++currentWallpaperIndex == WALLPAPERS.length) {
+    	currentWallpaperIndex = 0
     }
 }
 
 function loadCustomWallpaper() {
-	var wallpaper = prompt("Please set the wallpaper file URL:", "resources/wallpapers/")
-	if (wallpaper) {
-		setWallpaper(wallpaper)
+	var url = prompt("Please set the wallpaper image URL:", "resources/wallpapers/")
+	if (url) {
+		if (WALLPAPERS.loadTaskId) {
+			clearInterval(WALLPAPERS.loadTaskId)
+            delete WALLPAPERS.loadTaskId
+        }
+		setWallpaper(url)
 	}
 }
 
-function setWallpaper(wallpaper) {
-	if (currentLayer) {
-		workspaceLayer2.classList.remove("workspaceLayerAnimation")
-		workspaceLayer2.src = wallpaper
+function setWallpaper(url) {
+	if (currentBackgroundLayer) {
+		backgroundLayer2.classList.remove("backgroundLayerAnimation")
+		backgroundLayer2.src = url
 	} else {
-		workspaceLayer1.classList.remove("workspaceLayerAnimation")
-		workspaceLayer1.src = wallpaper
+		backgroundLayer1.classList.remove("backgroundLayerAnimation")
+		backgroundLayer1.src = url
 	}
-	currentLayer = !currentLayer
+	currentBackgroundLayer = !currentBackgroundLayer
 }
 
 function showWallpaper() {
-	if (currentLayer) {
-		workspaceLayer1.classList.add("workspaceLayerAnimation")
-		workspaceLayer1.style.zIndex = -1
-		workspaceLayer2.style.zIndex = -2
-	} else {
-		workspaceLayer2.classList.add("workspaceLayerAnimation")
-		workspaceLayer2.style.zIndex = -1
-		workspaceLayer1.style.zIndex = -2
-	}
+	setTimeout(function() {
+		if (currentBackgroundLayer) {
+			backgroundLayer1.classList.add("backgroundLayerAnimation")
+			backgroundLayer1.style.zIndex = -1
+			backgroundLayer2.style.zIndex = -2
+		} else {
+            backgroundLayer2.classList.add("backgroundLayerAnimation")
+            backgroundLayer2.style.zIndex = -1
+            backgroundLayer1.style.zIndex = -2
+        }
+    }, 3000)
 }
 
 function downloadFirefox() {
@@ -116,90 +128,112 @@ function hideErrorMessage() {
 }
 
 function showErrorMessage(id) {
-	var label
+	var text
 	switch (id) {
-		case ERROR_DOCUMENT_SAVE_OUT_OF_STORAGE_SPACE: label = "The document is too long. \
-				Please remove some content or <a class='messageLink' href=''>adjust Firefox's settings</a>."
+		case ERROR_DOCUMENT_SAVE_STORAGE: text = "The document is too long. Please delete some content or <a class='messageLink' href=''>adjust Firefox's settings</a>."
 		break
-		case ERROR_DOCUMENT_SAVE_UNKNOWN: label = "The document cannot be saved."
+		case ERROR_DOCUMENT_SAVE: text = "The document cannot be saved."
 		break
 		default:
 			console.error("Unknown error message ID: " + id)
 			return
 	}
-	errorMessageLabel.innerHTML = label
+	errorMessageText.innerHTML = text
 	showPopup(errorMessage)
-	
 }
 
 function showCustomErrorMessage() {
-	var id = prompt("Please set the error message ID:", "0")
-	if (!id) {
-		return
-	}
-	id = Number(id)
-	if (!Number.isNaN(id)) {
-		showErrorMessage(id)
+	var id = prompt("Please set the error message ID:")
+	if (id) {
+        showErrorMessage(id)
+    }
+}
+
+function toggleSyntax() {
+	if (syntax.popupOpen) {
+		hidePopup(syntax)
+	} else {
+		showPopup(syntax)
 	}
 }
 
-function toggleReference() {
-	if (reference.popupOpen) {
-		hidePopup(reference)
-	} else {
-		if (!referenceFrame.src) {
-			referenceFrame.src = "http://asciimath.org/#syntax"
-		}
-		showPopup(reference)
-	}
-}
-
-function togglePresentation(includeDownload) {
-	if (presentation.popupOpen) {
-		hidePopup(presentation)
-	} else {
-		if (includeDownload) {
-			presentationDownload.style.display = "block"
-		} else {
-			presentationDownload.style.display = "none"
-		}
-		showPopup(presentation)
-	}
+function hideTour() {
+	hidePopup(tour)
 	return false
+}
+
+function showTour(includeDownload) {
+    if (includeDownload) {
+        tourDownload.style.display = "block"
+    } else {
+        tourDownload.style.display = "none"
+    }
+    showPopup(tour)
+	return false
+}
+
+function hideAbout() {
+    for (aboutLink of about.querySelectorAll(".aboutLink")) {
+        aboutLink.classList.remove("aboutLinkAnimation")
+    }
+    hidePopup(about)
+	return false
+}
+
+function showAbout() {
+    for (aboutLink of about.querySelectorAll(".aboutLink")) {
+        aboutLink.classList.add("aboutLinkAnimation")
+    }
+    showPopup(about)
+	return false
+}
+
+function toggleTutorial() {
+	if (tutorial.popupOpen) {
+		hidePopup(tutorial)
+	} else {
+		showPopup(tutorial)
+	}
 }
 
 function toggleDebug() {
 	if (debug.popupOpen) {
-		clearInterval(debug.popupIntervalId)
+		clearInterval(debugConsole.refreshTaskId)
 		hidePopup(debug)
 	} else {
-		updateDebugInfo()
+		refreshDebugConsole()
 		showPopup(debug)
-		debug.popupIntervalId = setInterval(updateDebugInfo, 100)
+		debugConsole.refreshTaskId = setInterval(refreshDebugConsole, 100)
 	}
 }
 
-function updateDebugInfo() {
+function refreshDebugConsole() {
 	var result = ""
-	for ({key, value} of [
+	for ({key, value, separator} of [
+			{ key: "currentBackgroundLayer", value: currentBackgroundLayer },
+			{ key: "currentWallpaperIndex", value: currentWallpaperIndex },
+		    { separator: true },
+			{ key: "windowScrollY", value: windowScrollY },
 			{ key: "pageCount", value: pageCount },
+		    { separator: true },
+			{ key: "currentPageIndex", value: currentPageIndex },
 			{ key: "editorsValueData", value: editorsValueData },
 			{ key: "editorsHeightData", value: editorsHeightData },
 			{ key: "editorsSelectionStartData", value: editorsSelectionStartData },
 			{ key: "editorsSelectionEndData", value: editorsSelectionEndData },
 			{ key: "editorsScrollTopData", value: editorsScrollTopData },
 			{ key: "viewsScrollTopData", value: viewsScrollTopData },
-			{ key: "viewsScrollLeftData", value: viewsScrollLeftData },
-			{ key: "currentPageIndex", value: currentPageIndex },
-			{ key: "windowScrollY", value: windowScrollY },
-			{ key: "currentLayer", value: currentLayer },
-			{ key: "currentWallpaper", value: currentWallpaper }]) {
-		result += (key + " = " + format(value) + "<br>")
+			{ key: "viewsScrollLeftData", value: viewsScrollLeftData }]) {
+		if (separator) {
+			result += "<br>"
+		} else {
+            result += (key + " = " + debugConsole_format(value) + "<br>")
+		}
 	}
-	debugInfo.innerHTML = result + "<br><br>"
+	debugConsole.innerHTML = result + "<br><br>"
 }
 
-function format(value) {
+function debugConsole_format(value) {
 	if (value === null) {
 		return "null"
 	}
@@ -215,7 +249,7 @@ function format(value) {
 		}
 		var result = "["
 		for (e of value) {
-			result += (format(e) + ", ")
+			result += (debugConsole_format(e) + ", ")
 		}
 		return result.slice(0, result.length - 2) + "]"
 	}
@@ -223,7 +257,7 @@ function format(value) {
 }
 
 function resolveShortcut(event) {
-	if (debugVerbose.checked) {
+	if (debugKeyPress.checked) {
 		console.group()
 		console.info("charCode = " + event.charCode)
 		console.info("keyCode = " + event.keyCode)
@@ -236,11 +270,11 @@ function resolveShortcut(event) {
 			break
 			case 100: doRemovePage()
 			break
-			case 115: doSavePageSource()
+			case 115: downloadPageSource()
 			break
-			case 116: toggleTutorial()
+            case 116: toggleTutorial()
 			break
-			case 113: toggleReference()
+			case 113: toggleSyntax()
 			break
 			case 105: toggleDebug()
 			break
@@ -254,37 +288,10 @@ function resolveShortcut(event) {
 	}
 }
 
-function doSavePageSource() {
-	var link = document.createElement("a")
-	link.style.display = "none"
-	var url = URL.createObjectURL(new Blob([pages[currentPageIndex].editor.value], {type: "text/plain"}))
-	link.href = url
-	link.download = "ASCIIMath Source.txt"
-	
-	document.body.appendChild(link)
-	link.click()
-	document.body.removeChild(link)
-	URL.revokeObjectURL(url)
-}
-
-function doJumpUp() {
-	if (currentPageIndex == 0) {
-		return
-	}
-	jumpTo(pages[currentPageIndex - 1])
-}
-
-function doJumpDown() {
-	if (currentPageIndex == pages.length - 1) {
-		return
-	}
-	jumpTo(pages[currentPageIndex + 1])
-}
-
 function selectRandomly(array) {
 	return array[nextRandomNumber(0, array.length)]
 }
 
 function nextRandomNumber(min, max) {
-	return min + Math.floor(Math.random() * max)
+	return Math.floor(Math.random() * (max - min)) + min
 }

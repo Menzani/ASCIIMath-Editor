@@ -1,79 +1,117 @@
 <!DOCTYPE html><html>
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="workspace.css" type="text/css">
-  <link rel="stylesheet" href="document.css" type="text/css">
-  <script src="workspace.js" type="text/javascript"></script>
-  <script src="document.js" type="text/javascript"></script>
-  <script src="ASCIIMathML.js" type="text/javascript"></script>
-  
-  <link rel="icon" href="resources/favicon.ico" type="image/x-icon">
-  <title>ASCIIMath Editor for Firefox</title>
+  	<meta charset="UTF-8">
+  	<link rel="stylesheet" href="workspace.css" type="text/css">
+  	<link rel="stylesheet" href="document.css" type="text/css">
+  	<script src="workspace.js" type="text/javascript"></script>
+  	<script src="document.js" type="text/javascript"></script>
+  	<script src="lib/ASCIIMathML.js" type="text/javascript"></script>
+
+  	<link rel="icon" href="resources/favicon.ico" type="image/x-icon">
+  	<title>ASCIIMath Editor for Firefox</title>
 </head>
-<body onload="createWorkspace(); openDocument();" onkeypress="resolveShortcut(event)">
-	<img id="workspaceLayer1" class="workspaceLayer" onload="setTimeout(showWallpaper, 3000)">
-	<img id="workspaceLayer2" class="workspaceLayer" onload="setTimeout(showWallpaper, 3000)">
-	
-	<div id="browserMessage" class="card menu popup message"><p>
+<body onload="onBodyLoad()" onkeypress="resolveShortcut(event)">
+	<img id="backgroundLayer1" class="backgroundLayer" onload="showWallpaper()">
+	<img id="backgroundLayer2" class="backgroundLayer" onload="showWallpaper()">
+
+	<div id="browserMessage" class="card menu popup message"><p class="messageText">
 		This app is designed to run on <a class="messageLink" href="#" onclick="downloadFirefox()">Firefox</a>
-		and likely won't support other browsers. <a class="messageLink" href="#" onclick="togglePresentation(true)">Find out why</a>
+		and currently does not support other browsers. <a class="messageLink" href="#" onclick="showTour(true)">Find out why</a>
 	</p></div>
-	<div id="errorMessage" class="card menu popup message">
-		<p><span id="errorMessageLabel"></span>&nbsp;&nbsp;<a class="messageLink" href="#" onclick="hideErrorMessage()">Hide</a></p>
+	<div id="errorMessage" class="card menu popup message"><p class="messageText">
+		<span id="errorMessageText"></span>
+		&nbsp;
+		<a class="messageLink" href="#" onclick="hideErrorMessage()">Hide</a>
+	</p></div>
+
+	<div id="syntax" class="card menu popup">
+
 	</div>
-	
-	<div id="reference" class="card menu popup">
-		<iframe id="referenceFrame" sandbox="allow-scripts"></iframe>
-	</div>
-	<div id="presentation" class="card menu popup">
-		<p>
+	<div id="tour" class="card menu popup">
+		<p class="tourText">
+			ASCIIMath Editor is an online document editor that enables you to add beautiful mathematical content to pages,
+			while providing an intuitive interface to help you stay in the flow as you type.
+		</p>
+		<p class="tourText">
 			ASCIIMath Editor relies on Firefox's near-perfect MathML engine to perform the rendering,
 			so you get better results in less time.
-			<br>
-			ASCIIMath Editor also leverages Firefox's high-performance animation rendering engine
-			to delight the user with unintrusive, rich animations that are both fun and useful.
 		</p>
-		<input id="presentationDownload" type="button" value="Download Firefox" onclick="downloadFirefox()">
-		<p id="presentationClose"><a href="#" onclick="togglePresentation()">Close</a></p>
+		<input id="tourDownload" type="button" value="Download Firefox" onclick="downloadFirefox()">
+		<p id="tourClose"><a id="tourCloseLink" href="#" onclick="hideTour()">Close</a></p>
+	</div>
+	<div id="about" class="card menu popup">
+		<img id="aboutIcon" src="resources/extended-icon.png">
+		<h1 id="aboutTitle">
+			ASCIIMath Editor
+			<br>
+			<i>for Firefox</i>
+		</h1>
+		<div id="aboutText">
+			<p>
+				Powered by <a class="aboutLink" href="http://asciimath.org/" target="_blank">ASCIIMath</a>
+			</p>
+			<p>
+				<a class="aboutLink" href="https://github.com/MrSystem/ASCIIMath-Editor" target="_blank">Source code</a>
+				<a class="aboutLink" href="mailto:francescomenzani99@gmail.com?subject=[ASCIIMath Editor]%20Issue%20report">Report issue</a>
+			</p>
+			<p>
+				<a class="aboutLink" href="mailto:francescomenzani99@gmail.com?subject=[ASCIIMath Editor]%20Wallpaper%20submission">Submit wallpaper</a>
+				<a class="aboutLink" href="mailto:francescomenzani99@gmail.com?subject=[ASCIIMath Editor]%20">Contact</a>
+			</p>
+			<p id="aboutClose"><a id="aboutCloseLink" href="#" onclick="hideAbout()">Close</a></p>
+		</div>
+	</div>
+	<div id="tutorial" class="card menu popup">
+		<p class="tutorialText">
+			This tutorial aims to teach you how to get the best out of ASCIIMath Editor.
+			At the end, you will be able to produce high-quality mathematical content and deploy it anywhere, easily.
+		</p>
 	</div>
 	<div id="debug" class="card menu popup">
-		<p id="debugInfo"></p>
-		<div class="checkbox">
-			<input id="debugLog" type="checkbox">
-			<label for="debugLogCheckbox">Log document events</label>
+		<p id="debugConsole"></p>
+		<div class="debugCheckbox">
+			<input id="debugDocumentEvents" type="checkbox">
+			<label for="debugDocumentEvents" class="debugCheckboxLabel">Log document events</label>
 		</div>
-		<div class="checkbox">
-			<input id="debugVerbose" type="checkbox">
-			<label for="debugVerboseCheckbox">Verbose key press</label>
+		<div class="debugCheckbox">
+			<input id="debugKeyPress" type="checkbox">
+			<label for="debugKeyPress" class="debugCheckboxLabel">Verbose key press</label>
 		</div>
-		<input type="button" value="Load Wallpaper" onclick="loadCustomWallpaper()">
-		<input type="button" value="Display Browser Warning" onclick="showBrowserMessage()">
-		<input type="button" value="Display Error" onclick="showCustomErrorMessage()">
-		<input type="button" value="Delete Document" onclick="deleteDocument()">
+		<input class="debugButton" type="button" value="Load Wallpaper" onclick="loadCustomWallpaper()">
+		<input class="debugButton" type="button" value="Display Browser Warning" onclick="showBrowserMessage()">
+		<input class="debugButton" type="button" value="Display Error Message" onclick="showCustomErrorMessage()">
+		<input class="debugButton" type="button" value="Delete Document" onclick="deleteDocument()">
 	</div>
-	
-	<div id="commands" class="card menu">
-		<fieldset><legend>Page</legend>
-			<p>New Page</p>
-			<pre>Ctrl + Alt + N</pre>
-			<p>Delete Page</p>
-			<pre>Ctrl + Alt + D</pre>
-			<p>Download Source</p>
-			<pre>Ctrl + Alt + S</pre>
+
+	<div id="documentActions" class="card menu">
+		<fieldset class="documentActionsGroup">
+			<legend class="documentActionsGroupTitle">Page</legend>
+			<p class="documentActionsGroupText">New Page</p>
+			<pre class="documentActionsGroupText">Ctrl + Alt + N</pre>
+			<p class="documentActionsGroupText">Delete Page</p>
+			<pre class="documentActionsGroupText">Ctrl + Alt + D</pre>
+			<p class="documentActionsGroupText">Download Source</p>
+			<pre class="documentActionsGroupText">Ctrl + Alt + S</pre>
 		</fieldset>
-		<fieldset><legend>Navigate</legend>
-			<p>Page Up</p>
-			<pre>Ctrl + Alt + ⇑</pre>
-			<p>Page Down</p>
-			<pre>Ctrl + Alt + ⇓</pre>
+		<fieldset class="documentActionsGroup">
+			<legend class="documentActionsGroupTitle">Navigate</legend>
+			<p class="documentActionsGroupText">Page Up</p>
+			<pre class="documentActionsGroupText">Ctrl + Alt + ⇑</pre>
+			<p class="documentActionsGroupText">Page Down</p>
+			<pre class="documentActionsGroupText">Ctrl + Alt + ⇓</pre>
 		</fieldset>
-		<fieldset><legend>Learn</legend>
-			<p>Tutorial</p>
-			<pre>Ctrl + Alt + T</pre>
-			<p>Quick ASCIIMath Reference</p>
-			<pre>Ctrl + Alt + Q</pre>
-			<p><small>Press again to close popups</small></p>
+		<fieldset class="documentActionsGroup">
+			<legend class="documentActionsGroupTitle">Learn</legend>
+			<p class="documentActionsGroupText">Tutorial</p>
+			<pre class="documentActionsGroupText">Ctrl + Alt + T</pre>
+			<p class="documentActionsGroupText">Syntax Reference</p>
+			<pre class="documentActionsGroupText">Ctrl + Alt + Q</pre>
 		</fieldset>
+		<p id="footer">
+			<a class="footerLink" href="#" onclick="showTour(false)">Tour</a>
+			&emsp;
+			<a class="footerLink" href="#" onclick="showAbout()">About</a>
+		</p>
 	</div>
 </body>
 </html>

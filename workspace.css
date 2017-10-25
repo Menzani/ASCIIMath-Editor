@@ -4,128 +4,7 @@ body {
 	margin: 0px;
 }
 
-.message {
-	width: 100%;
-	height: 40px;
-	top: 0px;
-}
-
-.message > p {
-	color: white;
-	font-family: "Times New Roman", Times, serif;
-	font-weight: bold;
-	text-align: center;
-	margin: 10px;
-}
-
-.messageLink:link {
-	color: white;
-}
-
-.messageLink:visited {
-	color: white;
-}
-
-div.checkbox > label {
-	vertical-align: top;
-}
-
-#browserMessage {
-	background-color: #0C090A;
-}
-
-#errorMessage {
-	background-color: red;
-}
-
-#reference {
-	width: 500px;
-	height: 98%;
-	left: 30px;
-	top: 2px;
-	overflow: hidden;
-}
-
-#referenceFrame {
-	width: 516px;
-	height: 100%;
-	border: none;
-}
-
-#presentation {
-	margin: 2px auto;
-	left: 0px;
-	right: 0px;
-	width: 350px;
-	padding: 10px;
-}
-
-#presentation > p {
-	margin: 0px;
-}
-
-#presentationDownload {
-	margin: 20px auto 5px auto;
-	left: 0px;
-	right: 0px;
-	width: 150px;
-	height: 40px;
-}
-
-#presentationClose {
-	font-size: 13px;
-	text-align: center;
-}
-
-#presentationClose > a:link {
-	color: #0C090A;
-}
-
-#presentationClose > a:visited {
-	color: #0C090A;
-}
-
-#debug {
-	width: 450px;
-	right: 45px;
-	top: 2px;
-	padding: 10px;
-}
-
-#debugInfo {
-	border: 1px solid gray;
-	margin: 0px;
-	margin-bottom: 10px;
-	padding: 5px;
-	height: 300px;
-	overflow: auto;
-	font-family: "Lucida Console", Monaco, monospace;
-}
-
-#debug > div.checkbox {
-	margin-right: 10px;
-	float: left;
-}
-
-#debug > input {
-	margin-top: 5px;
-	height: 25px;
-}
-
-#commands {
-	width: 200px;
-	right: 2px;
-	top: 150px;
-	padding: 10px 5px 10px 5px;
-}
-
-#commands > fieldset > p {
-	font-size: 15px;
-	margin-top: 10px;
-	margin-bottom: 0px;
-}
-
-.workspaceLayer {
+.backgroundLayer {
 	visibility: hidden;
 	position: fixed;
 	height: 100%;
@@ -133,8 +12,8 @@ div.checkbox > label {
 	top: 0px;
 }
 
-.workspaceLayerAnimation {
-	animation: 3s ease-out workspaceLayer;
+.backgroundLayerAnimation {
+	animation: 3s ease-out backgroundLayer;
 	animation-fill-mode: forwards;
 }
 
@@ -164,7 +43,217 @@ div.checkbox > label {
 	animation-fill-mode: both;
 }
 
-@keyframes workspaceLayer {
+.message {
+	width: 100%;
+	height: 40px;
+	top: 0px;
+}
+
+.messageText {
+	color: white;
+	font-family: "Times New Roman", Times, serif;
+	font-weight: bold;
+	text-align: center;
+	margin: 10px;
+}
+
+.messageLink:link {
+	color: white;
+}
+
+.messageLink:visited {
+	color: white;
+}
+
+.tourText {
+	margin: 0px;
+}
+
+.aboutLink:link {
+	margin-left: 30px;
+	color: lightcoral;
+}
+
+.aboutLink:visited {
+	color: lightcoral;
+}
+
+.aboutLinkAnimation {
+	animation: 2s aboutLink;
+	animation-fill-mode: forwards;
+}
+
+.tutorialText {
+	margin: 0px;
+}
+
+.debugCheckbox {
+	margin-right: 10px;
+	float: left;
+}
+
+.debugCheckboxLabel {
+	vertical-align: top;
+}
+
+.debugButton {
+	margin-top: 5px;
+	height: 25px;
+}
+
+.documentActionsGroup {
+	padding: 5px;
+	padding-top: 0px;
+}
+
+.documentActionsGroupTitle {
+	color: teal;
+	font-size: 14px;
+}
+
+.documentActionsGroupText {
+	font-size: 15px;
+	margin: 5px;
+	margin-top: 10px;
+}
+
+.footerLink:link {
+	color: steelblue;
+}
+
+.footerLink:visited {
+	color: steelblue;
+}
+
+#browserMessage {
+	background-color: #0C090A;
+}
+
+#errorMessage {
+	background-color: red;
+}
+
+#syntax {
+	width: 500px;
+	height: 98%;
+	left: 30px;
+	top: 2px;
+	overflow: hidden;
+}
+
+#tour {
+	margin: 2px auto;
+	left: 0px;
+	right: 0px;
+	width: 350px;
+	padding: 10px;
+}
+
+#tourDownload {
+	margin: 20px auto 5px auto;
+	left: 0px;
+	right: 0px;
+	width: 150px;
+	height: 40px;
+}
+
+#tourClose {
+	text-align: center;
+	font-size: 13px;
+}
+
+#tourCloseLink:link {
+	color: #0C090A;
+}
+
+#tourCloseLink:visited {
+	color: #0C090A;
+}
+
+#about {
+	width: 400px;
+	height: 400px;
+	margin: 200px auto;
+	left: 0px;
+	right: 0px;
+	background: linear-gradient(to top, #f8ffae, #43c6ac);
+}
+
+#aboutIcon {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	z-index: -1;
+}
+
+#aboutTitle {
+	position: absolute;
+	top: 10px;
+	right: 27px;
+	font-size: 27px;
+	color: #f8ffae;
+	font-weight: bold;
+}
+
+#aboutText {
+	width: 370px;
+	position: absolute;
+	top: 130px;
+	left: 30px;
+	margin: 0px;
+}
+
+#aboutClose {
+	font-size: 13px;
+}
+
+#aboutCloseLink:link {
+	color: cadetblue;
+}
+
+#aboutCloseLink:visited {
+	color: cadetblue;
+}
+
+#tutorial {
+	padding: 10px;
+	height: 500px;
+	width: 500px;
+	right: 30px;
+	top: 50px;
+}
+
+#debug {
+	width: 450px;
+	right: 45px;
+	top: 2px;
+	padding: 10px;
+}
+
+#debugConsole {
+	border: 1px solid gray;
+	margin: 0px;
+	margin-bottom: 10px;
+	padding: 5px;
+	height: 300px;
+	overflow: auto;
+	font-family: "Lucida Console", Monaco, monospace;
+}
+
+#documentActions {
+	width: 200px;
+	right: 2px;
+	top: 200px;
+	padding: 10px 5px 0px 5px;
+}
+
+#footer {
+	margin: 5px;
+	text-align: center;
+	font-size: 13px;
+}
+
+@keyframes backgroundLayer {
 	from {
 		filter: opacity(0%) blur(10px);
 	}
@@ -190,5 +279,11 @@ div.checkbox > label {
 	to {
 		transform: rotate3d(1, 0, 0, 90deg);
 		visibility: hidden;
+	}
+}
+
+@keyframes aboutLink {
+	from {
+		margin-left: 0px;
 	}
 }

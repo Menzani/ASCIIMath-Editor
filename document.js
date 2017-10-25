@@ -11,7 +11,9 @@ const DEFAULT_WINDOW_SCROLL_Y = 0
 
 var pages = []
 
+var windowScrollY
 var pageCount
+var currentPageIndex
 var editorsValueData
 var editorsHeightData
 var editorsSelectionStartData
@@ -19,8 +21,6 @@ var editorsSelectionEndData
 var editorsScrollTopData
 var viewsScrollTopData
 var viewsScrollLeftData
-var currentPageIndex
-var windowScrollY
 
 window.onscroll = function() {
 	windowScrollY = window.scrollY
@@ -28,7 +28,9 @@ window.onscroll = function() {
 }
 
 function openDocument() {
+	windowScrollY = JSON.parse(localStorage.windowScrollY || DEFAULT_WINDOW_SCROLL_Y)
 	pageCount = JSON.parse(localStorage.pageCount || DEFAULT_PAGE_COUNT)
+	currentPageIndex = JSON.parse(localStorage.currentPageIndex || DEFAULT_CURRENT_PAGE_INDEX)
 	editorsValueData = JSON.parse(localStorage.editorsValueData || DEFAULT_EDITOR_VALUE_DATA)
 	editorsHeightData = JSON.parse(localStorage.editorsHeightData || DEFAULT_EDITOR_HEIGHT_DATA)
 	editorsSelectionStartData = JSON.parse(localStorage.editorsSelectionStartData || DEFAULT_EDITOR_SELECTION_START_DATA)
@@ -36,18 +38,19 @@ function openDocument() {
 	editorsScrollTopData = JSON.parse(localStorage.editorsScrollTopData || DEFAULT_EDITOR_SCROLL_TOP_DATA)
 	viewsScrollTopData = JSON.parse(localStorage.viewsScrollTopData || DEFAULT_VIEW_SCROLL_TOP_DATA)
 	viewsScrollLeftData = JSON.parse(localStorage.viewsScrollLeftData || DEFAULT_VIEW_SCROLL_LEFT_DATA)
-	currentPageIndex = JSON.parse(localStorage.currentPageIndex || DEFAULT_CURRENT_PAGE_INDEX)
-	windowScrollY = JSON.parse(localStorage.windowScrollY || DEFAULT_WINDOW_SCROLL_Y)
-	
+
 	for (let pageIndex = 0; pageIndex < pageCount; pageIndex++) {
 		addPage(pageIndex, false)
 	}
-	jumpTo(pages[currentPageIndex])
+	if (currentPageIndex != -1) {
+        jumpTo(pages[currentPageIndex])
+    }
     window.scrollTo(0, windowScrollY)
 }
 
 function addPage(pageIndex, animate) {
-	log("addPage", pageIndex)
+	logEvent("addPage", pageIndex)
+
 	var page = document.createElement("div")
 	page.classList.add("card", "page")
 	if (animate) {
@@ -57,59 +60,67 @@ function addPage(pageIndex, animate) {
 	editor.className = "editor"
 	var view = document.createElement("div")
 	view.className = "view"
-	var mathmlOutput = document.createElement("div")
-	mathmlOutput.className = "mathmlOutput"
+	var viewOutput = document.createElement("div")
+	viewOutput.className = "viewOutput"
 	
 	page.appendChild(editor)
-	view.appendChild(mathmlOutput)
+	view.appendChild(viewOutput)
 	page.appendChild(view)
 	page.editor = editor
 	page.view = view
-	page.mathmlOutput = mathmlOutput
+	page.viewOutput = viewOutput
 	
 	editor.value = editorsValueData[pageIndex]
 	editor.style.height = editorsHeightData[pageIndex]
 	editor.selectionStart = editorsSelectionStartData[pageIndex]
 	editor.selectionEnd = editorsSelectionEndData[pageIndex]
 	editor.scrollTop = editorsScrollTopData[pageIndex]
-	render(page)
+	refreshView(page)
 	window.requestAnimationFrame(function() {
 		view.scrollTop = viewsScrollTopData[pageIndex]
 		view.scrollLeft = viewsScrollLeftData[pageIndex]
 	})
 	
 	page.onclick = function() {
-		log("page.onclick", pageIndex)
+		logEvent("page.onclick", pageIndex)
+
 		jumpTo(page)
 	}
 	editor.onchange = function() {
-		log("editor.onchange", pageIndex)
+		logEvent("editor.onchange", pageIndex)
+
 		editorsValueData[pageIndex] = editor.value
 		saveDocument()
 	}
 	editor.onkeyup = function() {
-		log("editor.onkeyup", pageIndex, "onInteract")
-		onInteract(page, pageIndex)
+		logEvent("editor.onkeyup", pageIndex, "onEditorInteract")
+
+		onEditorInteract(page, pageIndex)
 	}
 	editor.onmouseup = function() {
-		log("editor.onmouseup", pageIndex, "onInteract")
-		onInteract(page, pageIndex)
+		logEvent("editor.onmouseup", pageIndex, "onEditorInteract")
+
+		onEditorInteract(page, pageIndex)
 	}
 	editor.oncut = function() {
-		log("editor.oncut", pageIndex, "onInteract")
-		onInteract(page, pageIndex)
+		logEvent("editor.oncut", pageIndex, "onEditorInteract")
+
+		onEditorInteract(page, pageIndex)
 	}
 	editor.onpaste = function() {
-		log("editor.onpaste", pageIndex, "onInteract")
-		onInteract(page, pageIndex)
+		logEvent("editor.onpaste", pageIndex, "onEditorInteract")
+
+		onEditorInteract(page, pageIndex)
 	}
 	editor.onscroll = function() {
-		log("editor.onscroll", pageIndex)
+		logEvent("editor.onscroll", pageIndex)
+
 		editorsScrollTopData[page.index] = editor.scrollTop
 		saveDocument()
 	}
 	view.onscroll = function() {
-		log("view.onscroll", pageIndex)
+		logEvent("view.onscroll", pageIndex)
+
 		viewsScrollTopData[pageIndex] = view.scrollTop
 		viewsScrollLeftData[pageIndex] = view.scrollLeft
 		saveDocument()
@@ -142,7 +153,8 @@ function doAddPage() {
 }
 
 function removePage(pageIndex) {
-	log("removePage", pageIndex)
+	logEvent("removePage", pageIndex)
+
 	var page = pages.splice(pageIndex, 1)[0]
 	page.classList.remove("pageAppearAnimation")
 	page.onclick = null
@@ -166,7 +178,8 @@ function removePage(pageIndex) {
 	
 	page.classList.add("pageDisappearAnimation")
 	page.onanimationend = function() {
-		log("page.onanimationend", pageIndex)
+		logEvent("page.onanimationend", pageIndex)
+
 		document.body.removeChild(page)
 		if (currentPageIndex != -1) {
 			jumpTo(pages[currentPageIndex])
@@ -191,23 +204,23 @@ function doRemovePage() {
 	saveDocument()
 }
 
-function render(page) {
+function refreshView(page) {
 	var result = ""
     for (line of page.editor.value.split(/\r?\n/)) {
     	if (line.startsWith("#")) {
-        	result += ("<p class='noteParagraph'><i>" + line.slice(1) + "</i></p>")
+        	result += ("<p class='viewOutputText'><i>" + line.slice(1) + "</i></p>")
         } else if (line.startsWith("*")) {
-            result += ("<p class='noteParagraph'><b>" + line.slice(1) + "</b></p>")
+            result += ("<p class='viewOutputText'><b>" + line.slice(1) + "</b></p>")
         } else if (line.trim().length > 0) {
-        	result += ("<div class='mathParagraph'>°" + line + "°</div>")
+        	result += ("<div class='viewOutputMath'>°" + line + "°</div>")
         }
     }
-	page.mathmlOutput.innerHTML = result
- 	asciimath.AMprocessNode(page.mathmlOutput)
+	page.viewOutput.innerHTML = result
+ 	asciimath.AMprocessNode(page.viewOutput)
 }
 
-function onInteract(page, pageIndex) {
-	render(page)
+function onEditorInteract(page, pageIndex) {
+	refreshView(page)
 	editorsHeightData[pageIndex] = page.editor.style.height
 	editorsSelectionStartData[pageIndex] = page.editor.selectionStart
 	editorsSelectionEndData[pageIndex] = page.editor.selectionEnd
@@ -216,12 +229,44 @@ function onInteract(page, pageIndex) {
 }
 
 function jumpTo(page) {
-	// Scroll into view
 	page.editor.focus()
 }
 
+function doJumpUp() {
+    if (currentPageIndex == 0) {
+        return
+    }
+    jumpTo(pages[currentPageIndex - 1])
+}
+
+function doJumpDown() {
+    if (currentPageIndex == pageCount - 1) {
+        return
+    }
+    jumpTo(pages[currentPageIndex + 1])
+}
+
+function downloadPageSource() {
+	if (currentPageIndex == -1) {
+		return
+	}
+
+    var link = document.createElement("a")
+    link.style.display = "none"
+    var url = URL.createObjectURL(new Blob([pages[currentPageIndex].editor.value], {type: "text/plain"}))
+    link.href = url
+    link.download = "Source.txt"
+
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+}
+
 function saveDocument() {
+	var oldWindowScrollY = localStorage.windowScrollY
 	var oldPageCount = localStorage.pageCount
+	var oldCurrentPageIndex = localStorage.currentPageIndex
 	var oldEditorsValueData = localStorage.editorsValueData
 	var oldEditorsHeightData = localStorage.editorsHeightData
 	var oldEditorsSelectionStartData = localStorage.editorsSelectionStartData
@@ -229,10 +274,10 @@ function saveDocument() {
 	var oldEditorsScrollTopData = localStorage.editorsScrollTopData
 	var oldViewsScrollTopData = localStorage.viewsScrollTopData
 	var oldViewsScrollLeftData = localStorage.viewsScrollLeftData
-	var oldCurrentPageIndex = localStorage.currentPageIndex
-	var oldWindowScrollY = localStorage.windowScrollY
 	try {
+		localStorage.windowScrollY = JSON.stringify(windowScrollY)
 		localStorage.pageCount = JSON.stringify(pageCount)
+		localStorage.currentPageIndex = JSON.stringify(currentPageIndex)
 		localStorage.editorsValueData = JSON.stringify(editorsValueData)
 		localStorage.editorsHeightData = JSON.stringify(editorsHeightData)
 		localStorage.editorsSelectionStartData = JSON.stringify(editorsSelectionStartData)
@@ -240,10 +285,11 @@ function saveDocument() {
 		localStorage.editorsScrollTopData = JSON.stringify(editorsScrollTopData)
 		localStorage.viewsScrollTopData = JSON.stringify(viewsScrollTopData)
 		localStorage.viewsScrollLeftData = JSON.stringify(viewsScrollLeftData)
-		localStorage.currentPageIndex = JSON.stringify(currentPageIndex)
-		localStorage.windowScrollY = JSON.stringify(windowScrollY)
 	} catch (e) {
+		localStorage.clear()
+		localStorage.windowScrollY = oldWindowScrollY
 		localStorage.pageCount = oldPageCount
+		localStorage.currentPageIndex = oldCurrentPageIndex
 		localStorage.editorsValueData = oldEditorsValueData
 		localStorage.editorsHeightData = oldEditorsHeightData
 		localStorage.editorsSelectionStartData = oldEditorsSelectionStartData
@@ -251,30 +297,25 @@ function saveDocument() {
 		localStorage.editorsScrollTopData = oldEditorsScrollTopData
 		localStorage.viewsScrollTopData = oldViewsScrollTopData
 		localStorage.viewsScrollLeftData = oldViewsScrollLeftData
-		localStorage.currentPageIndex = oldCurrentPageIndex
-		localStorage.windowScrollY = oldWindowScrollY
 		if (e.name == "NS_ERROR_DOM_QUOTA_REACHED") {
-			showErrorMessage(ERROR_DOCUMENT_SAVE_OUT_OF_STORAGE_SPACE)
+			showErrorMessage(ERROR_DOCUMENT_SAVE_STORAGE)
 		} else {
 			console.error(e)
-			showErrorMessage(ERROR_DOCUMENT_SAVE_UNKNOWN)
+			showErrorMessage(ERROR_DOCUMENT_SAVE)
 		}
 	}
 }
 
 function deleteDocument() {
-	if (!debug.popupOpen) {
-		return
-	}
 	localStorage.clear()
-	location.reload()
+	location.reload(true)
 }
 
-function log(methodName, pageIndex, calledMethodName) {
-	if (!debugLog.checked) {
+function logEvent(name, pageIndex, calledMethodName) {
+	if (!debugDocumentEvents.checked) {
 		return
 	}
-	var result = methodName + "(pageIndex = " + pageIndex + ")"
+	var result = name + "(pageIndex = " + pageIndex + ")"
 	if (calledMethodName) {
 		result += " -> " + calledMethodName + "()"
 	}

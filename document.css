@@ -51,23 +51,23 @@ math {
 }
 
 .view {
-	font-family: "Fira Code", "Lucida Console", Monaco, monospace;
     font-size: 15px;
 	width: 800px;
     height: 600px;
     overflow: auto;
 }
 
-.mathmlOutput {
+.viewOutput {
 	padding: 0px 10px 0px 10px;
 }
 
-.noteParagraph {
+.viewOutputText {
+	font-family: "Fira Code", "Lucida Console", Monaco, monospace;
 	margin: 0px;
 	padding: 10px 0px 10px 10px;
 }
 
-.mathParagraph > math {
+.viewOutputMath > math {
     font-size: 25px;
 }
 
