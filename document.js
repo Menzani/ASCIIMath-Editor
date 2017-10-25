@@ -47,6 +47,7 @@ function openDocument() {
 }
 
 function addPage(pageIndex, animate) {
+	console.log("addPage(pageIndex = " + pageIndex + ")")
 	var page = document.createElement("div")
 	page.classList.add("card", "page")
 	if (animate) {
@@ -79,21 +80,37 @@ function addPage(pageIndex, animate) {
 	})
 	
 	page.onclick = function() {
+		console.log("page.onclick(pageIndex = " + pageIndex + ")")
 		jumpTo(page)
 	}
 	editor.onchange = function() {
+		console.log("editor.onchange(pageIndex = " + pageIndex + ")"")
 		editorsValueData[page.index] = editor.value
 		saveDocument()
 	}
-	editor.onkeyup = function() { onInteract(page) }
-	editor.onmouseup = function() { onInteract(page) }
-	editor.oncut = function() { onInteract(page) }
-	editor.onpaste = function() { onInteract(page) }
+	editor.onkeyup = function() {
+		console.log("editor.onkeyup(pageIndex = " + pageIndex + ")"")
+		onInteract(page)
+	}
+	editor.onmouseup = function() {
+		console.log("editor.onmouseup(pageIndex = " + pageIndex + ")"")
+		onInteract(page)
+	}
+	editor.oncut = function() {
+		console.log("editor.oncut(pageIndex = " + pageIndex + ")"")
+		onInteract(page)
+	}
+	editor.onpaste = function() {
+		console.log("editor.onpaste(pageIndex = " + pageIndex + ")"")
+		onInteract(page)
+	}
 	editor.onscroll = function() {
+		console.log("editor.onscroll(pageIndex = " + pageIndex + ")")
 		editorsScrollTopData[page.index] = editor.scrollTop
 		saveDocument()
 	}
 	view.onscroll = function() {
+		console.log("view.onscroll(pageIndex = " + pageIndex + ")")
 		viewsScrollTopData[page.index] = view.scrollTop
 		viewsScrollLeftData[page.index] = view.scrollLeft
 		saveDocument()
@@ -126,6 +143,7 @@ function doAddPage() {
 }
 
 function removePage(pageIndex) {
+	console.log("removePage(pageIndex = " + pageIndex + ")")
 	var page = pages.splice(pageIndex, 1)[0]
 	for (newPageIndex = 0; newPageIndex < pages.length; newPageIndex++) {
 		pages[newPageIndex].index = newPageIndex
@@ -134,6 +152,7 @@ function removePage(pageIndex) {
 	page.classList.remove("pageAppearAnimation")
 	page.classList.add("pageDisappearAnimation")
 	page.onanimationend = function() {
+		console.log("page.onanimationend(pageIndex = " + pageIndex + ")")
 		document.body.removeChild(page)
 		
 		if (currentPageIndex == 0) {
@@ -182,6 +201,7 @@ function render(page) {
 }
 
 function onInteract(page) {
+	console.log("onInteract(pageIndex = " + pageIndex + ")")
 	if (page.index >= pages.length) {
 		return
 	}
@@ -194,6 +214,7 @@ function onInteract(page) {
 }
 
 function jumpTo(page) {
+	console.log("jumpTo(pageIndex = " + pageIndex + ")")
 	page.editor.focus()
 }
 

@@ -192,8 +192,10 @@ function format(value) {
 
 function resolveShortcut(event) {
 	if (debugVerboseCheckbox.checked) {
+		console.group()
 		console.info("charcode = " + event.charCode)
 		console.info("keyCode = " + event.keyCode)
+		console.groupEnd()
 	}
 	
 	if (event.ctrlKey && event.altKey) {
