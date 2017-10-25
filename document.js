@@ -221,20 +221,51 @@ function jumpTo(page) {
 }
 
 function saveDocument() {
-	// Fail gracefully if full
-	localStorage.pageCount = JSON.stringify(pageCount)
-	localStorage.editorsValueData = JSON.stringify(editorsValueData)
-	localStorage.editorsHeightData = JSON.stringify(editorsHeightData)
-	localStorage.editorsSelectionStartData = JSON.stringify(editorsSelectionStartData)
-	localStorage.editorsSelectionEndData = JSON.stringify(editorsSelectionEndData)
-	localStorage.editorsScrollTopData = JSON.stringify(editorsScrollTopData)
-	localStorage.viewsScrollTopData = JSON.stringify(viewsScrollTopData)
-	localStorage.viewsScrollLeftData = JSON.stringify(viewsScrollLeftData)
-	localStorage.currentPageIndex = JSON.stringify(currentPageIndex)
-	localStorage.windowScrollY = JSON.stringify(windowScrollY)
+	var oldPageCount = localStorage.pageCount
+	var oldEditorsValueData = localStorage.editorsValueData
+	var oldEditorsHeightData = localStorage.editorsHeightData
+	var oldEditorsSelectionStartData = localStorage.editorsSelectionStartData
+	var oldEditorsSelectionEndData = localStorage.editorsSelectionEndData
+	var oldEditorsScrollTopData = localStorage.editorsScrollTopData
+	var oldViewsScrollTopData = localStorage.viewsScrollTopData
+	var oldViewsScrollLeftData = localStorage.viewsScrollLeftData
+	var oldCurrentPageIndex = localStorage.currentPageIndex
+	var oldWindowScrollY = localStorage.windowScrollY
+	try {
+		localStorage.pageCount = JSON.stringify(pageCount)
+		localStorage.editorsValueData = JSON.stringify(editorsValueData)
+		localStorage.editorsHeightData = JSON.stringify(editorsHeightData)
+		localStorage.editorsSelectionStartData = JSON.stringify(editorsSelectionStartData)
+		localStorage.editorsSelectionEndData = JSON.stringify(editorsSelectionEndData)
+		localStorage.editorsScrollTopData = JSON.stringify(editorsScrollTopData)
+		localStorage.viewsScrollTopData = JSON.stringify(viewsScrollTopData)
+		localStorage.viewsScrollLeftData = JSON.stringify(viewsScrollLeftData)
+		localStorage.currentPageIndex = JSON.stringify(currentPageIndex)
+		localStorage.windowScrollY = JSON.stringify(windowScrollY)
+	} catch (e) {
+		localStorage.pageCount = oldPageCount
+		localStorage.editorsValueData = oldEditorsValueData
+		localStorage.editorsHeightData = oldEditorsHeightData
+		localStorage.editorsSelectionStartData = oldEditorsSelectionStartData
+		localStorage.editorsSelectionEndData = oldEditorsSelectionEndData
+		localStorage.editorsScrollTopData = oldEditorsScrollTopData
+		localStorage.viewsScrollTopData = oldViewsScrollTopData
+		localStorage.viewsScrollLeftData = oldViewsScrollLeftData
+		localStorage.currentPageIndex = oldCurrentPageIndex
+		localStorage.windowScrollY = oldWindowScrollY
+		if (e.name == "NS_ERROR_DOM_QUOTA_REACHED") {
+			showErrorMessage(ERROR_DOCUMENT_SAVE_OUT_OF_STORAGE_SPACE)
+		} else {
+			console.error(e)
+			showErrorMessage(ERROR_DOCUMENT_SAVE_UNKNOWN)
+		}
+	}
 }
 
 function deleteDocument() {
+	if (!debug.popupOpen) {
+		return
+	}
 	localStorage.clear()
 	location.reload()
 }

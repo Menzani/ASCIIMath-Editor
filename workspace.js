@@ -5,12 +5,16 @@ const BACKGROUNDS = [
 ]
 const WALLPAPERS = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg", "7.jpg", "8.jpg"]
 
+const ERROR_DOCUMENT_SAVE_OUT_OF_STORAGE_SPACE = 0
+const ERROR_DOCUMENT_SAVE_UNKNOWN = 1
+
 var currentLayer = false
 var currentWallpaper
 
 var workspaceLayer1
 var workspaceLayer2
-var browserWarning
+var browserMessage
+var errorMessage
 var reference
 var referenceFrame
 var presentation
@@ -23,7 +27,8 @@ var debugVerbose
 document.addEventListener("DOMContentLoaded", function() {
 	workspaceLayer1 = document.getElementById("workspaceLayer1")
 	workspaceLayer2 = document.getElementById("workspaceLayer2")
-	browserWarning = document.getElementById("browserWarning")
+	browserMessage = document.getElementById("browserMessage")
+	errorMessage = document.getElementById("errorMessage")
 	reference = document.getElementById("reference")
 	referenceFrame = document.getElementById("referenceFrame")
 	presentation = document.getElementById("presentation")
@@ -32,9 +37,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	debugInfo = document.getElementById("debugInfo")
 	debugLog = document.getElementById("debugLog")
 	debugVerbose = document.getElementById("debugVerbose")
-	reference.popupOpen = false
-	presentation.popupOpen = false
-	debug.popupOpen = false
 	
 	document.body.style.background = selectRandomly(BACKGROUNDS)
 	document.body.style.backgroundAttachment = "fixed"
@@ -42,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function createWorkspace() {
 	if (navigator.userAgent.indexOf("Firefox") == -1) {
-		showBrowserWarning()
+		showBrowserMessage()
 	}
 	
 	currentWallpaper = nextRandomNumber(0, WALLPAPERS.length)
@@ -57,6 +59,13 @@ function loadWallpaper() {
     }
 }
 
+function loadCustomWallpaper() {
+	var wallpaper = prompt("Please set the wallpaper file URL:", "resources/wallpapers/")
+	if (wallpaper) {
+		setWallpaper(wallpaper)
+	}
+}
+
 function setWallpaper(wallpaper) {
 	if (currentLayer) {
 		workspaceLayer2.classList.remove("workspaceLayerAnimation")
@@ -66,13 +75,6 @@ function setWallpaper(wallpaper) {
 		workspaceLayer1.src = wallpaper
 	}
 	currentLayer = !currentLayer
-}
-
-function loadWallpaperFromURL() {
-	var wallpaper = prompt("Please set URL of wallpaper file:", "resources/wallpapers/")
-	if (wallpaper) {
-		setWallpaper(wallpaper)
-	}
 }
 
 function showWallpaper() {
@@ -87,6 +89,11 @@ function showWallpaper() {
 	}
 }
 
+function downloadFirefox() {
+	location.href = "https://www.mozilla.org/it/firefox/new"
+	return false
+}
+
 function hidePopup(popup) {
 	popup.classList.remove("popupAppearAnimation")
 	popup.classList.add("popupDisappearAnimation")
@@ -99,8 +106,41 @@ function showPopup(popup) {
 	popup.popupOpen = true
 }
 
-function showBrowserWarning() {
-	showPopup(browserWarning)
+function showBrowserMessage() {
+	showPopup(browserMessage)
+}
+
+function hideErrorMessage() {
+	hidePopup(errorMessage)
+	return false
+}
+
+function showErrorMessage(id) {
+	var label
+	switch (id) {
+		case ERROR_DOCUMENT_SAVE_OUT_OF_STORAGE_SPACE: label = "The document is too long. \
+				Please remove some content or <a class='messageLink' href=''>adjust Firefox's settings</a>."
+		break
+		case ERROR_DOCUMENT_SAVE_UNKNOWN: label = "The document cannot be saved."
+		break
+		default:
+			console.error("Unknown error message ID: " + id)
+			return
+	}
+	errorMessageLabel.innerHTML = label
+	showPopup(errorMessage)
+	
+}
+
+function showCustomErrorMessage() {
+	var id = prompt("Please set the error message ID:", "0")
+	if (!id) {
+		return
+	}
+	id = Number(id)
+	if (!Number.isNaN(id)) {
+		showErrorMessage(id)
+	}
 }
 
 function toggleReference() {

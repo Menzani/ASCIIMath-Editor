@@ -4,18 +4,13 @@ body {
 	margin: 0px;
 }
 
-div.checkbox > label {
-	vertical-align: top;
-}
-
-#browserWarning {
+.message {
 	width: 100%;
 	height: 40px;
-	background-color: #0C090A;
 	top: 0px;
 }
 
-#browserWarning > p {
+.message > p {
 	color: white;
 	font-family: "Times New Roman", Times, serif;
 	font-weight: bold;
@@ -23,12 +18,24 @@ div.checkbox > label {
 	margin: 10px;
 }
 
-#browserWarning > p > a:link {
+.messageLink:link {
 	color: white;
 }
 
-#browserWarning > p > a:visited {
+.messageLink:visited {
 	color: white;
+}
+
+div.checkbox > label {
+	vertical-align: top;
+}
+
+#browserMessage {
+	background-color: #0C090A;
+}
+
+#errorMessage {
+	background-color: red;
 }
 
 #reference {
