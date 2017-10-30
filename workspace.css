@@ -80,7 +80,6 @@ body {
 
 .aboutLinkAnimation {
     animation: 2s aboutLink;
-    animation-fill-mode: forwards;
 }
 
 .tutorialText {
@@ -123,6 +122,14 @@ body {
     color: steelblue;
 }
 
+.contactLink:link {
+    color: #F5F5F5;
+}
+
+.contactLink:visited {
+    color: #F5F5F5;
+}
+
 #browserMessage {
     background-color: #0C090A;
 }
@@ -136,7 +143,6 @@ body {
     height: 98%;
     left: 30px;
     top: 2px;
-    overflow: hidden;
 }
 
 #tour {
@@ -213,6 +219,47 @@ body {
     color: cadetblue;
 }
 
+#donate {
+    padding: 10px;
+    color: #F5F5F5;
+    font-size: 14px;
+    background-color: #48CCCD;
+    width: 355px;
+    margin: 410px auto;
+    left: 20px;
+    right: 0;
+}
+
+#donateText {
+    margin: 0;
+    width: 170px;
+    float: left;
+}
+
+#donatePayPal {
+    margin-top: 10px;
+    float: right;
+}
+
+#donateCrypto {
+    clear: both;
+    padding-top: 10px;
+    margin: 0;
+}
+
+#donateClose {
+    text-align: right;
+    margin: 5px 0 0;
+}
+
+#donateCloseLink:link {
+    color: #F5F5F5;
+}
+
+#donateCloseLink:visited {
+    color: #F5F5F5;
+}
+
 #tutorial {
     padding: 10px;
     height: 500px;
@@ -239,15 +286,47 @@ body {
 
 #documentActions {
     width: 200px;
+    height: 525px;
     right: 2px;
     top: 200px;
     padding: 10px 5px 0 5px;
 }
 
 #footer {
-    margin: 5px;
+    margin-top: 5px;
     text-align: center;
     font-size: 13px;
+}
+
+#contact {
+    background-color: #48CCCD;
+    width: 210px;
+    height: 150px;
+    right: 2px;
+    top: 737px;
+    padding: 10px;
+    color: #F5F5F5;
+    font-size: 15px;
+}
+
+#contactTitle {
+    font-weight: bold;
+    margin: 0;
+}
+
+#contactCategories {
+    margin: 5px 0 10px;
+}
+
+#contactText {
+    font-size: 13px;
+    margin: 0;
+}
+
+#contactClose {
+    text-align: right;
+    font-size: 13px;
+    margin: 5px 0 0;
 }
 
 @keyframes backgroundLayer {

@@ -22,11 +22,13 @@ let syntax
 let tour
 let tourDownload
 let about
+let donate
 let tutorial
 let debug
 let debugConsole
 let debugDocumentEvents
 let debugKeyPress
+let contact
 
 document.addEventListener("DOMContentLoaded", function () {
     backgroundLayer1 = document.getElementById("backgroundLayer1")
@@ -38,11 +40,13 @@ document.addEventListener("DOMContentLoaded", function () {
     tour = document.getElementById("tour")
     tourDownload = document.getElementById("tourDownload")
     about = document.getElementById("about")
+    donate = document.getElementById("donate")
     tutorial = document.getElementById("tutorial")
     debug = document.getElementById("debug")
     debugConsole = document.getElementById("debugConsole")
     debugDocumentEvents = document.getElementById("debugDocumentEvents")
     debugKeyPress = document.getElementById("debugKeyPress")
+    contact = document.getElementById("contact")
 
     document.body.style.background = selectRandomly(BACKGROUNDS)
     document.body.style.backgroundAttachment = "fixed"
@@ -192,6 +196,16 @@ function showAbout() {
     return false
 }
 
+function hideDonate() {
+    hidePopup(donate)
+    return false
+}
+
+function showDonate() {
+    showPopup(donate)
+    return false
+}
+
 function toggleTutorial() {
     if (tutorial.popupOpen) {
         hidePopup(tutorial)
@@ -209,6 +223,16 @@ function toggleDebug() {
         showPopup(debug)
         debugConsole.refreshTaskId = setInterval(refreshDebugConsole, 100)
     }
+}
+
+function hideContact() {
+    hidePopup(contact)
+    return false
+}
+
+function showContact() {
+    showPopup(contact)
+    return false
 }
 
 function refreshDebugConsole() {
@@ -270,23 +294,23 @@ function resolveShortcut(event) {
 
     if (event.ctrlKey && event.altKey) {
         switch (event.charCode) {
+            case 100:
+                doRemovePage()
+                break
+            case 105:
+                toggleDebug()
+                break
             case 110:
                 doAddPage()
                 break
-            case 100:
-                doRemovePage()
+            case 113:
+                toggleSyntax()
                 break
             case 115:
                 downloadPageSource()
                 break
             case 116:
                 toggleTutorial()
-                break
-            case 113:
-                toggleSyntax()
-                break
-            case 105:
-                toggleDebug()
                 break
         }
         switch (event.keyCode) {
