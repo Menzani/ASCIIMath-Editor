@@ -1,6 +1,8 @@
+"use strict"
+
 const DEFAULT_PAGE_COUNT = 1
-const DEFAULT_EDITOR_VALUE_DATA = '[""]', DEFAULT_EDITOR_VALUE = ""
-const DEFAULT_EDITOR_HEIGHT_DATA = '["200px"]', DEFAULT_EDITOR_HEIGHT = "200px"
+const DEFAULT_EDITOR_VALUE_DATA = "[\"\"]", DEFAULT_EDITOR_VALUE = ""
+const DEFAULT_EDITOR_HEIGHT_DATA = "[\"200px\"]", DEFAULT_EDITOR_HEIGHT = "200px"
 const DEFAULT_EDITOR_SELECTION_START_DATA = "[0]", DEFAULT_EDITOR_SELECTION_START = 0
 const DEFAULT_EDITOR_SELECTION_END_DATA = "[0]", DEFAULT_EDITOR_SELECTION_END = 0
 const DEFAULT_EDITOR_SCROLL_TOP_DATA = "[0]", DEFAULT_EDITOR_SCROLL_TOP = 0
@@ -9,251 +11,251 @@ const DEFAULT_VIEW_SCROLL_LEFT_DATA = "[0]", DEFAULT_VIEW_SCROLL_LEFT = 0
 const DEFAULT_CURRENT_PAGE_INDEX = 0
 const DEFAULT_WINDOW_SCROLL_Y = 0
 
-var pages = []
+let pages = []
 
-var windowScrollY
-var pageCount
-var currentPageIndex
-var editorsValueData
-var editorsHeightData
-var editorsSelectionStartData
-var editorsSelectionEndData
-var editorsScrollTopData
-var viewsScrollTopData
-var viewsScrollLeftData
+let windowScrollY
+let pageCount
+let currentPageIndex
+let editorsValueData
+let editorsHeightData
+let editorsSelectionStartData
+let editorsSelectionEndData
+let editorsScrollTopData
+let viewsScrollTopData
+let viewsScrollLeftData
 
-window.onscroll = function() {
-	windowScrollY = window.scrollY
-	saveDocument()
+window.onscroll = function () {
+    windowScrollY = window.scrollY
+    saveDocument()
 }
 
 function openDocument() {
-	windowScrollY = JSON.parse(localStorage.windowScrollY || DEFAULT_WINDOW_SCROLL_Y)
-	pageCount = JSON.parse(localStorage.pageCount || DEFAULT_PAGE_COUNT)
-	currentPageIndex = JSON.parse(localStorage.currentPageIndex || DEFAULT_CURRENT_PAGE_INDEX)
-	editorsValueData = JSON.parse(localStorage.editorsValueData || DEFAULT_EDITOR_VALUE_DATA)
-	editorsHeightData = JSON.parse(localStorage.editorsHeightData || DEFAULT_EDITOR_HEIGHT_DATA)
-	editorsSelectionStartData = JSON.parse(localStorage.editorsSelectionStartData || DEFAULT_EDITOR_SELECTION_START_DATA)
-	editorsSelectionEndData = JSON.parse(localStorage.editorsSelectionEndData || DEFAULT_EDITOR_SELECTION_END_DATA)
-	editorsScrollTopData = JSON.parse(localStorage.editorsScrollTopData || DEFAULT_EDITOR_SCROLL_TOP_DATA)
-	viewsScrollTopData = JSON.parse(localStorage.viewsScrollTopData || DEFAULT_VIEW_SCROLL_TOP_DATA)
-	viewsScrollLeftData = JSON.parse(localStorage.viewsScrollLeftData || DEFAULT_VIEW_SCROLL_LEFT_DATA)
+    windowScrollY = JSON.parse(localStorage.windowScrollY || DEFAULT_WINDOW_SCROLL_Y)
+    pageCount = JSON.parse(localStorage.pageCount || DEFAULT_PAGE_COUNT)
+    currentPageIndex = JSON.parse(localStorage.currentPageIndex || DEFAULT_CURRENT_PAGE_INDEX)
+    editorsValueData = JSON.parse(localStorage.editorsValueData || DEFAULT_EDITOR_VALUE_DATA)
+    editorsHeightData = JSON.parse(localStorage.editorsHeightData || DEFAULT_EDITOR_HEIGHT_DATA)
+    editorsSelectionStartData = JSON.parse(localStorage.editorsSelectionStartData || DEFAULT_EDITOR_SELECTION_START_DATA)
+    editorsSelectionEndData = JSON.parse(localStorage.editorsSelectionEndData || DEFAULT_EDITOR_SELECTION_END_DATA)
+    editorsScrollTopData = JSON.parse(localStorage.editorsScrollTopData || DEFAULT_EDITOR_SCROLL_TOP_DATA)
+    viewsScrollTopData = JSON.parse(localStorage.viewsScrollTopData || DEFAULT_VIEW_SCROLL_TOP_DATA)
+    viewsScrollLeftData = JSON.parse(localStorage.viewsScrollLeftData || DEFAULT_VIEW_SCROLL_LEFT_DATA)
 
-	for (let pageIndex = 0; pageIndex < pageCount; pageIndex++) {
-		addPage(pageIndex, false)
-	}
-	if (currentPageIndex != -1) {
+    for (let pageIndex = 0; pageIndex < pageCount; pageIndex++) {
+        addPage(pageIndex, false)
+    }
+    if (currentPageIndex !== -1) {
         jumpTo(pages[currentPageIndex])
     }
     window.scrollTo(0, windowScrollY)
 }
 
 function addPage(pageIndex, animate) {
-	logEvent("addPage", pageIndex)
+    logEvent("addPage", pageIndex)
 
-	var page = document.createElement("div")
-	page.classList.add("card", "page")
-	if (animate) {
-		page.classList.add("pageAppearAnimation")
-	}
-	var editor = document.createElement("textarea")
-	editor.className = "editor"
-	var view = document.createElement("div")
-	view.className = "view"
-	var viewOutput = document.createElement("div")
-	viewOutput.className = "viewOutput"
-	
-	page.appendChild(editor)
-	view.appendChild(viewOutput)
-	page.appendChild(view)
-	page.editor = editor
-	page.view = view
-	page.viewOutput = viewOutput
-	
-	editor.value = editorsValueData[pageIndex]
-	editor.style.height = editorsHeightData[pageIndex]
-	editor.selectionStart = editorsSelectionStartData[pageIndex]
-	editor.selectionEnd = editorsSelectionEndData[pageIndex]
-	editor.scrollTop = editorsScrollTopData[pageIndex]
-	refreshView(page)
-	window.requestAnimationFrame(function() {
-		view.scrollTop = viewsScrollTopData[pageIndex]
-		view.scrollLeft = viewsScrollLeftData[pageIndex]
-	})
-	
-	page.onclick = function() {
-		logEvent("page.onclick", pageIndex)
+    let page = document.createElement("div")
+    page.classList.add("card", "page")
+    if (animate) {
+        page.classList.add("pageAppearAnimation")
+    }
+    let editor = document.createElement("textarea")
+    editor.className = "editor"
+    let view = document.createElement("div")
+    view.className = "view"
+    let viewOutput = document.createElement("div")
+    viewOutput.className = "viewOutput"
 
-		jumpTo(page)
-	}
-	editor.onchange = function() {
-		logEvent("editor.onchange", pageIndex)
+    page.appendChild(editor)
+    view.appendChild(viewOutput)
+    page.appendChild(view)
+    page.editor = editor
+    page.view = view
+    page.viewOutput = viewOutput
 
-		editorsValueData[pageIndex] = editor.value
-		saveDocument()
-	}
-	editor.onkeyup = function() {
-		logEvent("editor.onkeyup", pageIndex, "onEditorInteract")
+    editor.value = editorsValueData[pageIndex]
+    editor.style.height = editorsHeightData[pageIndex]
+    editor.selectionStart = editorsSelectionStartData[pageIndex]
+    editor.selectionEnd = editorsSelectionEndData[pageIndex]
+    editor.scrollTop = editorsScrollTopData[pageIndex]
+    refreshView(page)
+    window.requestAnimationFrame(function () {
+        view.scrollTop = viewsScrollTopData[pageIndex]
+        view.scrollLeft = viewsScrollLeftData[pageIndex]
+    })
 
-		onEditorInteract(page, pageIndex)
-	}
-	editor.onmouseup = function() {
-		logEvent("editor.onmouseup", pageIndex, "onEditorInteract")
+    page.onclick = function () {
+        logEvent("page.onclick", pageIndex)
 
-		onEditorInteract(page, pageIndex)
-	}
-	editor.oncut = function() {
-		logEvent("editor.oncut", pageIndex, "onEditorInteract")
+        jumpTo(page)
+    }
+    editor.onchange = function () {
+        logEvent("editor.onchange", pageIndex)
 
-		onEditorInteract(page, pageIndex)
-	}
-	editor.onpaste = function() {
-		logEvent("editor.onpaste", pageIndex, "onEditorInteract")
+        editorsValueData[pageIndex] = editor.value
+        saveDocument()
+    }
+    editor.onkeyup = function () {
+        logEvent("editor.onkeyup", pageIndex, "onEditorInteract")
 
-		onEditorInteract(page, pageIndex)
-	}
-	editor.onscroll = function() {
-		logEvent("editor.onscroll", pageIndex)
+        onEditorInteract(page, pageIndex)
+    }
+    editor.onmouseup = function () {
+        logEvent("editor.onmouseup", pageIndex, "onEditorInteract")
 
-		editorsScrollTopData[page.index] = editor.scrollTop
-		saveDocument()
-	}
-	view.onscroll = function() {
-		logEvent("view.onscroll", pageIndex)
+        onEditorInteract(page, pageIndex)
+    }
+    editor.oncut = function () {
+        logEvent("editor.oncut", pageIndex, "onEditorInteract")
 
-		viewsScrollTopData[pageIndex] = view.scrollTop
-		viewsScrollLeftData[pageIndex] = view.scrollLeft
-		saveDocument()
-	}
-	
-	if (pageIndex == pages.length) {
-		pages.push(page)
-		document.body.appendChild(page)
-	} else {
-		pages.splice(pageIndex, 0, page)
-		document.body.insertBefore(page, pages[pageIndex + 1])
-	}
-	return page
+        onEditorInteract(page, pageIndex)
+    }
+    editor.onpaste = function () {
+        logEvent("editor.onpaste", pageIndex, "onEditorInteract")
+
+        onEditorInteract(page, pageIndex)
+    }
+    editor.onscroll = function () {
+        logEvent("editor.onscroll", pageIndex)
+
+        editorsScrollTopData[page.index] = editor.scrollTop
+        saveDocument()
+    }
+    view.onscroll = function () {
+        logEvent("view.onscroll", pageIndex)
+
+        viewsScrollTopData[pageIndex] = view.scrollTop
+        viewsScrollLeftData[pageIndex] = view.scrollLeft
+        saveDocument()
+    }
+
+    if (pageIndex === pages.length) {
+        pages.push(page)
+        document.body.appendChild(page)
+    } else {
+        pages.splice(pageIndex, 0, page)
+        document.body.insertBefore(page, pages[pageIndex + 1])
+    }
+    return page
 }
 
 function doAddPage() {
-	pageCount++
-	currentPageIndex++
-	editorsValueData.splice(currentPageIndex, 0, DEFAULT_EDITOR_VALUE)
-	editorsHeightData.splice(currentPageIndex, 0, DEFAULT_EDITOR_HEIGHT)
-	editorsSelectionStartData.splice(currentPageIndex, 0, DEFAULT_EDITOR_SELECTION_START)
-	editorsSelectionEndData.splice(currentPageIndex, 0, DEFAULT_EDITOR_SELECTION_END)
-	editorsScrollTopData.splice(currentPageIndex, 0, DEFAULT_EDITOR_SCROLL_TOP)
-	viewsScrollTopData.splice(currentPageIndex, 0, DEFAULT_VIEW_SCROLL_TOP)
-	viewsScrollLeftData.splice(currentPageIndex, 0, DEFAULT_VIEW_SCROLL_LEFT)
-	
-	var page = addPage(currentPageIndex, true)
-	jumpTo(page)
-	saveDocument()
+    pageCount++
+    currentPageIndex++
+    editorsValueData.splice(currentPageIndex, 0, DEFAULT_EDITOR_VALUE)
+    editorsHeightData.splice(currentPageIndex, 0, DEFAULT_EDITOR_HEIGHT)
+    editorsSelectionStartData.splice(currentPageIndex, 0, DEFAULT_EDITOR_SELECTION_START)
+    editorsSelectionEndData.splice(currentPageIndex, 0, DEFAULT_EDITOR_SELECTION_END)
+    editorsScrollTopData.splice(currentPageIndex, 0, DEFAULT_EDITOR_SCROLL_TOP)
+    viewsScrollTopData.splice(currentPageIndex, 0, DEFAULT_VIEW_SCROLL_TOP)
+    viewsScrollLeftData.splice(currentPageIndex, 0, DEFAULT_VIEW_SCROLL_LEFT)
+
+    let page = addPage(currentPageIndex, true)
+    jumpTo(page)
+    saveDocument()
 }
 
 function removePage(pageIndex) {
-	logEvent("removePage", pageIndex)
+    logEvent("removePage", pageIndex)
 
-	var page = pages.splice(pageIndex, 1)[0]
-	page.classList.remove("pageAppearAnimation")
-	page.onclick = null
-	page.editor.onchange = null
-	page.editor.onkeyup = null
-	page.editor.onmouseup = null
-	page.editor.oncut = null
-	page.editor.onpaste = null
-	page.editor.onscroll = null
-	page.view.onscroll = null
-	
-	if (pageIndex == 0) {
-		if (pageCount == 0) {
-			currentPageIndex = -1
-		} else {
-			currentPageIndex = 0
-		}
-	} else {
-		currentPageIndex = --pageIndex
-	}
-	
-	page.classList.add("pageDisappearAnimation")
-	page.onanimationend = function() {
-		logEvent("page.onanimationend", pageIndex)
+    let page = pages.splice(pageIndex, 1)[0]
+    page.classList.remove("pageAppearAnimation")
+    page.onclick = null
+    page.editor.onchange = null
+    page.editor.onkeyup = null
+    page.editor.onmouseup = null
+    page.editor.oncut = null
+    page.editor.onpaste = null
+    page.editor.onscroll = null
+    page.view.onscroll = null
 
-		document.body.removeChild(page)
-		if (currentPageIndex != -1) {
-			jumpTo(pages[currentPageIndex])
-		}
-	}
+    if (pageIndex === 0) {
+        if (pageCount === 0) {
+            currentPageIndex = -1
+        } else {
+            currentPageIndex = 0
+        }
+    } else {
+        currentPageIndex = --pageIndex
+    }
+
+    page.classList.add("pageDisappearAnimation")
+    page.onanimationend = function () {
+        logEvent("page.onanimationend", pageIndex)
+
+        document.body.removeChild(page)
+        if (currentPageIndex !== -1) {
+            jumpTo(pages[currentPageIndex])
+        }
+    }
 }
 
 function doRemovePage() {
-	if (pageCount == 0) {
-		return
-	}
-	pageCount--
-	editorsValueData.splice(currentPageIndex, 1)
-	editorsHeightData.splice(currentPageIndex, 1)
-	editorsSelectionStartData.splice(currentPageIndex, 1)
-	editorsSelectionEndData.splice(currentPageIndex, 1)
-	editorsScrollTopData.splice(currentPageIndex, 1)
-	viewsScrollTopData.splice(currentPageIndex, 1)
-	viewsScrollLeftData.splice(currentPageIndex, 1)
-	
-	removePage(currentPageIndex)
-	saveDocument()
+    if (pageCount === 0) {
+        return
+    }
+    pageCount--
+    editorsValueData.splice(currentPageIndex, 1)
+    editorsHeightData.splice(currentPageIndex, 1)
+    editorsSelectionStartData.splice(currentPageIndex, 1)
+    editorsSelectionEndData.splice(currentPageIndex, 1)
+    editorsScrollTopData.splice(currentPageIndex, 1)
+    viewsScrollTopData.splice(currentPageIndex, 1)
+    viewsScrollLeftData.splice(currentPageIndex, 1)
+
+    removePage(currentPageIndex)
+    saveDocument()
 }
 
 function refreshView(page) {
-	var result = ""
-    for (line of page.editor.value.split(/\r?\n/)) {
-    	if (line.startsWith("#")) {
-        	result += ("<p class='viewOutputText'><i>" + line.slice(1) + "</i></p>")
+    let result = ""
+    for (let line of page.editor.value.split(/\r?\n/)) {
+        if (line.startsWith("#")) {
+            result += ("<p class=\"viewOutputText\"><i>" + line.slice(1) + "</i></p>")
         } else if (line.startsWith("*")) {
-            result += ("<p class='viewOutputText'><b>" + line.slice(1) + "</b></p>")
+            result += ("<p class=\"viewOutputText\"><b>" + line.slice(1) + "</b></p>")
         } else if (line.trim().length > 0) {
-        	result += ("<div class='viewOutputMath'>°" + line + "°</div>")
+            result += ("<div class=\"viewOutputMath\">°" + line + "°</div>")
         }
     }
-	page.viewOutput.innerHTML = result
- 	asciimath.AMprocessNode(page.viewOutput)
+    page.viewOutput.innerHTML = result
+    asciimath.AMprocessNode(page.viewOutput)
 }
 
 function onEditorInteract(page, pageIndex) {
-	refreshView(page)
-	editorsHeightData[pageIndex] = page.editor.style.height
-	editorsSelectionStartData[pageIndex] = page.editor.selectionStart
-	editorsSelectionEndData[pageIndex] = page.editor.selectionEnd
-	currentPageIndex = pageIndex
-	saveDocument()
+    refreshView(page)
+    editorsHeightData[pageIndex] = page.editor.style.height
+    editorsSelectionStartData[pageIndex] = page.editor.selectionStart
+    editorsSelectionEndData[pageIndex] = page.editor.selectionEnd
+    currentPageIndex = pageIndex
+    saveDocument()
 }
 
 function jumpTo(page) {
-	page.editor.focus()
+    page.editor.focus()
 }
 
 function doJumpUp() {
-    if (currentPageIndex == 0) {
+    if (currentPageIndex === 0) {
         return
     }
     jumpTo(pages[currentPageIndex - 1])
 }
 
 function doJumpDown() {
-    if (currentPageIndex == pageCount - 1) {
+    if (currentPageIndex === pageCount - 1) {
         return
     }
     jumpTo(pages[currentPageIndex + 1])
 }
 
 function downloadPageSource() {
-	if (currentPageIndex == -1) {
-		return
-	}
+    if (currentPageIndex === -1) {
+        return
+    }
 
-    var link = document.createElement("a")
+    let link = document.createElement("a")
     link.style.display = "none"
-    var url = URL.createObjectURL(new Blob([pages[currentPageIndex].editor.value], {type: "text/plain"}))
+    let url = URL.createObjectURL(new Blob([pages[currentPageIndex].editor.value], {type: "text/plain"}))
     link.href = url
     link.download = "Source.txt"
 
@@ -264,60 +266,60 @@ function downloadPageSource() {
 }
 
 function saveDocument() {
-	var oldWindowScrollY = localStorage.windowScrollY
-	var oldPageCount = localStorage.pageCount
-	var oldCurrentPageIndex = localStorage.currentPageIndex
-	var oldEditorsValueData = localStorage.editorsValueData
-	var oldEditorsHeightData = localStorage.editorsHeightData
-	var oldEditorsSelectionStartData = localStorage.editorsSelectionStartData
-	var oldEditorsSelectionEndData = localStorage.editorsSelectionEndData
-	var oldEditorsScrollTopData = localStorage.editorsScrollTopData
-	var oldViewsScrollTopData = localStorage.viewsScrollTopData
-	var oldViewsScrollLeftData = localStorage.viewsScrollLeftData
-	try {
-		localStorage.windowScrollY = JSON.stringify(windowScrollY)
-		localStorage.pageCount = JSON.stringify(pageCount)
-		localStorage.currentPageIndex = JSON.stringify(currentPageIndex)
-		localStorage.editorsValueData = JSON.stringify(editorsValueData)
-		localStorage.editorsHeightData = JSON.stringify(editorsHeightData)
-		localStorage.editorsSelectionStartData = JSON.stringify(editorsSelectionStartData)
-		localStorage.editorsSelectionEndData = JSON.stringify(editorsSelectionEndData)
-		localStorage.editorsScrollTopData = JSON.stringify(editorsScrollTopData)
-		localStorage.viewsScrollTopData = JSON.stringify(viewsScrollTopData)
-		localStorage.viewsScrollLeftData = JSON.stringify(viewsScrollLeftData)
-	} catch (e) {
-		localStorage.clear()
-		localStorage.windowScrollY = oldWindowScrollY
-		localStorage.pageCount = oldPageCount
-		localStorage.currentPageIndex = oldCurrentPageIndex
-		localStorage.editorsValueData = oldEditorsValueData
-		localStorage.editorsHeightData = oldEditorsHeightData
-		localStorage.editorsSelectionStartData = oldEditorsSelectionStartData
-		localStorage.editorsSelectionEndData = oldEditorsSelectionEndData
-		localStorage.editorsScrollTopData = oldEditorsScrollTopData
-		localStorage.viewsScrollTopData = oldViewsScrollTopData
-		localStorage.viewsScrollLeftData = oldViewsScrollLeftData
-		if (e.name == "NS_ERROR_DOM_QUOTA_REACHED") {
-			showErrorMessage(ERROR_DOCUMENT_SAVE_STORAGE)
-		} else {
-			console.error(e)
-			showErrorMessage(ERROR_DOCUMENT_SAVE)
-		}
-	}
+    let oldWindowScrollY = localStorage.windowScrollY
+    let oldPageCount = localStorage.pageCount
+    let oldCurrentPageIndex = localStorage.currentPageIndex
+    let oldEditorsValueData = localStorage.editorsValueData
+    let oldEditorsHeightData = localStorage.editorsHeightData
+    let oldEditorsSelectionStartData = localStorage.editorsSelectionStartData
+    let oldEditorsSelectionEndData = localStorage.editorsSelectionEndData
+    let oldEditorsScrollTopData = localStorage.editorsScrollTopData
+    let oldViewsScrollTopData = localStorage.viewsScrollTopData
+    let oldViewsScrollLeftData = localStorage.viewsScrollLeftData
+    try {
+        localStorage.windowScrollY = JSON.stringify(windowScrollY)
+        localStorage.pageCount = JSON.stringify(pageCount)
+        localStorage.currentPageIndex = JSON.stringify(currentPageIndex)
+        localStorage.editorsValueData = JSON.stringify(editorsValueData)
+        localStorage.editorsHeightData = JSON.stringify(editorsHeightData)
+        localStorage.editorsSelectionStartData = JSON.stringify(editorsSelectionStartData)
+        localStorage.editorsSelectionEndData = JSON.stringify(editorsSelectionEndData)
+        localStorage.editorsScrollTopData = JSON.stringify(editorsScrollTopData)
+        localStorage.viewsScrollTopData = JSON.stringify(viewsScrollTopData)
+        localStorage.viewsScrollLeftData = JSON.stringify(viewsScrollLeftData)
+    } catch (e) {
+        localStorage.clear()
+        localStorage.windowScrollY = oldWindowScrollY
+        localStorage.pageCount = oldPageCount
+        localStorage.currentPageIndex = oldCurrentPageIndex
+        localStorage.editorsValueData = oldEditorsValueData
+        localStorage.editorsHeightData = oldEditorsHeightData
+        localStorage.editorsSelectionStartData = oldEditorsSelectionStartData
+        localStorage.editorsSelectionEndData = oldEditorsSelectionEndData
+        localStorage.editorsScrollTopData = oldEditorsScrollTopData
+        localStorage.viewsScrollTopData = oldViewsScrollTopData
+        localStorage.viewsScrollLeftData = oldViewsScrollLeftData
+        if (e.name === "NS_ERROR_DOM_QUOTA_REACHED") {
+            showErrorMessage(ERROR_DOCUMENT_SAVE_STORAGE)
+        } else {
+            console.error(e)
+            showErrorMessage(ERROR_DOCUMENT_SAVE)
+        }
+    }
 }
 
 function deleteDocument() {
-	localStorage.clear()
-	location.reload(true)
+    localStorage.clear()
+    location.reload(true)
 }
 
 function logEvent(name, pageIndex, calledMethodName) {
-	if (!debugDocumentEvents.checked) {
-		return
-	}
-	var result = name + "(pageIndex = " + pageIndex + ")"
-	if (calledMethodName) {
-		result += " -> " + calledMethodName + "()"
-	}
-	console.log(result)
+    if (!debugDocumentEvents.checked) {
+        return
+    }
+    let result = name + "(pageIndex = " + pageIndex + ")"
+    if (calledMethodName) {
+        result += " -> " + calledMethodName + "()"
+    }
+    console.log(result)
 }

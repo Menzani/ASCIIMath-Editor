@@ -1,29 +1,29 @@
 @font-face {
-	font-family: "Fira Code";
+    font-family: "Fira Code";
     src: url("resources/fonts/FiraCode-Regular.otf") format("opentype");
 }
 
 @font-face {
-	font-family: "Fira Code";
+    font-family: "Fira Code";
     font-style: italic;
     src: url("resources/fonts/FiraCode-Light.otf") format("opentype");
 }
 
 @font-face {
-	font-family: "Fira Code";
+    font-family: "Fira Code";
     font-weight: bold;
     src: url("resources/fonts/FiraCode-Bold.otf") format("opentype");
 }
 
 @font-face {
-	font-family: "Latin Modern Math";
+    font-family: "Latin Modern Math";
     src: url("resources/fonts/latinmodern-math.otf") format("opentype");
 }
 
 math {
-	color: #505050;
-	font-family: "Latin Modern Math", "Cambria Math";
-	font-size: 20px;
+    color: #505050;
+    font-family: "Latin Modern Math", "Cambria Math", serif;
+    font-size: 20px;
 }
 
 .page {
@@ -32,39 +32,39 @@ math {
 }
 
 .pageAppearAnimation {
-	animation: 2s pageAppear;
+    animation: 2s pageAppear;
 }
 
 .pageDisappearAnimation {
-	animation: 0.5s pageDisappear;
+    animation: 0.5s pageDisappear;
 }
 
 .editor {
-	font-family: "Fira Code", "Lucida Console", Monaco, monospace;
-	width: 778px;
-	min-height: 150px;
+    font-family: "Fira Code", "Lucida Console", Monaco, monospace;
+    width: 778px;
+    min-height: 150px;
     height: 200px;
-	max-height: 250px;
+    max-height: 250px;
     border-style: none;
     resize: vertical;
-	margin: 10px;
+    margin: 10px;
 }
 
 .view {
     font-size: 15px;
-	width: 800px;
+    width: 800px;
     height: 600px;
     overflow: auto;
 }
 
 .viewOutput {
-	padding: 0px 10px 0px 10px;
+    padding: 0 10px 0 10px;
 }
 
 .viewOutputText {
-	font-family: "Fira Code", "Lucida Console", Monaco, monospace;
-	margin: 0px;
-	padding: 10px 0px 10px 10px;
+    font-family: "Fira Code", "Lucida Console", Monaco, monospace;
+    margin: 0;
+    padding: 10px 0 10px 10px;
 }
 
 .viewOutputMath > math {
@@ -72,13 +72,13 @@ math {
 }
 
 @keyframes pageAppear {
-	from {
-		transform: translateY(30px);
-	}
+    from {
+        transform: translateY(30px);
+    }
 }
 
 @keyframes pageDisappear {
-	to {
-		filter: opacity(0%) blur(10px);
-	}
+    to {
+        filter: opacity(0%) blur(10px);
+    }
 }
