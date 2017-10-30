@@ -34,14 +34,14 @@
 <img id="backgroundLayer2" class="backgroundLayer" onload="showWallpaper()">
 
 <div id="browserMessage" class="card menu popup message"><p class="messageText">
-    This app is designed to run on <a class="messageLink" href="#" onclick="downloadFirefox()">Firefox</a>
+    This app is designed to run on <a class="messageLink" href="#" onclick="downloadFirefox(event)">Firefox</a>
     and currently does not support other browsers.
-    <a class="messageLink" href="#" onclick="showTour(true)">Find out why</a>
+    <a class="messageLink" href="#" onclick="showTour(true, event)">Find out why</a>
 </p></div>
 <div id="errorMessage" class="card menu popup message"><p class="messageText">
     <span id="errorMessageText"></span>
     &nbsp;
-    <a class="messageLink" href="#" onclick="hideErrorMessage()">Hide</a>
+    <a class="messageLink" href="#" onclick="hideErrorMessage(event)">Hide</a>
 </p></div>
 
 <div id="syntax" class="card menu popup">
@@ -57,7 +57,7 @@
         so you get better results in less time.
     </p>
     <input id="tourDownload" type="button" value="Download Firefox" onclick="downloadFirefox()">
-    <p id="tourClose"><a id="tourCloseLink" href="#" onclick="hideTour()">Close</a></p>
+    <p id="tourClose"><a id="tourCloseLink" href="#" onclick="hideTour(event)">Close</a></p>
 </div>
 <div id="about" class="card menu popup">
     <img id="aboutIcon" src="resources/extended-icon.png">
@@ -72,9 +72,9 @@
         </p>
         <p>
             <a class="aboutLink" href="https://github.com/MrSystem/ASCIIMath-Editor" target="_blank">Source code</a>
-            <a class="aboutLink" href="#" onclick="showDonate()">Donate</a>
+            <a class="aboutLink" href="#" onclick="showDonate(event)">Donate</a>
         </p>
-        <p id="aboutClose"><a id="aboutCloseLink" href="#" onclick="hideAbout()">Close</a></p>
+        <p id="aboutClose"><a id="aboutCloseLink" href="#" onclick="hideAbout(event)">Close</a></p>
     </div>
 </div>
 <div id="donate" class="card menu popup">
@@ -93,7 +93,7 @@
         ETH:
         <small>0xa5e47552f6e5C3476d807F9f899D118Cf94e65b4</small>
     </p>
-    <p id="donateClose"><a id="donateCloseLink" href="#" onclick="hideDonate()">Close</a></p>
+    <p id="donateClose"><a id="donateCloseLink" href="#" onclick="hideDonate(event)">Close</a></p>
 </div>
 <div id="tutorial" class="card menu popup">
     <p class="tutorialText">
@@ -142,11 +142,11 @@
         <pre class="documentActionsGroupText">Ctrl + Alt + Q</pre>
     </fieldset>
     <p id="footer">
-        <a class="footerLink" href="#" onclick="showTour(false)">Tour</a>
+        <a class="footerLink" href="#" onclick="showTour(false, event)">Tour</a>
         &emsp;
-        <a class="footerLink" href="#" onclick="showContact()">Contact</a>
+        <a class="footerLink" href="#" onclick="showContact(event)">Contact</a>
         &emsp;
-        <a class="footerLink" href="#" onclick="showAbout()">About</a>
+        <a class="footerLink" href="#" onclick="showAbout(event)">About</a>
     </p>
 </div>
 <div id="contact" class="card menu popup">
@@ -176,7 +176,7 @@
         Or send an email to:
         <i>francescomenzani99@gmail.com</i>
     </p>
-    <p id="contactClose"><a class="contactLink" href="#" onclick="hideContact()">Close</a></p>
+    <p id="contactClose"><a class="contactLink" href="#" onclick="hideContact(event)">Close</a></p>
 </div>
 </body>
 </html>

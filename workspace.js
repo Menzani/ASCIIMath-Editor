@@ -125,9 +125,11 @@ function showWallpaper() {
     }, 3000)
 }
 
-function downloadFirefox() {
+function downloadFirefox(event) {
     location.href = "https://www.mozilla.org/it/firefox/new"
-    return false
+    if (event) {
+        event.preventDefault()
+    }
 }
 
 function hidePopup(popup) {
@@ -146,9 +148,9 @@ function showBrowserMessage() {
     showPopup(browserMessage)
 }
 
-function hideErrorMessage() {
+function hideErrorMessage(event) {
     hidePopup(errorMessage)
-    return false
+    event.preventDefault()
 }
 
 function showErrorMessage(id) {
@@ -183,45 +185,45 @@ function toggleSyntax() {
     }
 }
 
-function hideTour() {
+function hideTour(event) {
     hidePopup(tour)
-    return false
+    event.preventDefault()
 }
 
-function showTour(includeDownload) {
+function showTour(includeDownload, event) {
     if (includeDownload) {
         tourDownload.style.display = "block"
     } else {
         tourDownload.style.display = "none"
     }
     showPopup(tour)
-    return false
+    event.preventDefault()
 }
 
-function hideAbout() {
+function hideAbout(event) {
     for (let aboutLink of about.querySelectorAll(".aboutLink")) {
         aboutLink.classList.remove("aboutLinkAnimation")
     }
     hidePopup(about)
-    return false
+    event.preventDefault()
 }
 
-function showAbout() {
+function showAbout(event) {
     for (let aboutLink of about.querySelectorAll(".aboutLink")) {
         aboutLink.classList.add("aboutLinkAnimation")
     }
     showPopup(about)
-    return false
+    event.preventDefault()
 }
 
-function hideDonate() {
+function hideDonate(event) {
     hidePopup(donate)
-    return false
+    event.preventDefault()
 }
 
-function showDonate() {
+function showDonate(event) {
     showPopup(donate)
-    return false
+    event.preventDefault()
 }
 
 function toggleTutorial() {
@@ -243,14 +245,16 @@ function toggleDebug() {
     }
 }
 
-function hideContact() {
+function hideContact(event) {
     hidePopup(contact)
-    return false
+    if (event) {
+        event.preventDefault()
+    }
 }
 
-function showContact() {
+function showContact(event) {
     showPopup(contact)
-    return false
+    event.preventDefault()
 }
 
 function refreshDebugConsole() {
