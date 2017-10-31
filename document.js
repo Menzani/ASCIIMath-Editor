@@ -227,16 +227,24 @@ function doRemovePage() {
 function refreshView(page) {
     let result = ""
     for (let line of page.editor.value.split(/\r?\n/)) {
+        line = stripHTMLTags(line.trim().replace(/ {2}/g, "\\ "))
         if (line.startsWith("#")) {
             result += ("<p class=\"viewOutputText\"><i>" + line.slice(1) + "</i></p>")
         } else if (line.startsWith("*")) {
             result += ("<p class=\"viewOutputText\"><b>" + line.slice(1) + "</b></p>")
-        } else if (line.trim().length > 0) {
+        } else if (line.length > 0) {
+            line = line.replace(/\\*$/, "")
             result += ("<div class=\"viewOutputMath\">°" + line + "°</div>")
         }
     }
     page.viewOutput.innerHTML = result
     asciimath.AMprocessNode(page.viewOutput)
+}
+
+function stripHTMLTags(text) {
+    let dummyBody = document.implementation.createHTMLDocument().body
+    dummyBody.innerHTML = text
+    return dummyBody.textContent
 }
 
 function onEditorInteract(page, pageIndex) {
