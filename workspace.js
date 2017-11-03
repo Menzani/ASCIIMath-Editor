@@ -311,12 +311,12 @@ function refreshDebugConsole() {
         {key: "viewsScrollTopData", value: viewsScrollTopData},
         {key: "viewsScrollLeftData", value: viewsScrollLeftData}]) {
         if (separator) {
-            result += "<br>"
+            result += "\r\n"
         } else {
-            result += (key + " = " + debugConsole_format(value) + "<br>")
+            result += (key + " = " + debugConsole_format(value) + "\r\n")
         }
     }
-    debugConsole.innerHTML = result + "<br><br>"
+    debugConsole.textContent = result
 }
 
 function debugConsole_format(value) {
