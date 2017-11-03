@@ -278,7 +278,7 @@ body {
     color: #F5F5F5;
     font-size: 14px;
     background-color: #48CCCD;
-    width: 366px;
+    width: 350px;
     margin: 410px auto;
     left: 20px;
     right: 0;
@@ -286,19 +286,15 @@ body {
 
 #donateText {
     margin: 0;
-    width: 192px;
-    float: left;
 }
 
 #donatePayPal {
+    text-align: center;
     margin-top: 10px;
-    float: right;
 }
 
 #donateCrypto {
-    clear: both;
-    padding-top: 10px;
-    margin: 0;
+    margin: 10px 0 0;
 }
 
 #donateClose {

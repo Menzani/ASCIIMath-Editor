@@ -256,7 +256,7 @@ function showPageViewSaveInstructions() {
     }
 
     let page = pages[currentPageIndex]
-    pageViewSaveInstructions.style.top = page.viewOutput.offsetTop + "px"
+    pageViewSaveInstructions.style.top = page.view.offsetTop + "px"
     let offsetLeft = page.viewOutput.offsetLeft
     if (offsetLeft === 0) {
         pageViewSaveInstructions.style.left = ""
