@@ -28,7 +28,8 @@ const WALLPAPERS = [
     "lake1.jpg", "lake2.jpg",
     "river1.jpg", "river2.jpg", "river3.jpg",
     "forest1.jpg", "forest2.jpg",
-    "skyline1.jpg", "skyline2.jpg"]
+    "skyline1.jpg", "skyline2.jpg"
+]
 
 const ERROR_DOCUMENT_SAVE_STORAGE = "document_save_storage"
 const ERROR_DOCUMENT_SAVE = "document_save"
@@ -81,6 +82,8 @@ function onBodyLoad() {
     if (navigator.userAgent.indexOf("Firefox") === -1) {
         showBrowserMessage()
     }
+
+    asciimath.AMprocessNode(syntax)
 
     currentWallpaperIndex = nextRandomNumber(0, WALLPAPERS.length)
     loadWallpaper()
@@ -242,7 +245,7 @@ function toggleTutorial() {
 }
 
 function hidePageViewSaveInstructions(event) {
-    pageViewSaveInstructions.targetViewOutput.style.backgroundClip = ""
+    pageViewSaveInstructions.targetViewOutput.style.backgroundClip = "border-box"
     hidePopup(pageViewSaveInstructions)
     event.preventDefault()
 }

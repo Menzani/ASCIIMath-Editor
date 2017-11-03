@@ -83,6 +83,30 @@ body {
     color: white;
 }
 
+.syntaxTable {
+    margin-left: 5px;
+    margin-top: 5px;
+    float: left;
+    font-variant-ligatures: none;
+    font-family: "Fira Code Light", "Lucida Console", Monaco, monospace;
+    font-size: 15px;
+}
+
+.syntaxTableCell {
+    padding: 10px;
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+
+.syntaxReadingLink:link {
+    color: forestgreen;
+    margin-left: 15px;
+}
+
+.syntaxReadingLink:visited {
+    color: forestgreen;
+}
+
 .tourText {
     margin: 0;
 }
@@ -157,10 +181,22 @@ body {
 }
 
 #syntax {
-    width: 500px;
+    overflow: auto;
+    width: 507px;
     height: 98%;
-    left: 30px;
+    left: 20px;
     top: 2px;
+}
+
+#syntaxReadings {
+    clear: both;
+    font-size: 14px;
+    margin: 10px;
+}
+
+#syntaxReadingsText {
+    padding-top: 10px;
+    margin: 0;
 }
 
 #tour {
