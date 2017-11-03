@@ -242,7 +242,7 @@ body {
     color: #F5F5F5;
     font-size: 14px;
     background-color: #48CCCD;
-    width: 355px;
+    width: 366px;
     margin: 410px auto;
     left: 20px;
     right: 0;
@@ -250,7 +250,7 @@ body {
 
 #donateText {
     margin: 0;
-    width: 170px;
+    width: 192px;
     float: left;
 }
 
@@ -286,6 +286,27 @@ body {
     top: 50px;
 }
 
+#pageViewSaveInstructions {
+    position: absolute;
+}
+
+#pageViewSaveInstructionsText {
+    float: right;
+    width: 253px;
+    font-size: 14px;
+    margin-left: 5px;
+    margin-right: 10px;
+}
+
+#pageViewSaveInstructionsClose:link {
+    color: darkolivegreen;
+    font-style: italic;
+}
+
+#pageViewSaveInstructionsClose:visited {
+    color: darkolivegreen;
+}
+
 #debug {
     width: 450px;
     right: 45px;
@@ -304,9 +325,9 @@ body {
 
 #documentActions {
     width: 200px;
-    height: 525px;
+    height: 612px;
     right: 2px;
-    top: 200px;
+    top: 150px;
     padding: 10px 5px 0 5px;
 }
 
@@ -318,10 +339,10 @@ body {
 
 #contact {
     background-color: #48CCCD;
-    width: 210px;
+    width: 178px;
     height: 150px;
-    right: 2px;
-    top: 737px;
+    right: 8px;
+    top: 774px;
     padding: 10px;
     color: #F5F5F5;
     font-size: 15px;
@@ -342,7 +363,7 @@ body {
 }
 
 #contactClose {
-    text-align: right;
+    text-align: center;
     font-size: 13px;
     margin: 5px 0 0;
 }

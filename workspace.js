@@ -42,6 +42,7 @@ let tourDownload
 let about
 let donate
 let tutorial
+let pageViewSaveInstructions
 let debug
 let debugConsole
 let debugDocumentEvents
@@ -60,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
     about = document.getElementById("about")
     donate = document.getElementById("donate")
     tutorial = document.getElementById("tutorial")
+    pageViewSaveInstructions = document.getElementById("pageViewSaveInstructions")
     debug = document.getElementById("debug")
     debugConsole = document.getElementById("debugConsole")
     debugDocumentEvents = document.getElementById("debugDocumentEvents")
@@ -234,6 +236,32 @@ function toggleTutorial() {
     }
 }
 
+function hidePageViewSaveInstructions(event) {
+    pageViewSaveInstructions.targetViewOutput.style.backgroundClip = ""
+    hidePopup(pageViewSaveInstructions)
+    event.preventDefault()
+}
+
+function showPageViewSaveInstructions() {
+    if (currentPageIndex === -1) {
+        return
+    }
+
+    let page = pages[currentPageIndex]
+    pageViewSaveInstructions.style.top = page.viewOutput.offsetTop + "px"
+    let offsetLeft = page.viewOutput.offsetLeft
+    if (offsetLeft === 0) {
+        pageViewSaveInstructions.style.left = ""
+        pageViewSaveInstructions.style.right = "200px"
+    } else {
+        pageViewSaveInstructions.style.left = (offsetLeft + page.viewOutput.offsetWidth) + "px"
+        pageViewSaveInstructions.style.right = ""
+    }
+    showPopup(pageViewSaveInstructions)
+    page.viewOutput.style.backgroundClip = "content-box, padding-box"
+    pageViewSaveInstructions.targetViewOutput = page.viewOutput
+}
+
 function toggleDebug() {
     if (debug.popupOpen) {
         clearInterval(debugConsole.refreshTaskId)
@@ -324,6 +352,9 @@ function resolveShortcut(event) {
                 break
             case 110:
                 doAddPage()
+                break
+            case 112:
+                showPageViewSaveInstructions()
                 break
             case 113:
                 toggleSyntax()

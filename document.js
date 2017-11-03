@@ -227,13 +227,13 @@ function doRemovePage() {
 function refreshView(page) {
     let result = ""
     for (let line of page.editor.value.split(/\r?\n/)) {
-        line = stripHTMLTags(line.trim().replace(/ {2}/g, "\\ "))
-        if (line.startsWith("#")) {
+        line = stripHTMLTags(line.trim())
+        if (/^# */.test(line)) {
             result += ("<p class=\"viewOutputText\"><i>" + line.slice(1) + "</i></p>")
-        } else if (line.startsWith("*")) {
+        } else if (/^\* */.test(line)) {
             result += ("<p class=\"viewOutputText\"><b>" + line.slice(1) + "</b></p>")
         } else if (line.length > 0) {
-            line = line.replace(/\\*$/, "")
+            line = line.replace(/°/g, "\\°").replace(/\\*$/, "")
             result += ("<div class=\"viewOutputMath\">°" + line + "°</div>")
         }
     }
@@ -279,15 +279,15 @@ function downloadPageSource() {
         return
     }
 
-    let link = document.createElement("a")
-    link.style.display = "none"
+    let dummyLink = document.createElement("a")
+    dummyLink.style.display = "none"
     let url = URL.createObjectURL(new Blob([pages[currentPageIndex].editor.value], {type: "text/plain"}))
-    link.href = url
-    link.download = "Source.txt"
+    dummyLink.href = url
+    dummyLink.download = "Source.txt"
 
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
+    document.body.appendChild(dummyLink)
+    dummyLink.click()
+    document.body.removeChild(dummyLink)
     URL.revokeObjectURL(url)
 }
 

@@ -77,12 +77,18 @@ math {
 
 .viewOutput {
     padding: 0 10px 0 10px;
+    display: inline-block;
+    background: linear-gradient(white, white), linear-gradient(yellow, yellow);
 }
 
 .viewOutputText {
     font-family: "Fira Code", "Lucida Console", Monaco, monospace;
     margin: 0;
-    padding: 10px 0 10px 10px;
+    padding: 5px 10px 5px 10px;
+}
+
+.viewOutputMath {
+    padding: 10px;
 }
 
 .viewOutputMath > math {
