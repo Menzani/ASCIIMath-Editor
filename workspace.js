@@ -43,6 +43,10 @@ let browserMessage
 let errorMessage
 let errorMessageText
 let syntax
+let syntaxTabsASCIIMath
+let syntaxTabsFormatting
+let syntaxASCIIMath
+let syntaxFormatting
 let infoMessage
 let infoMessageText
 let tour
@@ -64,6 +68,10 @@ document.addEventListener("DOMContentLoaded", function () {
     errorMessage = document.getElementById("errorMessage")
     errorMessageText = document.getElementById("errorMessageText")
     syntax = document.getElementById("syntax")
+    syntaxTabsASCIIMath = document.getElementById("syntaxTabsASCIIMath")
+    syntaxTabsFormatting = document.getElementById("syntaxTabsFormatting")
+    syntaxASCIIMath = document.getElementById("syntaxASCIIMath")
+    syntaxFormatting = document.getElementById("syntaxFormatting")
     infoMessage = document.getElementById("infoMessage")
     infoMessageText = document.getElementById("infoMessageText")
     tour = document.getElementById("tour")
@@ -83,15 +91,16 @@ document.addEventListener("DOMContentLoaded", function () {
 })
 
 function onBodyLoad() {
+    currentWallpaperIndex = nextRandomNumber(0, WALLPAPERS.length)
+    loadWallpaper()
+    WALLPAPERS.loadTaskId = setInterval(loadWallpaper, 5 * 60 * 1000)
+
     if (navigator.userAgent.indexOf("Firefox") === -1) {
         showBrowserMessage()
     }
 
-    asciimath.AMprocessNode(syntax)
-
-    currentWallpaperIndex = nextRandomNumber(0, WALLPAPERS.length)
-    loadWallpaper()
-    WALLPAPERS.loadTaskId = setInterval(loadWallpaper, 5 * 60 * 1000)
+    asciimath.AMprocessNode(syntaxASCIIMath)
+    selectSyntaxTab(syntaxTabsASCIIMath)
 
     openDocument()
 }
@@ -362,6 +371,25 @@ function downloadFirefox(event) {
     location.href = "https://www.mozilla.org/it/firefox/new"
     if (event) {
         event.preventDefault()
+    }
+}
+
+function selectSyntaxTab(tab) {
+    switch (tab) {
+        case syntaxTabsASCIIMath:
+            syntaxTabsASCIIMath.classList.add("syntaxTabsButtonSelected")
+            syntaxTabsFormatting.classList.remove("syntaxTabsButtonSelected")
+            syntaxASCIIMath.style.display = "block"
+            syntaxFormatting.style.display = "none"
+            break
+        case syntaxTabsFormatting:
+            syntaxTabsASCIIMath.classList.remove("syntaxTabsButtonSelected")
+            syntaxTabsFormatting.classList.add("syntaxTabsButtonSelected")
+            syntaxASCIIMath.style.display = "none"
+            syntaxFormatting.style.display = "block"
+            break
+        default:
+            console.error("Unknown syntax tab: " + tab)
     }
 }
 

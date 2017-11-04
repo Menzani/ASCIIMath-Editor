@@ -15,7 +15,6 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 @import url("https://fonts.googleapis.com/css?family=Bitter");
 
 body {
@@ -93,7 +92,29 @@ body {
     color: white;
 }
 
-.syntaxTable {
+.syntaxTabsButton {
+    float: left;
+    border: none;
+    cursor: pointer;
+    padding: 12px 14px;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+.syntaxTabsButton:hover {
+    background-color: #DDDDDD;
+}
+
+.syntaxTabsButtonSelected {
+    background-color: #CCCCCC;
+}
+
+.syntaxTabContent {
+    clear: both;
+    border-top: 1px solid gray;
+}
+
+.syntaxASCIIMathTable {
     margin-left: 5px;
     margin-top: 5px;
     float: left;
@@ -102,7 +123,7 @@ body {
     font-size: 15px;
 }
 
-.syntaxTableCell {
+.syntaxASCIIMathTableCell {
     padding: 10px;
     border: 1px solid gray;
     border-collapse: collapse;
@@ -112,12 +133,12 @@ body {
     cursor: pointer;
 }
 
-.syntaxReadingsLink:link {
+.syntaxASCIIMathReadingsLink:link {
     color: forestgreen;
     margin-left: 15px;
 }
 
-.syntaxReadingsLink:visited {
+.syntaxASCIIMathReadingsLink:visited {
     color: forestgreen;
 }
 
@@ -202,13 +223,17 @@ body {
     top: 2px;
 }
 
-#syntaxReadings {
+#syntaxTabs {
+    margin-left: 10px;
+}
+
+#syntaxASCIIMathReadings {
     clear: both;
     font-size: 14px;
     margin: 10px;
 }
 
-#syntaxReadingsText {
+#syntaxASCIIMathReadingsText {
     padding-top: 10px;
     margin: 0;
 }
