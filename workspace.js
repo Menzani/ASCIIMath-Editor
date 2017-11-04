@@ -358,6 +358,22 @@ function downloadFirefox(event) {
     }
 }
 
+function copyContent(node) {
+    let dummyTextarea = document.createElement("textarea")
+    let content = node.textContent.trim()
+    dummyTextarea.textContent = content
+    document.body.appendChild(dummyTextarea)
+    dummyTextarea.select()
+    try {
+        document.execCommand("copy")
+        showInfoMessage("<b>Copied:</b> " + content)
+    } catch (e) {
+        console.error(e)
+    } finally {
+        document.body.removeChild(dummyTextarea)
+    }
+}
+
 function resolveShortcut(event) {
     if (debugKeyPress.checked) {
         console.group()

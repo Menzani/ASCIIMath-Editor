@@ -108,6 +108,10 @@ body {
     border-collapse: collapse;
 }
 
+.copyable {
+    cursor: pointer;
+}
+
 .syntaxReadingsLink:link {
     color: forestgreen;
     margin-left: 15px;
