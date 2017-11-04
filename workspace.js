@@ -190,6 +190,13 @@ function showInfoMessage(text) {
     }, 2000)
 }
 
+function showCustomInfoMessage() {
+    let text = prompt("Please set the info message text:")
+    if (text) {
+        showInfoMessage(text)
+    }
+}
+
 function hideTour(event) {
     hidePopup(tour)
     event.preventDefault()

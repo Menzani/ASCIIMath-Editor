@@ -223,7 +223,7 @@ body {
 
 #infoMessageText {
     color: white;
-    margin: 0;
+    margin: 0 10px 0 10px;
     overflow: hidden;
 }
 
