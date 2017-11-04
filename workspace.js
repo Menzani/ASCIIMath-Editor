@@ -43,6 +43,8 @@ let browserMessage
 let errorMessage
 let errorMessageText
 let syntax
+let infoMessage
+let infoMessageText
 let tour
 let tourDownload
 let about
@@ -62,6 +64,8 @@ document.addEventListener("DOMContentLoaded", function () {
     errorMessage = document.getElementById("errorMessage")
     errorMessageText = document.getElementById("errorMessageText")
     syntax = document.getElementById("syntax")
+    infoMessage = document.getElementById("infoMessage")
+    infoMessageText = document.getElementById("infoMessageText")
     tour = document.getElementById("tour")
     tourDownload = document.getElementById("tourDownload")
     about = document.getElementById("about")
@@ -121,27 +125,6 @@ function setWallpaper(url) {
     currentBackgroundLayer = !currentBackgroundLayer
 }
 
-function showWallpaper() {
-    setTimeout(function () {
-        if (currentBackgroundLayer) {
-            backgroundLayer1.classList.add("backgroundLayerAnimation")
-            backgroundLayer1.style.zIndex = -1
-            backgroundLayer2.style.zIndex = -2
-        } else {
-            backgroundLayer2.classList.add("backgroundLayerAnimation")
-            backgroundLayer2.style.zIndex = -1
-            backgroundLayer1.style.zIndex = -2
-        }
-    }, 3000)
-}
-
-function downloadFirefox(event) {
-    location.href = "https://www.mozilla.org/it/firefox/new"
-    if (event) {
-        event.preventDefault()
-    }
-}
-
 function hidePopup(popup) {
     popup.classList.remove("popupAppearAnimation")
     popup.classList.add("popupDisappearAnimation")
@@ -193,6 +176,18 @@ function toggleSyntax() {
     } else {
         showPopup(syntax)
     }
+}
+
+function showInfoMessage(text) {
+    infoMessageText.innerHTML = text
+    if (infoMessage.closeTaskId) {
+        clearTimeout(infoMessage.closeTaskId)
+    }
+    showPopup(infoMessage)
+    infoMessage.closeTaskId = setTimeout(function () {
+        hidePopup(infoMessage)
+        infoMessage.closeTaskId = null
+    }, 2000)
 }
 
 function hideTour(event) {
@@ -281,18 +276,6 @@ function toggleDebug() {
     }
 }
 
-function hideContact(event) {
-    hidePopup(contact)
-    if (event) {
-        event.preventDefault()
-    }
-}
-
-function showContact(event) {
-    showPopup(contact)
-    event.preventDefault()
-}
-
 function refreshDebugConsole() {
     let result = ""
     for (let {key, value, separator} of [
@@ -340,6 +323,39 @@ function debugConsole_format(value) {
         return result.slice(0, result.length - 2) + "]"
     }
     return value.toString()
+}
+
+function hideContact(event) {
+    hidePopup(contact)
+    if (event) {
+        event.preventDefault()
+    }
+}
+
+function showContact(event) {
+    showPopup(contact)
+    event.preventDefault()
+}
+
+function showWallpaper() {
+    setTimeout(function () {
+        if (currentBackgroundLayer) {
+            backgroundLayer1.classList.add("backgroundLayerAnimation")
+            backgroundLayer1.style.zIndex = -1
+            backgroundLayer2.style.zIndex = -2
+        } else {
+            backgroundLayer2.classList.add("backgroundLayerAnimation")
+            backgroundLayer2.style.zIndex = -1
+            backgroundLayer1.style.zIndex = -2
+        }
+    }, 3000)
+}
+
+function downloadFirefox(event) {
+    location.href = "https://www.mozilla.org/it/firefox/new"
+    if (event) {
+        event.preventDefault()
+    }
 }
 
 function resolveShortcut(event) {

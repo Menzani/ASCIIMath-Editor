@@ -61,6 +61,16 @@ body {
     animation-fill-mode: both;
 }
 
+#infoMessage.popupAppearAnimation {
+    animation: 0.5s infoMessagePopupAppear;
+    animation-fill-mode: both;
+}
+
+#infoMessage.popupDisappearAnimation {
+    animation: 0.5s infoMessagePopupDisappear;
+    animation-fill-mode: both;
+}
+
 .message {
     width: 100%;
     height: 40px;
@@ -98,12 +108,12 @@ body {
     border-collapse: collapse;
 }
 
-.syntaxReadingLink:link {
+.syntaxReadingsLink:link {
     color: forestgreen;
     margin-left: 15px;
 }
 
-.syntaxReadingLink:visited {
+.syntaxReadingsLink:visited {
     color: forestgreen;
 }
 
@@ -199,6 +209,20 @@ body {
     margin: 0;
 }
 
+#infoMessage {
+    padding: 10px;
+    bottom: 20px;
+    left: 25px;
+    max-width: 500px;
+    background-color: mediumseagreen;
+}
+
+#infoMessageText {
+    color: white;
+    margin: 0;
+    overflow: hidden;
+}
+
 #tour {
     margin: 2px auto;
     left: 0;
@@ -238,7 +262,7 @@ body {
 }
 
 #aboutIcon {
-    position: fixed;
+    position: absolute;
     height: 100%;
     width: 100%;
     z-index: -1;
@@ -426,6 +450,26 @@ body {
     }
     to {
         transform: rotate3d(1, 0, 0, 90deg);
+        visibility: hidden;
+    }
+}
+
+@keyframes infoMessagePopupAppear {
+    from {
+        transform: translateX(-1000px);
+        visibility: hidden;
+    }
+    to {
+        visibility: visible;
+    }
+}
+
+@keyframes infoMessagePopupDisappear {
+    from {
+        visibility: visible;
+    }
+    to {
+        transform: translateX(-1000px);
         visibility: hidden;
     }
 }
