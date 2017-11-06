@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.style.backgroundAttachment = "fixed"
 })
 
-function onBodyLoad() {
+function initialize() {
     currentWallpaperIndex = nextRandomNumber(0, WALLPAPERS.length)
     loadWallpaper()
     WALLPAPERS.loadTaskId = setInterval(loadWallpaper, 5 * 60 * 1000)
@@ -341,8 +341,11 @@ function debugConsole_format(value) {
     return value.toString()
 }
 
-function hideContact(event) {
+function hideContact(event, mailSubject) {
     hidePopup(contact)
+    if (mailSubject) {
+        window.open("mailto:contact@asciimatheditor.eu?subject=[ASCIIMath Editor]%20" + mailSubject)
+    }
     if (event) {
         event.preventDefault()
     }

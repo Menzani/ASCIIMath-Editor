@@ -29,7 +29,7 @@
     <link rel="icon" href="resources/icon/favicon.ico" type="image/x-icon">
     <title>ASCIIMath Editor for Firefox</title>
 </head>
-<body onload="onBodyLoad()" onkeypress="resolveShortcut(event)">
+<body onload="initialize()" onkeypress="resolveShortcut(event)">
 <img id="backgroundLayer1" class="backgroundLayer" onload="showWallpaper()">
 <img id="backgroundLayer2" class="backgroundLayer" onload="showWallpaper()">
 
@@ -732,11 +732,11 @@
             <p id="syntaxASCIIMathReadingsText">Recommended readings:</p>
             <a class="syntaxASCIIMathReadingsLink" href="http://www.wjagray.co.uk/maths/ASCIIMathTutorial.html"
                target="_blank">
-                Tutorial (by James Gray)
+                Tutorial by James Gray
             </a>
-            <a class="syntaxASCIIMathReadingsLink" href="https://www1.chapman.edu/~jipsen/mathml/asciimathsyntax.xml"
+            <a class="syntaxASCIIMathReadingsLink" href="https://runarberg.github.io/ascii2mathml/#reference"
                target="_blank">
-                Syntax and constants (by Peter Jipsen)
+                Tutorial by runarberg
             </a>
         </div>
     </div>
@@ -781,7 +781,7 @@
     <p id="donateText">
         If you like ASCIIMath Editor, consider making a donation to support its development.
     </p>
-    <a href="https://www.paypal.me/menzani"><img id="donatePayPal" src="resources/paypal.png"></a>
+    <a href="https://www.paypal.me/menzani" target="_blank"><img id="donatePayPal" src="resources/paypal.png"></a>
     <p id="donateCrypto">
         ETH:
         <small class="copyable" onclick="copyContent(this)">0xa5e47552f6e5C3476d807F9f899D118Cf94e65b4</small>
@@ -869,21 +869,15 @@
         You want to:
     </p>
     <p id="contactCategories">
-        <a class="contactLink"
-           href="mailto:contact@asciimatheditor.eu?subject=[ASCIIMath Editor]%20Issue%20report"
-           onclick="hideContact()">
+        <a class="contactLink" href="#" onclick="hideContact(event, 'Issue%20report')">
             Report an issue
         </a>
         <br>
-        <a class="contactLink"
-           href="mailto:contact@asciimatheditor.eu?subject=[ASCIIMath Editor]%20Feature%20request"
-           onclick="hideContact()">
+        <a class="contactLink" href="#" onclick="hideContact(event, 'Feature%20request')">
             Request a feature
         </a>
         <br>
-        <a class="contactLink"
-           href="mailto:contact@asciimatheditor.eu?subject=[ASCIIMath Editor]%20Wallpaper%20submission"
-           onclick="hideContact()">
+        <a class="contactLink" href="#" onclick="hideContact(event, 'Wallpaper%20submission')">
             Submit a wallpaper
         </a>
     </p>

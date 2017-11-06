@@ -248,9 +248,6 @@ body {
 #infoMessageText {
     color: white;
     margin: 0 10px 0 10px;
-    max-width: 500px;
-    max-height: 20px;
-    overflow: hidden;
 }
 
 #tour {
