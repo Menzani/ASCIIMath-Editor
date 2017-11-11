@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function initialize() {
     currentWallpaperIndex = nextRandomNumber(0, WALLPAPERS.length)
     loadWallpaper()
-    WALLPAPERS.loadTaskId = setInterval(loadWallpaper, 5 * 60 * 1000)
+    WALLPAPERS.loadTaskId = setInterval(loadWallpaper, 10 * 60 * 1000)
 
     if (navigator.userAgent.indexOf("Firefox") === -1) {
         showBrowserMessage()

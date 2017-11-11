@@ -22,7 +22,6 @@
 }
 
 math {
-    color: #505050;
     font-family: "Latin Modern Math", "Cambria Math", serif;
     font-size: 20px;
 }
@@ -56,12 +55,13 @@ math {
     width: 800px;
     height: 600px;
     overflow: auto;
+    background-color: #F5F5F5;
 }
 
 .viewOutput {
-    padding: 0 10px 0 10px;
+    padding-right: 10px;
     display: inline-block;
-    background: linear-gradient(white, white), linear-gradient(yellow, yellow);
+    background: linear-gradient(#F5F5F5, #F5F5F5), linear-gradient(yellow, yellow);
 }
 
 .viewOutputText {
