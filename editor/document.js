@@ -210,14 +210,17 @@ function doRemovePage() {
 function refreshView(page) {
     let result = ""
     for (let line of page.editor.value.split(/\r?\n/)) {
-        line = stripHTMLTags(line.trim())
-        if (/^# */.test(line)) {
-            result += ("<p class=\"viewOutputText\"><i>" + line.slice(1) + "</i></p>")
-        } else if (/^\* */.test(line)) {
-            result += ("<p class=\"viewOutputText\"><b>" + line.slice(1) + "</b></p>")
-        } else if (line.length > 0) {
-            line = line.replace(/°/g, "\\°").replace(/\\*$/, "")
-            result += ("<div class=\"viewOutputMath\">°" + line + "°</div>")
+        let trimmedLine = stripHTMLTags(line.trim())
+        let untrimmedLine = stripHTMLTags(line)
+        if (/^# /.test(trimmedLine)) {
+            result += ("<p class=\"viewOutputText viewOutputParagraph\">" + trimmedLine.slice(2) + "</p>")
+        } else if (/^\* /.test(trimmedLine)) {
+            result += ("<p class=\"viewOutputText viewOutputHeading\">" + trimmedLine.slice(2) + "</p>")
+        } else if (/^ {2}/.test(untrimmedLine)) {
+            result += ("<p class=\"viewOutputText viewOutputQuote\">" + untrimmedLine + "</p>")
+        } else if (trimmedLine.length > 0) {
+            trimmedLine = trimmedLine.replace(/°/g, "\\°").replace(/\\*$/, "")
+            result += ("<div class=\"viewOutputMath\">°" + trimmedLine + "°</div>")
         }
     }
     page.viewOutput.innerHTML = result
