@@ -89,14 +89,14 @@ function initialize() {
 }
 
 function loadWallpaper() {
-    setWallpaper("../resources/wallpapers/" + WALLPAPERS[currentWallpaperIndex])
+    setWallpaper("resources/wallpapers/" + WALLPAPERS[currentWallpaperIndex])
     if (++currentWallpaperIndex === WALLPAPERS.length) {
         currentWallpaperIndex = 0
     }
 }
 
 function loadCustomWallpaper() {
-    let url = prompt("Please set the wallpaper image URL:", "../resources/wallpapers/")
+    let url = prompt("Please set the wallpaper image URL:", "resources/wallpapers/")
     if (url) {
         if (WALLPAPERS.loadTaskId) {
             clearInterval(WALLPAPERS.loadTaskId)

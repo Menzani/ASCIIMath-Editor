@@ -1,23 +1,23 @@
 /*ASCIIMath Editor | (C) 2017 Francesco Menzani – francescomenzani99@gmail.com | https://goo.gl/L1rTj9*/
 @font-face {
     font-family: "Fira Code";
-    src: url("../resources/fonts/FiraCode-Regular.otf") format("opentype");
+    src: url("resources/fonts/FiraCode-Regular.otf") format("opentype");
 }
 
 @font-face {
     font-family: "Fira Code";
     font-weight: bold;
-    src: url("../resources/fonts/FiraCode-Bold.otf") format("opentype");
+    src: url("resources/fonts/FiraCode-Bold.otf") format("opentype");
 }
 
 @font-face {
     font-family: "Fira Code Light";
-    src: url("../resources/fonts/FiraCode-Light.otf") format("opentype");
+    src: url("resources/fonts/FiraCode-Light.otf") format("opentype");
 }
 
 @font-face {
     font-family: "Latin Modern Math";
-    src: url("../resources/fonts/latinmodern-math.otf") format("opentype");
+    src: url("resources/fonts/latinmodern-math.otf") format("opentype");
 }
 
 math {

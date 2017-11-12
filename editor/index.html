@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="document.css" type="text/css">
     <script src="workspace.js" type="text/javascript"></script>
     <script src="document.js" type="text/javascript"></script>
-    <script src="../lib/ASCIIMathML.js" type="text/javascript"></script>
+    <script src="lib/ASCIIMathML.js" type="text/javascript"></script>
 
-    <link rel="icon" href="../resources/icon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../resources/favicon.ico" type="image/x-icon">
     <title>ASCIIMath Editor</title>
 </head>
 <body onload="initialize()" onkeypress="resolveShortcut(event)">
@@ -743,7 +743,7 @@
     <p id="tourClose"><a id="tourCloseLink" href="#" onclick="hideTour(event)">Close</a></p>
 </div>
 <div id="about" class="card menu popup">
-    <img id="aboutIcon" src="../resources/icon/extended-icon.png">
+    <img id="aboutIcon" src="resources/extended-icon.png">
     <h1 id="aboutTitle">
         ASCIIMath Editor
         <br>
@@ -764,7 +764,7 @@
     <p id="donateText">
         If you like ASCIIMath Editor, consider making a donation to support its development.
     </p>
-    <a href="https://www.paypal.me/menzani" target="_blank"><img id="donatePayPal" src="../resources/paypal.png"></a>
+    <a href="https://www.paypal.me/menzani" target="_blank"><img id="donatePayPal" src="resources/paypal.png"></a>
     <p id="donateCrypto">
         ETH:
         <small class="copyable" onclick="copyContent(this)">0xa5e47552f6e5C3476d807F9f899D118Cf94e65b4</small>
@@ -778,7 +778,7 @@
     </p>
 </div>
 <div id="pageViewSaveInstructions" class="card menu popup">
-    <img src="../resources/screenshot/contextMenu.png">
+    <img src="resources/screenshot/contextMenu.png">
     <p id="pageViewSaveInstructionsText">
         To save this preview, right-click anywhere below the editable area and choose <b>Take a Screenshot</b>,
         then click with your mouse on the <span style="background-color: yellow;">yellow</span> border if you want to
@@ -790,9 +790,9 @@
                                      onclick="hidePageViewSaveInstructions(event)">I am ready</a>.
     </p>
     <br>
-    <img src="../resources/screenshot/selectArea.png">
+    <img src="resources/screenshot/selectArea.png">
     <br>
-    <img src="../resources/screenshot/download.png">
+    <img src="resources/screenshot/download.png">
 </div>
 <div id="debug" class="card menu popup">
     <textarea id="debugConsole" onfocus="this.blur()"></textarea>
