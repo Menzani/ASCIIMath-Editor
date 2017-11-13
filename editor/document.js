@@ -212,14 +212,16 @@ function refreshView(page) {
     for (let line of page.editor.value.split(/\r?\n/)) {
         let trimmedLine = stripHTMLTags(line.trim())
         let untrimmedLine = stripHTMLTags(line)
-        if (/^# /.test(trimmedLine)) {
-            result += ("<p class=\"viewOutputText viewOutputParagraph\">" + trimmedLine.slice(2) + "</p>")
-        } else if (/^\* /.test(trimmedLine)) {
-            result += ("<p class=\"viewOutputText viewOutputHeading\">" + trimmedLine.slice(2) + "</p>")
-        } else if (/^ {2}/.test(untrimmedLine)) {
-            result += ("<p class=\"viewOutputText viewOutputQuote\">" + untrimmedLine + "</p>")
+        if (trimmedLine.startsWith("#")) {
+            result += ("<p class=\"viewOutputText viewOutputParagraph\">" + trimmedLine.slice(1) + "</p>")
+        } else if (trimmedLine.startsWith("*")) {
+            result += ("<p class=\"viewOutputText viewOutputHeading\">" + trimmedLine.slice(1) + "</p>")
+        } else if (trimmedLine === "-=-=-") {
+            result += "<hr>"
+        } else if (untrimmedLine.startsWith(" ")) { // Always at the end before outline math
+            result += ("<p class=\"viewOutputText viewOutputQuote\">" + untrimmedLine.slice(1) + "</p>")
         } else if (trimmedLine.length > 0) {
-            trimmedLine = trimmedLine.replace(/°/g, "\\°").replace(/\\*$/, "")
+            trimmedLine = trimmedLine.replace(/°/g, "\\°").replace(/\\+$/, "")
             result += ("<div class=\"viewOutputMath\">°" + trimmedLine + "°</div>")
         }
     }
