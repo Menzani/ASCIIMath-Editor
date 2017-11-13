@@ -1,4 +1,4 @@
-/*ASCIIMath Editor | (C) 2017 Francesco Menzani – francescomenzani99@gmail.com | https://goo.gl/L1rTj9*/
+/*ASCIIMath Editor | (C) 2017 Francesco Menzani – francescomenzani99@gmail.com | https://github.com/MrSystem/ASCIIMath-Editor/blob/production/LICENSE*/
 @import url("https://fonts.googleapis.com/css?family=Bitter");
 
 body {
@@ -24,7 +24,7 @@ body {
 }
 
 .menu {
-    font-family: Bitter, Tahoma, Geneva, sans-serif;
+    font-family: Bitter, sans-serif;
     position: fixed;
 }
 

@@ -1,4 +1,4 @@
-// ASCIIMath Editor | (C) 2017 Francesco Menzani – francescomenzani99@gmail.com | https://goo.gl/L1rTj9
+// ASCIIMath Editor | (C) 2017 Francesco Menzani – francescomenzani99@gmail.com | https://github.com/MrSystem/ASCIIMath-Editor/blob/production/LICENSE
 "use strict"
 
 const DEFAULT_PAGE_COUNT = 1
@@ -322,9 +322,47 @@ function saveDocument() {
     }
 }
 
-function deleteDocument() {
+function openTestDocument() {
+    getResource("testResources/testDocumentData.txt").then(function (data) {
+        deleteDocument(function () {
+            let lines = data.split(/\r\n/)
+            localStorage.windowScrollY = lines[0]
+            localStorage.pageCount = lines[1]
+            localStorage.currentPageIndex = lines[2]
+            localStorage.editorsValueData = lines[3]
+            localStorage.editorsHeightData = lines[4]
+            localStorage.editorsSelectionStartData = lines[5]
+            localStorage.editorsSelectionEndData = lines[6]
+            localStorage.editorsScrollTopData = lines[7]
+            localStorage.viewsScrollTopData = lines[8]
+            localStorage.viewsScrollLeftData = lines[9]
+        })
+    })
+}
+
+function deleteDocument(initTask) {
     localStorage.clear()
+    if (initTask) {
+        initTask()
+    }
     location.reload(true)
+}
+
+function getResource(url) {
+    return new Promise((resolve, reject) => {
+        let request = new XMLHttpRequest()
+        request.open("GET", url)
+        request.onreadystatechange = function () {
+            if (request.readyState !== 4 || (request.status !== 200 && request.status !== 0)) {
+                return
+            }
+            resolve(request.response)
+        }
+        request.onerror = function () {
+            reject(request.statusText)
+        }
+        request.send()
+    })
 }
 
 function logEvent(name, pageIndex, calledMethodName) {
