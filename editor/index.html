@@ -15,6 +15,34 @@
 <body onload="initialize()" onkeypress="resolveShortcut(event)">
 <img id="backgroundLayer1" class="backgroundLayer" onload="showWallpaper()">
 <img id="backgroundLayer2" class="backgroundLayer" onload="showWallpaper()">
+<div id="topBar" class="card menu">
+    <div>
+        <img class="topBar-element" src="resources/icons/previous-document.png" title="Go to Previous Document">
+        <img class="topBar-element" src="resources/icons/next-document.png" title="Go to Next Document">
+        <input class="topBar-element" type="text" placeholder="Unnamed document">
+        <p id="topBar-savedStatus" class="topBar-element">Not saved yet</p>
+    </div>
+    <div id="topBar-lowerBar">
+        <img class="topBar-element" src="resources/icons/switch-document.png" title="Switch Document">
+        <div class="topBar-element topBar-separator"></div>
+        <img class="topBar-element" src="resources/icons/new-document.png" title="New Document">
+        <img class="topBar-element" src="resources/icons/import-document.png" title="Import Document">
+        <img class="topBar-element" src="resources/icons/export-document.png" title="Export Document">
+        <img class="topBar-element" src="resources/icons/save-document.png" title="Save Document as Image">
+        <div class="topBar-element topBar-separator"></div>
+        <img class="topBar-element" src="resources/icons/new-page.png" title="New Page">
+        <img class="topBar-element" src="resources/icons/delete-page.png" title="Delete Page">
+        <img class="topBar-element" src="resources/icons/previous-page.png" title="Go to Previous Page">
+        <img class="topBar-element" src="resources/icons/next-page.png" title="Go to Next Page">
+        <div class="topBar-element topBar-separator"></div>
+        <img class="topBar-element" src="resources/icons/syntax.png" title="Syntax Reference">
+        <img class="topBar-element" src="resources/icons/tutorial.png" title="Tutorial">
+        <div class="topBar-element topBar-separator"></div>
+        <img class="topBar-element" src="resources/icons/settings.png" title="Settings">
+        <img class="topBar-element" src="resources/icons/homepage.png" title="Return to Homepage">
+        <img class="topBar-element" src="resources/icons/about.png" title="About">
+    </div>
+</div>
 
 <div id="browserMessage" class="card menu popup message"><p class="messageText">
     This app is designed to run on <a class="messageLink" href="#" onclick="downloadFirefox(event)">Firefox</a>
