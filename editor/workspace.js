@@ -397,7 +397,7 @@ function copyContent(node) {
 
 function resolveShortcut(event) {
     if (debugKeyPress.checked) {
-        console.group()
+        console.group("body.onkeypress")
         console.info("charCode = " + event.charCode)
         console.info("keyCode = " + event.keyCode)
         console.groupEnd()
