@@ -281,28 +281,34 @@ function downloadPagePreview() {
     svg.setAttribute("xmlns", "http://www.w3.org/2000/svg")
     svg.setAttribute("width", previewWidth)
     svg.setAttribute("height", previewHeight)
-    let foreignObject = document.createElement("foreignObject")
-    foreignObject.setAttribute("width", "100%")
-    foreignObject.setAttribute("height", "100%")
-    let pageViewOutputClone = pageViewOutput.cloneNode(true)
-    pageViewOutputClone.setAttribute("xmlns", "http://www.w3.org/1998/Math/MathML")
-    foreignObject.appendChild(pageViewOutputClone)
-    svg.appendChild(foreignObject)
+    getResource("document.css").then(function (data) {
+        let style = document.createElement("style")
+        style.textContent = data
+        svg.appendChild(style)
+    }).then(function () {
+        let foreignObject = document.createElement("foreignObject")
+        foreignObject.setAttribute("width", "100%")
+        foreignObject.setAttribute("height", "100%")
+        let pageViewOutputClone = pageViewOutput.cloneNode(true)
+        pageViewOutputClone.setAttribute("xmlns", "http://www.w3.org/1998/Math/MathML")
+        foreignObject.appendChild(pageViewOutputClone)
+        svg.appendChild(foreignObject)
 
-    let texture = new Image()
-    let data = svg.outerHTML.replace(/foreignobject/g, "foreignObject")
-    let url = URL.createObjectURL(new Blob([data], {type: "image/svg+xml"}))
-    texture.onload = function () {
-        let canvas = document.createElement("canvas")
-        canvas.setAttribute("width", previewWidth)
-        canvas.setAttribute("height", previewHeight)
-        canvas.getContext("2d").drawImage(texture, 0, 0)
-        canvas.toBlob(function (blob) {
-            downloadFile(blob, "Preview.png")
-        })
-        URL.revokeObjectURL(url)
-    }
-    texture.src = url
+        let texture = new Image()
+        let data = svg.outerHTML.replace(/foreignobject/g, "foreignObject")
+        let url = URL.createObjectURL(new Blob([data], {type: "image/svg+xml"}))
+        texture.onload = function () {
+            let canvas = document.createElement("canvas")
+            canvas.setAttribute("width", previewWidth)
+            canvas.setAttribute("height", previewHeight)
+            canvas.getContext("2d").drawImage(texture, 0, 0)
+            canvas.toBlob(function (blob) {
+                downloadFile(blob, "Preview.png")
+            })
+            URL.revokeObjectURL(url)
+        }
+        texture.src = url
+    })
 }
 
 function downloadFile(blob, fileName) {
