@@ -266,13 +266,51 @@ function downloadPageSource() {
     if (currentPageIndex === -1) {
         return
     }
+    downloadFile(new Blob([pages[currentPageIndex].editor.value], {type: "text/plain"}), "Source.txt")
+}
 
+function downloadPagePreview() {
+    if (currentPageIndex === -1) {
+        return
+    }
+
+    let pageViewOutput = pages[currentPageIndex].viewOutput
+    let previewWidth = pageViewOutput.offsetWidth + "px"
+    let previewHeight = pageViewOutput.offsetHeight + "px"
+    let svg = document.createElement("svg")
+    svg.setAttribute("xmlns", "http://www.w3.org/2000/svg")
+    svg.setAttribute("width", previewWidth)
+    svg.setAttribute("height", previewHeight)
+    let foreignObject = document.createElement("foreignObject")
+    foreignObject.setAttribute("width", "100%")
+    foreignObject.setAttribute("height", "100%")
+    let pageViewOutputClone = pageViewOutput.cloneNode(true)
+    pageViewOutputClone.setAttribute("xmlns", "http://www.w3.org/1998/Math/MathML")
+    foreignObject.appendChild(pageViewOutputClone)
+    svg.appendChild(foreignObject)
+
+    let texture = new Image()
+    let data = svg.outerHTML.replace(/foreignobject/g, "foreignObject")
+    let url = URL.createObjectURL(new Blob([data], {type: "image/svg+xml"}))
+    texture.onload = function () {
+        let canvas = document.createElement("canvas")
+        canvas.setAttribute("width", previewWidth)
+        canvas.setAttribute("height", previewHeight)
+        canvas.getContext("2d").drawImage(texture, 0, 0)
+        canvas.toBlob(function (blob) {
+            downloadFile(blob, "Preview.png")
+        })
+        URL.revokeObjectURL(url)
+    }
+    texture.src = url
+}
+
+function downloadFile(blob, fileName) {
     let dummyLink = document.createElement("a")
     dummyLink.style.display = "none"
-    let url = URL.createObjectURL(new Blob([pages[currentPageIndex].editor.value], {type: "text/plain"}))
+    let url = URL.createObjectURL(blob)
     dummyLink.href = url
-    dummyLink.download = "Source.txt"
-
+    dummyLink.download = fileName
     document.body.appendChild(dummyLink)
     dummyLink.click()
     document.body.removeChild(dummyLink)
