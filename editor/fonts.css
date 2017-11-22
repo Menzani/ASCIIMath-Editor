@@ -1,0 +1,43 @@
+@import url("resources/fonts/FiraCode/fira_code.css");
+@import url("resources/fonts/SourceCodePro/source-code-pro.css");
+
+@import url("https://fonts.googleapis.com/css?family=Bitter");
+
+@font-face {
+    font-family: "Latin Modern";
+    src: url("resources/fonts/LM/lmsans10-regular.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "Latin Modern";
+    font-style: italic;
+    src: url("resources/fonts/LM/lmsans10-oblique.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "Latin Modern";
+    font-weight: bold;
+    src: url("resources/fonts/LM/lmsans10-bold.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "Latin Modern Math";
+    src: url("resources/fonts/LM/latinmodern-math.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "iosevka";
+    src: url("resources/fonts/iosevka/iosevka-regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "iosevka";
+    font-style: italic;
+    src: url("resources/fonts/iosevka/iosevka-italic.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "iosevka";
+    font-weight: bold;
+    src: url("resources/fonts/iosevka/iosevka-heavy.ttf") format("truetype");
+}
