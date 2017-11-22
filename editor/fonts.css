@@ -1,7 +1,41 @@
-@import url("resources/fonts/FiraCode/fira_code.css");
-@import url("resources/fonts/SourceCodePro/source-code-pro.css");
-
 @import url("https://fonts.googleapis.com/css?family=Bitter");
+
+@font-face {
+    font-family: "Fira Code";
+    src: url("resources/fonts/FiraCode/eot/FiraCode-Regular.eot") format("embedded-opentype"),
+    url("resources/fonts/FiraCode/woff2/FiraCode-Regular.woff2") format("woff2"),
+    url("resources/fonts/FiraCode/woff/FiraCode-Regular.woff") format("woff"),
+    url("resources/fonts/FiraCode/ttf/FiraCode-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Fira Code";
+    src: url("resources/fonts/FiraCode/eot/FiraCode-Bold.eot") format("embedded-opentype"),
+    url("resources/fonts/FiraCode/woff2/FiraCode-Bold.woff2") format("woff2"),
+    url("resources/fonts/FiraCode/woff/FiraCode-Bold.woff") format("woff"),
+    url("resources/fonts/FiraCode/ttf/FiraCode-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "iosevka";
+    src: url("resources/fonts/iosevka/iosevka-regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "iosevka";
+    font-style: italic;
+    src: url("resources/fonts/iosevka/iosevka-italic.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "iosevka";
+    font-weight: bold;
+    src: url("resources/fonts/iosevka/iosevka-heavy.ttf") format("truetype");
+}
 
 @font-face {
     font-family: "Latin Modern";
@@ -26,18 +60,37 @@
 }
 
 @font-face {
-    font-family: "iosevka";
-    src: url("resources/fonts/iosevka/iosevka-regular.ttf") format("truetype");
+    font-family: "Source Code Pro";
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    src: url("resources/fonts/SourceCodePro/EOT/SourceCodePro-Regular.eot") format("embedded-opentype"),
+    url("resources/fonts/SourceCodePro/WOFF2/TTF/SourceCodePro-Regular.ttf.woff2") format("woff2"),
+    url("resources/fonts/SourceCodePro/WOFF/OTF/SourceCodePro-Regular.otf.woff") format("woff"),
+    url("resources/fonts/SourceCodePro/OTF/SourceCodePro-Regular.otf") format("opentype"),
+    url("resources/fonts/SourceCodePro/TTF/SourceCodePro-Regular.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: "iosevka";
+    font-family: "Source Code Pro";
+    font-weight: 400;
     font-style: italic;
-    src: url("resources/fonts/iosevka/iosevka-italic.ttf") format("truetype");
+    font-stretch: normal;
+    src: url("resources/fonts/SourceCodePro/EOT/SourceCodePro-It.eot") format("embedded-opentype"),
+    url("resources/fonts/SourceCodePro/WOFF2/TTF/SourceCodePro-It.ttf.woff2") format("woff2"),
+    url("resources/fonts/SourceCodePro/WOFF/OTF/SourceCodePro-It.otf.woff") format("woff"),
+    url("resources/fonts/SourceCodePro/OTF/SourceCodePro-It.otf") format("opentype"),
+    url("resources/fonts/SourceCodePro/TTF/SourceCodePro-It.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: "iosevka";
-    font-weight: bold;
-    src: url("resources/fonts/iosevka/iosevka-heavy.ttf") format("truetype");
+    font-family: "Source Code Pro";
+    font-weight: 700;
+    font-style: normal;
+    font-stretch: normal;
+    src: url("resources/fonts/SourceCodePro/EOT/SourceCodePro-Black.eot") format("embedded-opentype"),
+    url("resources/fonts/SourceCodePro/WOFF2/TTF/SourceCodePro-Black.ttf.woff2") format("woff2"),
+    url("resources/fonts/SourceCodePro/WOFF/OTF/SourceCodePro-Black.otf.woff") format("woff"),
+    url("resources/fonts/SourceCodePro/OTF/SourceCodePro-Black.otf") format("opentype"),
+    url("resources/fonts/SourceCodePro/TTF/SourceCodePro-Black.ttf") format("truetype");
 }
