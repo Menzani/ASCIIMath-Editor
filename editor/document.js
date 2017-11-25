@@ -367,7 +367,7 @@ function saveDocument() {
 }
 
 function openTestDocument() {
-    getResource("testResources/testDocumentData.txt").then(function (data) {
+    getResource("resources/test-document-data.txt").then(function (data) {
         deleteDocument(function () {
             let lines = data.split(/\r\n/)
             localStorage.windowScrollY = lines[0]
