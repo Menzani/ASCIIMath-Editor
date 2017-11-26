@@ -14,11 +14,11 @@ function initializeDataModel() {
             notifyError("Some changes may not be saved.", dataSource.errorCode)
         }
     }
-    request.onupgradeneeded = updateSchema
+    request.onupgradeneeded = upgradeSchema
 }
 
-// See Schema Design.md for more information
-function updateSchema(event) {
+// See DB_SCHEMA.md for more information
+function upgradeSchema(event) {
     if (event.oldVersion < 1) {
         dataSource.createObjectStore("document", {autoIncrement: true})
         dataSource.createObjectStore("page", {autoIncrement: true})
