@@ -294,20 +294,20 @@ function downloadPagePreview() {
         foreignObject.appendChild(pageViewOutputClone)
         svg.appendChild(foreignObject)
 
-        let texture = new Image()
+        let image = new Image()
         let data = svg.outerHTML.replace(/foreignobject/g, "foreignObject")
         let url = URL.createObjectURL(new Blob([data], {type: "image/svg+xml"}))
-        texture.onload = function () {
+        image.onload = function () {
             let canvas = document.createElement("canvas")
             canvas.setAttribute("width", previewWidth)
             canvas.setAttribute("height", previewHeight)
-            canvas.getContext("2d").drawImage(texture, 0, 0)
+            canvas.getContext("2d").drawImage(image, 0, 0)
             canvas.toBlob(function (blob) {
                 downloadFile(blob, "Preview.png")
             })
             URL.revokeObjectURL(url)
         }
-        texture.src = url
+        image.src = url
     })
 }
 
