@@ -9,13 +9,13 @@ ASCIIMath Editor | 1
 
 The schema defines three object stores:
 
-Object store | Key type | Description | Notes
+Object store | Key supply | Description | Notes
 ---|---|---|---
 document | auto increment | Stores all documents | Contains pointers to _page_ objects 
 page | auto increment | Stores each page of every document | Contains a pointer to a _page_source_ object
 page_source | auto increment | Stores the contents of every page
 
-These object stores are defined as follows:
+These object stores contain objects with the following fields:
 
 ### document
 
