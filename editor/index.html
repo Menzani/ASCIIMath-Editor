@@ -14,7 +14,7 @@
     <link rel="icon" href="../resources/favicon.ico" type="image/x-icon">
     <title>ASCIIMath Editor</title>
 </head>
-<body onload="initializeDataModel()" onkeypress="resolveShortcut(event)">
+<body onload="openDatabase()" onkeypress="resolveShortcut(event)">
 <img id="backgroundLayer1" class="backgroundLayer" onload="showWallpaper()">
 <img id="backgroundLayer2" class="backgroundLayer" onload="showWallpaper()">
 <div id="topBar" class="card menu">
@@ -839,7 +839,7 @@
     <input class="debugButton" type="button" value="Display Error Message" onclick="showCustomErrorMessage()">
     <input class="debugButton" type="button" value="Display Info Message" onclick="showCustomInfoMessage()">
     <input class="debugButton" type="button" value="Load Test Document" onclick="openTestDocument()">
-    <input class="debugButton" type="button" value="Delete Document" onclick="deleteDocument()">
+    <input class="debugButton" type="button" value="Delete Document" onclick="deleteDatabase()">
 </div>
 
 <div id="documentActions" class="card menu">
