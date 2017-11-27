@@ -167,10 +167,6 @@ body {
     color: #F5F5F5;
 }
 
-.tutorialText {
-    margin: 0;
-}
-
 .debugCheckbox {
     margin-right: 10px;
     float: left;
@@ -408,14 +404,6 @@ body {
     text-align: center;
     font-size: 13px;
     margin: 5px 0 0;
-}
-
-#tutorial {
-    padding: 10px;
-    height: 500px;
-    width: 500px;
-    right: 30px;
-    top: 50px;
 }
 
 #pageViewSaveInstructions {

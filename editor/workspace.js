@@ -38,7 +38,6 @@ let about
 let flaticon
 let donate
 let contact
-let tutorial
 let pageViewSaveInstructions
 let debug
 let debugConsole
@@ -64,7 +63,6 @@ document.addEventListener("DOMContentLoaded", function () {
     flaticon = document.getElementById("flaticon")
     donate = document.getElementById("donate")
     contact = document.getElementById("contact")
-    tutorial = document.getElementById("tutorial")
     pageViewSaveInstructions = document.getElementById("pageViewSaveInstructions")
     debug = document.getElementById("debug")
     debugConsole = document.getElementById("debugConsole")
@@ -250,14 +248,6 @@ function showContact(event) {
     event.preventDefault()
 }
 
-function toggleTutorial() {
-    if (tutorial.popupOpen) {
-        hidePopup(tutorial)
-    } else {
-        showPopup(tutorial)
-    }
-}
-
 function hidePageViewSaveInstructions(event) {
     pageViewSaveInstructions.targetViewOutput.style.backgroundClip = "border-box"
     hidePopup(pageViewSaveInstructions)
@@ -427,9 +417,6 @@ function resolveShortcut(event) {
                 break
             case 115:
                 downloadPageSource()
-                break
-            case 116:
-                toggleTutorial()
                 break
         }
         switch (event.keyCode) {
