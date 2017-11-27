@@ -151,6 +151,14 @@ body {
     animation: 2s aboutLink;
 }
 
+.flaticonLink:link {
+    color: black;
+}
+
+.flaticonLink:visited {
+    color: black;
+}
+
 .tutorialText {
     margin: 0;
 }
@@ -339,6 +347,23 @@ body {
     color: cadetblue;
 }
 
+#flaticon {
+    background-color: #48CCCD;
+    color: #F5F5F5;
+    width: 600px;
+    padding: 10px;
+    font-size: 15px;
+    margin: 310px auto;
+    left: 0;
+    right: 0;
+}
+
+#flaticonClose {
+    font-size: 13px;
+    text-align: right;
+    margin: 5px 0 0;
+}
+
 #donate {
     background-color: #48CCCD;
     color: #F5F5F5;
@@ -429,7 +454,6 @@ body {
 
 #pageViewSaveInstructionsClose:link {
     color: darkolivegreen;
-    font-style: italic;
 }
 
 #pageViewSaveInstructionsClose:visited {

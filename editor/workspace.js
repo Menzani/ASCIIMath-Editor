@@ -35,6 +35,7 @@ let infoMessageText
 let tour
 let tourDownload
 let about
+let flaticon
 let donate
 let contact
 let tutorial
@@ -60,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
     tour = document.getElementById("tour")
     tourDownload = document.getElementById("tourDownload")
     about = document.getElementById("about")
+    flaticon = document.getElementById("flaticon")
     donate = document.getElementById("donate")
     contact = document.getElementById("contact")
     tutorial = document.getElementById("tutorial")
@@ -217,6 +219,16 @@ function showAbout(event) {
         aboutLink.classList.add("aboutLinkAnimation")
     }
     showPopup(about)
+    event.preventDefault()
+}
+
+function hideFlaticon(event) {
+    hidePopup(flaticon)
+    event.preventDefault()
+}
+
+function showFlaticon(event) {
+    showPopup(flaticon)
     event.preventDefault()
 }
 
