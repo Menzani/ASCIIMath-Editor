@@ -196,12 +196,7 @@ function hideTour(event) {
     event.preventDefault()
 }
 
-function showTour(includeDownload, event) {
-    if (includeDownload) {
-        tourDownload.style.display = "block"
-    } else {
-        tourDownload.style.display = "none"
-    }
+function showTour(event) {
     showPopup(tour)
     event.preventDefault()
 }
@@ -247,9 +242,7 @@ function hideContact(event, mailSubject) {
     if (mailSubject) {
         window.open("mailto:contact@asciimatheditor.eu?subject=[ASCIIMath Editor]%20" + mailSubject)
     }
-    if (event) {
-        event.preventDefault()
-    }
+    event.preventDefault()
 }
 
 function showContact(event) {
@@ -366,7 +359,7 @@ function showWallpaper() {
 }
 
 function downloadFirefox(event) {
-    location.href = "https://www.mozilla.org/it/firefox/new"
+    location.href = "https://www.mozilla.org/it/firefox/new/"
     if (event) {
         event.preventDefault()
     }

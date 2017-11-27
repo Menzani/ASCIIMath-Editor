@@ -159,6 +159,14 @@ body {
     color: black;
 }
 
+.contactLink:link {
+    color: #F5F5F5;
+}
+
+.contactLink:visited {
+    color: #F5F5F5;
+}
+
 .tutorialText {
     margin: 0;
 }
@@ -175,36 +183,6 @@ body {
 .debugButton {
     margin-top: 5px;
     height: 25px;
-}
-
-.documentActionsGroup {
-    padding: 0 5px 5px;
-}
-
-.documentActionsGroupTitle {
-    color: teal;
-    font-size: 14px;
-}
-
-.documentActionsGroupText {
-    font-size: 15px;
-    margin: 10px 5px 5px;
-}
-
-.footerLink:link {
-    color: steelblue;
-}
-
-.footerLink:visited {
-    color: steelblue;
-}
-
-.contactLink:link {
-    color: #F5F5F5;
-}
-
-.contactLink:visited {
-    color: #F5F5F5;
 }
 
 #topBar {
@@ -475,20 +453,6 @@ body {
     width: 435px;
     resize: none;
     font-family: "Lucida Console", Monaco, monospace;
-}
-
-#documentActions {
-    width: 200px;
-    height: 612px;
-    right: 2px;
-    top: 150px;
-    padding: 10px 5px 0 5px;
-}
-
-#footer {
-    margin-top: 5px;
-    text-align: center;
-    font-size: 13px;
 }
 
 @keyframes backgroundLayer {
