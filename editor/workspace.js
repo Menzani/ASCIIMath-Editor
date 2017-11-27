@@ -22,6 +22,7 @@ let currentWallpaperIndex
 
 let backgroundLayer1
 let backgroundLayer2
+let topBar
 let browserMessage
 let errorMessage
 let errorMessageText
@@ -47,6 +48,7 @@ let debugKeyPress
 document.addEventListener("DOMContentLoaded", function () {
     backgroundLayer1 = document.getElementById("backgroundLayer1")
     backgroundLayer2 = document.getElementById("backgroundLayer2")
+    topBar = document.getElementById("topBar")
     browserMessage = document.getElementById("browserMessage")
     errorMessage = document.getElementById("errorMessage")
     errorMessageText = document.getElementById("errorMessageText")
@@ -130,6 +132,7 @@ function showPopup(popup) {
 }
 
 function showBrowserMessage() {
+    topBar.style.display = "none"
     showPopup(browserMessage)
 }
 
