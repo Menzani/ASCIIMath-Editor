@@ -78,7 +78,7 @@ function addPage(pageIndex, animate) {
     editor.selectionStart = editorsSelectionStartData[pageIndex]
     editor.selectionEnd = editorsSelectionEndData[pageIndex]
     editor.scrollTop = editorsScrollTopData[pageIndex]
-    refreshView(page)
+    updateView(page)
     window.requestAnimationFrame(function () {
         view.scrollTop = viewsScrollTopData[pageIndex]
         view.scrollLeft = viewsScrollLeftData[pageIndex]
@@ -207,7 +207,7 @@ function doRemovePage() {
     saveDocument()
 }
 
-function refreshView(page) {
+function updateView(page) {
     let result = ""
     for (let line of page.editor.value.split(/\r?\n/)) {
         let trimmedLine = stripHTMLTags(line.trim())
@@ -236,7 +236,7 @@ function stripHTMLTags(text) {
 }
 
 function onEditorInteract(page, pageIndex) {
-    refreshView(page)
+    updateView(page)
     editorsHeightData[pageIndex] = page.editor.style.height
     editorsSelectionStartData[pageIndex] = page.editor.selectionStart
     editorsSelectionEndData[pageIndex] = page.editor.selectionEnd
