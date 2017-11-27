@@ -48,7 +48,7 @@
 <div id="browserMessage" class="card menu popup message"><p class="messageText">
     This app is designed to run on <a class="messageLink" href="#" onclick="downloadFirefox(event)">Firefox</a>
     and currently does not support other browsers.
-    <a class="messageLink" href="#" onclick="showTour(true, event)">Find out why</a>
+    <a class="messageLink" href="#" onclick="showBrowserInform(event)">Find out why</a>
 </p></div>
 <div id="errorMessage" class="card menu popup message"><p class="messageText">
     <span id="errorMessageText"></span>
@@ -759,17 +759,17 @@
 <div id="infoMessage" class="card menu popup">
     <p id="infoMessageText"></p>
 </div>
-<div id="tour" class="card menu popup">
-    <p class="tourText">
+<div id="browserInform" class="card menu popup">
+    <p class="browserInformText">
         ASCIIMath Editor is an online document editor that enables you to add beautiful mathematical content to pages,
         while providing an intuitive interface to help you stay in the flow as you type.
     </p>
-    <p class="tourText">
+    <p class="browserInformText">
         ASCIIMath Editor relies on Firefox's near-perfect MathML engine to perform the rendering,
         so you get better results in less time.
     </p>
-    <input id="tourDownload" type="button" value="Download Firefox" onclick="downloadFirefox()">
-    <p id="tourClose"><a id="tourCloseLink" href="#" onclick="hideTour(event)">Close</a></p>
+    <input id="browserInformDownload" type="button" value="Download Firefox" onclick="downloadFirefox()">
+    <p id="browserInformClose"><a id="browserInformCloseLink" href="#" onclick="hideBrowserInform(event)">Close</a></p>
 </div>
 <div id="about" class="card menu popup">
     <img id="aboutLogo" src="resources/extended-logo.png">

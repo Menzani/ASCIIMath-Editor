@@ -134,7 +134,7 @@ body {
     color: forestgreen;
 }
 
-.tourText {
+.browserInformText {
     margin: 0;
 }
 
@@ -243,7 +243,7 @@ body {
     margin: 0 10px 0 10px;
 }
 
-#tour {
+#browserInform {
     margin-left: auto;
     margin-right: auto;
     top: 52px;
@@ -253,23 +253,23 @@ body {
     padding: 10px;
 }
 
-#tourDownload {
+#browserInformDownload {
     margin: 20px auto 5px auto;
     width: 150px;
     height: 40px;
     display: block;
 }
 
-#tourClose {
+#browserInformClose {
     text-align: center;
     font-size: 13px;
 }
 
-#tourCloseLink:link {
+#browserInformCloseLink:link {
     color: #0C090A;
 }
 
-#tourCloseLink:visited {
+#browserInformCloseLink:visited {
     color: #0C090A;
 }
 

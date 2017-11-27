@@ -33,8 +33,7 @@ let syntaxASCIIMath
 let syntaxFormatting
 let infoMessage
 let infoMessageText
-let tour
-let tourDownload
+let browserInform
 let about
 let flaticon
 let donate
@@ -59,8 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
     syntaxFormatting = document.getElementById("syntaxFormatting")
     infoMessage = document.getElementById("infoMessage")
     infoMessageText = document.getElementById("infoMessageText")
-    tour = document.getElementById("tour")
-    tourDownload = document.getElementById("tourDownload")
+    browserInform = document.getElementById("browserInform")
     about = document.getElementById("about")
     flaticon = document.getElementById("flaticon")
     donate = document.getElementById("donate")
@@ -192,13 +190,13 @@ function showCustomInfoMessage() {
     }
 }
 
-function hideTour(event) {
-    hidePopup(tour)
+function hideBrowserInform(event) {
+    hidePopup(browserInform)
     event.preventDefault()
 }
 
-function showTour(event) {
-    showPopup(tour)
+function showBrowserInform(event) {
+    showPopup(browserInform)
     event.preventDefault()
 }
 
