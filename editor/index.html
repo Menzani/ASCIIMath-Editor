@@ -7,14 +7,13 @@
     <link rel="stylesheet" href="workspace.css" type="text/css">
     <link rel="stylesheet" href="document.css" type="text/css">
     <script src="workspace.js" type="text/javascript"></script>
-    <script src="database.js" type="text/javascript"></script>
     <script src="document.js" type="text/javascript"></script>
     <script src="lib/ASCIIMathML.js" type="text/javascript"></script>
 
     <link rel="icon" href="../resources/favicon.ico" type="image/x-icon">
     <title>ASCIIMath Editor</title>
 </head>
-<body onload="openDatabase()" onkeypress="resolveShortcut(event)">
+<body onload="initialize()" onkeypress="resolveShortcut(event)">
 <img id="backgroundLayer1" class="backgroundLayer" onload="showWallpaper()">
 <img id="backgroundLayer2" class="backgroundLayer" onload="showWallpaper()">
 <div id="topBar" class="card menu">
@@ -839,7 +838,7 @@
     <input class="debugButton" type="button" value="Display Error Message" onclick="showCustomErrorMessage()">
     <input class="debugButton" type="button" value="Display Info Message" onclick="showCustomInfoMessage()">
     <input class="debugButton" type="button" value="Load Test Document" onclick="openTestDocument()">
-    <input class="debugButton" type="button" value="Delete Document" onclick="deleteDatabase()">
+    <input class="debugButton" type="button" value="Delete Document" onclick="deleteDocument()">
 </div>
 
 <div id="documentActions" class="card menu">
