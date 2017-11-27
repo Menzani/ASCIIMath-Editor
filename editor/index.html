@@ -779,20 +779,23 @@
         <i>for Firefox</i>
     </p>
     <div id="aboutText">
-        <p>
-            Powered by <a class="aboutLink" href="http://asciimath.org/" target="_blank">ASCIIMath</a>
-        </p>
-        <p>
-            <a class="aboutLink" href="https://github.com/MrSystem/ASCIIMath-Editor" target="_blank">Source code</a>
-            <a class="aboutLink" href="#" onclick="showDonate(event)">Donate</a>
-        </p>
-        <br><br>
         <p id="aboutVision">
             Write documents containing gorgeous mathematics<br><i>in seconds!</i>
             <br>
             Produce content on the desktop like you do on paper.
             <br>
             Stay productive while remaining in the flow!
+        </p>
+        <p>
+            Powered by <a class="aboutLink" href="http://asciimath.org/" target="_blank">ASCIIMath</a>
+        </p>
+        <p>
+            Icons by <a class="aboutLink" href="https://www.flaticon.com/" target="_blank">Flaticon</a>
+        </p>
+        <p>
+            <a class="aboutLink" href="#" onclick="showDonate(event)">Donate</a>
+            <a class="aboutLink" href="#" onclick="showContact(event)">Contact</a>
+            <a class="aboutLink" href="https://github.com/MrSystem/ASCIIMath-Editor" target="_blank">Source code</a>
         </p>
         <p id="aboutClose"><a id="aboutCloseLink" href="#" onclick="hideAbout(event)">Close</a></p>
     </div>
@@ -807,6 +810,29 @@
         <small class="copyable" onclick="copyContent(this)">0xa5e47552f6e5C3476d807F9f899D118Cf94e65b4</small>
     </p>
     <p id="donateClose"><a id="donateCloseLink" href="#" onclick="hideDonate(event)">Close</a></p>
+</div>
+<div id="contact" class="card menu popup">
+    <p id="contactTitle">
+        You want to:
+    </p>
+    <p id="contactCategories">
+        <a class="contactLink" href="#" onclick="hideContact(event, 'Issue%20report')">
+            Report an issue
+        </a>
+        <br>
+        <a class="contactLink" href="#" onclick="hideContact(event, 'Feature%20request')">
+            Request a feature
+        </a>
+        <br>
+        <a class="contactLink" href="#" onclick="hideContact(event, 'Wallpaper%20submission')">
+            Submit a wallpaper
+        </a>
+    </p>
+    <p id="contactText">
+        Or send an email to:
+        <i class="copyable" onclick="copyContent(this)">contact@asciimatheditor.eu</i>
+    </p>
+    <p id="contactClose"><a class="contactLink" href="#" onclick="hideContact(event)">Close</a></p>
 </div>
 <div id="tutorial" class="card menu popup">
     <p class="tutorialText">
@@ -885,29 +911,6 @@
         &emsp;
         <a class="footerLink" href="#" onclick="showAbout(event)">About</a>
     </p>
-</div>
-<div id="contact" class="card menu popup">
-    <p id="contactTitle">
-        You want to:
-    </p>
-    <p id="contactCategories">
-        <a class="contactLink" href="#" onclick="hideContact(event, 'Issue%20report')">
-            Report an issue
-        </a>
-        <br>
-        <a class="contactLink" href="#" onclick="hideContact(event, 'Feature%20request')">
-            Request a feature
-        </a>
-        <br>
-        <a class="contactLink" href="#" onclick="hideContact(event, 'Wallpaper%20submission')">
-            Submit a wallpaper
-        </a>
-    </p>
-    <p id="contactText">
-        Or send an email to:
-        <i class="copyable" onclick="copyContent(this)">contact@asciimatheditor.eu</i>
-    </p>
-    <p id="contactClose"><a class="contactLink" href="#" onclick="hideContact(event)">Close</a></p>
 </div>
 </body>
 </html>

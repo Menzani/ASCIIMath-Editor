@@ -36,13 +36,13 @@ let tour
 let tourDownload
 let about
 let donate
+let contact
 let tutorial
 let pageViewSaveInstructions
 let debug
 let debugConsole
 let debugDocumentEvents
 let debugKeyPress
-let contact
 
 document.addEventListener("DOMContentLoaded", function () {
     backgroundLayer1 = document.getElementById("backgroundLayer1")
@@ -61,13 +61,13 @@ document.addEventListener("DOMContentLoaded", function () {
     tourDownload = document.getElementById("tourDownload")
     about = document.getElementById("about")
     donate = document.getElementById("donate")
+    contact = document.getElementById("contact")
     tutorial = document.getElementById("tutorial")
     pageViewSaveInstructions = document.getElementById("pageViewSaveInstructions")
     debug = document.getElementById("debug")
     debugConsole = document.getElementById("debugConsole")
     debugDocumentEvents = document.getElementById("debugDocumentEvents")
     debugKeyPress = document.getElementById("debugKeyPress")
-    contact = document.getElementById("contact")
 
     document.body.style.background = selectRandomly(BACKGROUNDS)
     document.body.style.backgroundAttachment = "fixed"
@@ -230,6 +230,21 @@ function showDonate(event) {
     event.preventDefault()
 }
 
+function hideContact(event, mailSubject) {
+    hidePopup(contact)
+    if (mailSubject) {
+        window.open("mailto:contact@asciimatheditor.eu?subject=[ASCIIMath Editor]%20" + mailSubject)
+    }
+    if (event) {
+        event.preventDefault()
+    }
+}
+
+function showContact(event) {
+    showPopup(contact)
+    event.preventDefault()
+}
+
 function toggleTutorial() {
     if (tutorial.popupOpen) {
         hidePopup(tutorial)
@@ -322,21 +337,6 @@ function debugConsole_format(value) {
         return result.slice(0, result.length - 2) + "]"
     }
     return value.toString()
-}
-
-function hideContact(event, mailSubject) {
-    hidePopup(contact)
-    if (mailSubject) {
-        window.open("mailto:contact@asciimatheditor.eu?subject=[ASCIIMath Editor]%20" + mailSubject)
-    }
-    if (event) {
-        event.preventDefault()
-    }
-}
-
-function showContact(event) {
-    showPopup(contact)
-    event.preventDefault()
 }
 
 function showWallpaper() {

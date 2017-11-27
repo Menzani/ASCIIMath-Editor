@@ -340,12 +340,12 @@ body {
 }
 
 #donate {
-    padding: 10px;
-    color: #F5F5F5;
-    font-size: 14px;
     background-color: #48CCCD;
+    color: #F5F5F5;
     width: 350px;
-    margin: 410px auto;
+    padding: 10px;
+    font-size: 14px;
+    margin: 450px auto;
     left: 20px;
     right: 0;
 }
@@ -374,6 +374,37 @@ body {
 
 #donateCloseLink:visited {
     color: #F5F5F5;
+}
+
+#contact {
+    background-color: #48CCCD;
+    color: #F5F5F5;
+    width: 178px;
+    padding: 10px;
+    font-size: 15px;
+    margin: 310px auto;
+    left: 0;
+    right: 0;
+}
+
+#contactTitle {
+    font-weight: bold;
+    margin: 0;
+}
+
+#contactCategories {
+    margin: 5px 0 10px;
+}
+
+#contactText {
+    font-size: 13px;
+    margin: 0;
+}
+
+#contactClose {
+    text-align: center;
+    font-size: 13px;
+    margin: 5px 0 0;
 }
 
 #tutorial {
@@ -434,37 +465,6 @@ body {
     margin-top: 5px;
     text-align: center;
     font-size: 13px;
-}
-
-#contact {
-    background-color: #48CCCD;
-    width: 178px;
-    height: 150px;
-    right: 8px;
-    top: 774px;
-    padding: 10px;
-    color: #F5F5F5;
-    font-size: 15px;
-}
-
-#contactTitle {
-    font-weight: bold;
-    margin: 0;
-}
-
-#contactCategories {
-    margin: 5px 0 10px;
-}
-
-#contactText {
-    font-size: 13px;
-    margin: 0;
-}
-
-#contactClose {
-    text-align: center;
-    font-size: 13px;
-    margin: 5px 0 0;
 }
 
 @keyframes backgroundLayer {
