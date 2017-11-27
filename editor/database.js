@@ -7,6 +7,37 @@ const DOCUMENTS = "document"
 const PAGES = "page"
 const PAGE_SOURCES = "page_source"
 
+// See DB_SCHEMA.md for more information
+const DEFAULT_DOCUMENT = {
+    focusedPage: -1,
+    pageKeys: [],
+    scroll: {
+        top: 0
+    }
+}
+const DEFAULT_PAGE = {
+    value: ""
+}
+const DEFAULT_PAGE_SOURCE = {
+    pageSourceKey: undefined,
+    editor: {
+        height: 200,
+        selection: {
+            start: 0,
+            end: 0
+        },
+        scroll: {
+            top: 0
+        }
+    },
+    view: {
+        scroll: {
+            left: 0,
+            top: 0
+        }
+    }
+}
+
 let dataSource
 
 function openDatabase() {
@@ -23,7 +54,6 @@ function openDatabase() {
     }
 }
 
-// See DB_SCHEMA.md for more information
 function upgradeSchema(event) {
     let dataSource = event.target.result
     if (event.oldVersion < 1) {

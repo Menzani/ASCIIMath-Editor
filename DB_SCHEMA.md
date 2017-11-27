@@ -15,39 +15,40 @@ document | auto increment | Stores all documents | Contains pointers to _page_ o
 page | auto increment | Stores each page of every document | Contains a pointer to a _page_source_ object
 page_source | auto increment | Stores the contents of every page
 
-These object stores contain objects with the following fields:
+These object stores contain objects defined as follows.
+Note that `undefined` means the value is computed dynamically.
 
 ### document
 
-Field | Type | Description | Notes
----|---|---|---
-focusedPage | Number | The page currently being edited on, which is the target of commands | An index in the _pageKeys_ array
-pageKeys | Array of Numbers | The pages that make up the document (in descending order) | A set of keys in the _page_ object store
-scroll | Object | The `window` scroll position
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; top | Number | `window.scrollTop`
+Field | Type | Default value | Description | Notes
+---|---|---|---|---
+focusedPage | Number | `-1` | The page currently being edited on, which is the target of commands | An index in the _pageKeys_ array
+pageKeys | Array of Numbers | `[]` | The pages that make up the document (in descending order) | A set of keys in the _page_ object store
+scroll | Object | _N/A_ | The `window` scroll position
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; top | Number | `0` | `window.scrollTop`
 
 ### page
 
-Field | Type | Description | Notes
----|---|---|---
-pageSourceKey | Number | The contents of the page | A key in the _page_source_ object store
-editor | Object | The `textarea` in the upper, smaller part of the page
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height | Number | `textarea.style.height`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; selection | Object | The `textarea` selection
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start | Number | `textarea.selectionStart`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end | Number | `textarea.selectionEnd`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scroll | Object | The `textarea` scroll position
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; top | Number | `textarea.scrollTop`
-view | Object | The `div` in the lower, bigger part of the page
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scroll | Object | The `div` scroll positions
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; left | Number | `div.scrollLeft`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; top | Number | `div.scrollTop`
+Field | Type | Default value | Description | Notes
+---|---|---|---|---
+pageSourceKey | Number | `undefined` | The contents of the page | A key in the _page_source_ object store
+editor | Object | _N/A_ | The `textarea` in the upper, smaller part of the page
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height | Number | `200` | `textarea.style.height`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; selection | Object | _N/A_ | The `textarea` selection
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start | Number | `0` | `textarea.selectionStart`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end | Number | `0` | `textarea.selectionEnd`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scroll | Object | _N/A_ | The `textarea` scroll position
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; top | Number | `0` | `textarea.scrollTop`
+view | Object | _N/A_ | The `div` in the lower, bigger part of the page
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scroll | Object | _N/A_ | The `div` scroll positions
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; left | Number | `0` | `div.scrollLeft`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; top | Number | `0` | `div.scrollTop`
 
 ### page_source
 
-Field | Type | Description | Notes
----|---|---|---
-value | String | `textarea.value` where `textarea` is the page editor
+Field | Type | Default value | Description | Notes
+---|---|---|---|---
+value | String | `""` | `textarea.value` where `textarea` is the page editor
 
 ## Design conventions
 
