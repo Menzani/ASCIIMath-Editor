@@ -56,6 +56,9 @@ function addPage(pageIndex, animate) {
 
     let page = document.createElement("div")
     page.classList.add("card", "page")
+    if (pageIndex === 0) {
+        page.style.marginTop = "100px"
+    }
     if (animate) {
         page.classList.add("pageAppearAnimation")
     }
