@@ -3,14 +3,14 @@
 
 const DATABASE_NAME = "ASCIIMath Editor"
 const SCHEMA_VERSION = 1
-const DOCUMENT_OBJECT_STORE_NAME = "document"
-const PAGE_OBJECT_STORE_NAME = "page"
-const PAGE_SOURCE_OBJECT_STORE_NAME = "page_source"
+const DOCUMENTS = "document"
+const PAGES = "page"
+const PAGE_SOURCES = "page_source"
 
 let dataSource
 
 function openDatabase() {
-    let request = indexedDB.open(DATABASE_NAME, SCHEMA_VERSION)
+    let request = indexedDB.open(DATABASE_NAME, {version: SCHEMA_VERSION, storage: "persistent"})
     request.onerror = function () {
         notifyError("We are unable to save your data in Firefox.")
     }
@@ -27,22 +27,25 @@ function openDatabase() {
 function upgradeSchema(event) {
     let dataSource = event.target.result
     if (event.oldVersion < 1) {
-        dataSource.createObjectStore(DOCUMENT_OBJECT_STORE_NAME, {autoIncrement: true})
-        dataSource.createObjectStore(PAGE_OBJECT_STORE_NAME, {autoIncrement: true})
-        dataSource.createObjectStore(PAGE_SOURCE_OBJECT_STORE_NAME, {autoIncrement: true})
+        dataSource.createObjectStore(DOCUMENTS, {autoIncrement: true})
+        dataSource.createObjectStore(PAGES, {autoIncrement: true})
+        dataSource.createObjectStore(PAGE_SOURCES, {autoIncrement: true})
     }
 }
 
-function documents(level) {
-    return dataSource.transaction(DOCUMENT_OBJECT_STORE_NAME, level).objectStore(DOCUMENT_OBJECT_STORE_NAME)
-}
-
-function pages(level) {
-    return dataSource.transaction(PAGE_OBJECT_STORE_NAME, level).objectStore(PAGE_OBJECT_STORE_NAME)
-}
-
-function pageSources(level) {
-    return dataSource.transaction(PAGE_SOURCE_OBJECT_STORE_NAME, level).objectStore(PAGE_SOURCE_OBJECT_STORE_NAME)
+function createTransaction(scope, modifiable) {
+    let transaction = dataSource.transaction(scope, modifiable ? "readwrite" : "readonly")
+    return {
+        documents: function () {
+            return transaction.objectStore(DOCUMENTS)
+        },
+        pages: function () {
+            return transaction.objectStore(PAGES)
+        },
+        pageSources: function () {
+            return transaction.objectStore(PAGE_SOURCES)
+        }
+    }
 }
 
 function deleteDatabase() {
