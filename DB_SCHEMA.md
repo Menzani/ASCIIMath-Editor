@@ -21,8 +21,8 @@ These object stores contain objects with the following fields:
 
 Field | Type | Description | Notes
 ---|---|---|---
-focused_page | Number | The page currently being edited on, which is the target of commands | An index in the _page_keys_ array
-page_keys | Array of Numbers | The pages that make up the document (in descending order) | A set of keys in the _page_ object store
+focusedPage | Number | The page currently being edited on, which is the target of commands | An index in the _pageKeys_ array
+pageKeys | Array of Numbers | The pages that make up the document (in descending order) | A set of keys in the _page_ object store
 scroll | Object | The `window` scroll position
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; top | Number | `window.scrollTop`
 
@@ -30,7 +30,7 @@ scroll | Object | The `window` scroll position
 
 Field | Type | Description | Notes
 ---|---|---|---
-page_source_key | Number | The contents of the page | A key in the _page_source_ object store
+pageSourceKey | Number | The contents of the page | A key in the _page_source_ object store
 editor | Object | The `textarea` in the upper, smaller part of the page
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height | Number | `textarea.style.height`
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; selection | Object | The `textarea` selection
