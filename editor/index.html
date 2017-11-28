@@ -44,18 +44,13 @@
         <img class="topBar-element" src="resources/icons/about.png" title="About">
     </div>
 </div>
-
-<div id="browserMessage" class="card menu popup message"><p class="messageText">
-    This app is designed to run on <a class="messageLink" href="#" onclick="downloadFirefox(event)">Firefox</a>
-    and currently does not support other browsers.
-    <a class="messageLink" href="#" onclick="showBrowserInform(event)">Find out why</a>
-</p></div>
-<div id="errorMessage" class="card menu popup message"><p class="messageText">
-    <span id="errorMessageText"></span>
-    &nbsp;
-    <a class="messageLink" href="#" onclick="hideErrorMessage(event)">Hide</a>
-</p></div>
-
+<div id="browserMessage" class="card menu popup">
+    <p id="browserMessageText" class="messageText">
+        This app is designed to run on <a class="messageLink" href="#" onclick="downloadFirefox(event)">Firefox</a>
+        and currently does not support other browsers.
+        <a class="messageLink" href="#" onclick="showBrowserInform(event)">Find out why</a>
+    </p>
+</div>
 <div id="syntax" class="card menu popup">
     <div id="syntaxTabs">
         <input id="syntaxTabsASCIIMath" class="syntaxTabsButton" type="button" value="ASCIIMath"
@@ -757,7 +752,7 @@
     </div>
 </div>
 <div id="infoMessage" class="card menu popup">
-    <p id="infoMessageText"></p>
+    <p id="infoMessageText" class="messageText"></p>
 </div>
 <div id="browserInform" class="card menu popup">
     <p class="browserInformText">
@@ -924,6 +919,12 @@
     <input class="debugButton" type="button" value="Display Info Message" onclick="showCustomInfoMessage()">
     <input class="debugButton" type="button" value="Load Test Document" onclick="openTestDocument()">
     <input class="debugButton" type="button" value="Delete Document" onclick="deleteDocument()">
+</div>
+<div id="errorMessage" class="card menu popup">
+    <p id="errorMessageText" class="messageText">
+        <span id="errorMessageSpan"></span>
+        <a id="errorMessageClose" href="#" onclick="hideErrorMessage(event)"><b>Hide</b></a>
+    </p>
 </div>
 </body>
 </html>

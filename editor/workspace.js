@@ -24,8 +24,6 @@ let backgroundLayer1
 let backgroundLayer2
 let topBar
 let browserMessage
-let errorMessage
-let errorMessageText
 let syntax
 let syntaxTabsASCIIMath
 let syntaxTabsFormatting
@@ -43,14 +41,14 @@ let debug
 let debugConsole
 let debugDocumentEvents
 let debugKeyPress
+let errorMessage
+let errorMessageSpan
 
 document.addEventListener("DOMContentLoaded", function () {
     backgroundLayer1 = document.getElementById("backgroundLayer1")
     backgroundLayer2 = document.getElementById("backgroundLayer2")
     topBar = document.getElementById("topBar")
     browserMessage = document.getElementById("browserMessage")
-    errorMessage = document.getElementById("errorMessage")
-    errorMessageText = document.getElementById("errorMessageText")
     syntax = document.getElementById("syntax")
     syntaxTabsASCIIMath = document.getElementById("syntaxTabsASCIIMath")
     syntaxTabsFormatting = document.getElementById("syntaxTabsFormatting")
@@ -68,6 +66,8 @@ document.addEventListener("DOMContentLoaded", function () {
     debugConsole = document.getElementById("debugConsole")
     debugDocumentEvents = document.getElementById("debugDocumentEvents")
     debugKeyPress = document.getElementById("debugKeyPress")
+    errorMessage = document.getElementById("errorMessage")
+    errorMessageSpan = document.getElementById("errorMessageSpan")
 
     document.body.style.background = selectRandomly(BACKGROUNDS)
     document.body.style.backgroundAttachment = "fixed"
@@ -134,35 +134,6 @@ function showBrowserMessage() {
     showPopup(browserMessage)
 }
 
-function hideErrorMessage(event) {
-    hidePopup(errorMessage)
-    event.preventDefault()
-}
-
-function showErrorMessage(id) {
-    let text
-    switch (id) {
-        case ERROR_DOCUMENT_SAVE_STORAGE:
-            text = "The document is too long. Please delete some content or <a class=\"messageLink\" href=\"\">adjust Firefox's settings</a>."
-            break
-        case ERROR_DOCUMENT_SAVE:
-            text = "The document cannot be saved."
-            break
-        default:
-            console.error("Unknown error message ID: " + id)
-            return
-    }
-    errorMessageText.innerHTML = text
-    showPopup(errorMessage)
-}
-
-function showCustomErrorMessage() {
-    let id = prompt("Please set the error message ID:")
-    if (id) {
-        showErrorMessage(id)
-    }
-}
-
 function toggleSyntax() {
     if (syntax.popupOpen) {
         hidePopup(syntax)
@@ -171,8 +142,8 @@ function toggleSyntax() {
     }
 }
 
-function showInfoMessage(text) {
-    infoMessageText.innerHTML = text
+function showInfoMessage(html) {
+    infoMessageText.innerHTML = html
     if (infoMessage.closeTaskId) {
         clearTimeout(infoMessage.closeTaskId)
     }
@@ -184,9 +155,9 @@ function showInfoMessage(text) {
 }
 
 function showCustomInfoMessage() {
-    let text = prompt("Please set the info message text:")
-    if (text) {
-        showInfoMessage(text)
+    let html = prompt("Please set the info message HTML fragment:")
+    if (html) {
+        showInfoMessage(html)
     }
 }
 
@@ -333,6 +304,35 @@ function debugConsole_format(value) {
         return result.slice(0, result.length - 2) + "]"
     }
     return value.toString()
+}
+
+function hideErrorMessage(event) {
+    hidePopup(errorMessage)
+    event.preventDefault()
+}
+
+function showErrorMessage(id) {
+    let html
+    switch (id) {
+        case ERROR_DOCUMENT_SAVE_STORAGE:
+            html = "The document is too long. Please delete some content or <a class=\"messageLink\" href=\"\">adjust Firefox's settings</a>."
+            break
+        case ERROR_DOCUMENT_SAVE:
+            html = "The document cannot be saved."
+            break
+        default:
+            console.error("Unknown error message ID: " + id)
+            return
+    }
+    errorMessageSpan.innerHTML = html
+    showPopup(errorMessage)
+}
+
+function showCustomErrorMessage() {
+    let id = prompt("Please set the error message ID:")
+    if (id) {
+        showErrorMessage(id)
+    }
 }
 
 function showWallpaper() {
