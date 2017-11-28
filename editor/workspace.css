@@ -135,8 +135,16 @@ body {
     color: forestgreen;
 }
 
-.browserInformText {
-    margin: 0;
+.browserInformQuestion {
+    color: firebrick;
+}
+
+.browserInformLink:link {
+    color: white;
+}
+
+.browserInformLink:visited {
+    color: white;
 }
 
 .aboutLink:link {
@@ -189,7 +197,6 @@ body {
     top: 1px;
     left: 0;
     right: 0;
-    background-color: white;
 }
 
 #topBar-savedStatus {
@@ -252,33 +259,31 @@ body {
 }
 
 #browserInform {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto 0 auto;
+    background-color: #48CCCD;
+    color: #F5F5F5;
     top: 51px;
     left: 0;
     right: 0;
-    width: 350px;
-    padding: 10px;
+    width: 500px;
+    padding: 0 10px 15px;
 }
 
-#browserInformDownload {
-    margin: 20px auto 5px auto;
-    width: 150px;
-    height: 40px;
-    display: block;
+#browserInformButtons {
+    width: 250px;
+    margin-left: 75px;
 }
 
 #browserInformClose {
-    text-align: center;
+    float: left;
     font-size: 13px;
 }
 
-#browserInformCloseLink:link {
-    color: #0C090A;
-}
-
-#browserInformCloseLink:visited {
-    color: #0C090A;
+#browserInformDownload {
+    float: right;
+    font-weight: bold;
+    width: 150px;
+    height: 40px;
 }
 
 #about {
@@ -467,6 +472,7 @@ body {
 }
 
 #errorMessageClose:link {
+    font-weight: bold;
     color: black;
 }
 

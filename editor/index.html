@@ -755,16 +755,32 @@
     <p id="infoMessageText" class="messageText"></p>
 </div>
 <div id="browserInform" class="card menu popup">
-    <p class="browserInformText">
-        ASCIIMath Editor is an online document editor that enables you to add beautiful mathematical content to pages,
-        while providing an intuitive interface to help you stay in the flow as you type.
+    <h4 class="browserInformQuestion">Why is Firefox required in order to use this app?</h4>
+    <p>
+        This app is built on top of <a class="browserInformLink" href="#" onclick="visitASCIIMathWebsite(event)">ASCIIMath</a>,
+        a powerful tool that can convert mathematical objects written in plain text and using an intuitive syntax to
+        high-quality mathematical content that is rendered directly in your browser.
     </p>
-    <p class="browserInformText">
-        ASCIIMath Editor relies on Firefox's near-perfect MathML engine to perform the rendering,
-        so you get better results in less time.
+    <p>
+        ASCIIMath works with the <a class="browserInformLink" href="https://www.w3.org/Math/" target="_blank">MathML</a>
+        specification to achieve beautiful results efficiently.
+        However, Firefox is the only browser that supports the MathML standard at this time.
+        As soon as other browsers feature a decent implementation of the standard they will be supported, too.
     </p>
-    <input id="browserInformDownload" type="button" value="Download Firefox" onclick="downloadFirefox()">
-    <p id="browserInformClose"><a id="browserInformCloseLink" href="#" onclick="hideBrowserInform(event)">Close</a></p>
+    <h4 class="browserInformQuestion">What would it take to support all browsers anyway?</h4>
+    <p>
+        Supporting all browsers would require the rendering to be implemented from scratch.
+        However, doing so would be less-than-optimal for various reasons, mostly because it would severely
+        impact performance.
+        By leveraging a native technology like MathML, you get better results in less time, and you are free to enjoy
+        an optimized experience that is crafted just for your browser.
+    </p>
+    <div id="browserInformButtons">
+        <p id="browserInformClose">
+            <a class="browserInformLink" href="#" onclick="hideBrowserInform(event)">&lt;&lt; Go Back</a>
+        </p>
+        <input id="browserInformDownload" type="button" value="Download Firefox" onclick="downloadFirefox()">
+    </div>
 </div>
 <div id="about" class="card menu popup">
     <img id="aboutLogo" src="resources/extended-logo.png">
@@ -782,7 +798,7 @@
             Stay productive while remaining in the flow!
         </p>
         <p>
-            Powered by <a class="aboutLink" href="http://asciimath.org/" target="_blank">ASCIIMath</a>
+            Powered by <a class="aboutLink" href="#" onclick="visitASCIIMathWebsite(event)">ASCIIMath</a>
         </p>
         <p>
             Icons by <a class="aboutLink" href="#" onclick="showFlaticon(event)">Flaticon</a>
@@ -923,7 +939,7 @@
 <div id="errorMessage" class="card menu popup">
     <p id="errorMessageText" class="messageText">
         <span id="errorMessageSpan"></span>
-        <a id="errorMessageClose" href="#" onclick="hideErrorMessage(event)"><b>Hide</b></a>
+        <a id="errorMessageClose" href="#" onclick="hideErrorMessage(event)">Hide</a>
     </p>
 </div>
 </body>

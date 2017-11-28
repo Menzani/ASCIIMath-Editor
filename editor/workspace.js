@@ -356,6 +356,11 @@ function downloadFirefox(event) {
     }
 }
 
+function visitASCIIMathWebsite(event) {
+    window.open("http://asciimath.org/")
+    event.preventDefault()
+}
+
 function selectSyntaxTab(tab) {
     switch (tab) {
         case syntaxTabsASCIIMath:
