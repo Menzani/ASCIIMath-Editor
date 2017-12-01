@@ -210,7 +210,7 @@ function showDonate(event) {
 function hideContact(event, mailSubject) {
     hidePopup(contact)
     if (mailSubject) {
-        window.open("mailto:contact@asciimatheditor.eu?subject=[ASCIIMath Editor]%20" + mailSubject)
+        window.open("mailto:francescomenzani99@gmail.com?subject=[ASCIIMath Editor]%20" + mailSubject)
     }
     event.preventDefault()
 }
