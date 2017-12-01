@@ -231,9 +231,9 @@ img.topBar-element:hover {
 #syntax {
     overflow: auto;
     width: 507px;
-    height: 98%;
+    height: 95%;
     left: 20px;
-    top: 2px;
+    top: 15px;
 }
 
 #syntaxTabs {
