@@ -24,11 +24,11 @@ body {
 .menu {
     font-family: Bitter, sans-serif;
     position: fixed;
+    z-index: 1;
 }
 
 .popup {
     visibility: hidden;
-    z-index: 1;
     transform-origin: top;
 }
 
@@ -304,7 +304,6 @@ img.topBar-element:hover {
     position: absolute;
     height: 100%;
     width: 100%;
-    z-index: -1;
 }
 
 #aboutTitle {
