@@ -67,6 +67,10 @@ body {
     margin: 5px;
 }
 
+img.topBar-element:hover {
+    background-color: lightcyan;
+}
+
 .topBar-separator {
     border-left: 1px solid gray;
     height: 32px;
