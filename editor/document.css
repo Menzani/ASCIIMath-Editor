@@ -54,7 +54,8 @@ hr {
 }
 
 .viewOutputParagraph {
-    font-family: "Fira Code Light", "Lucida Console", Monaco, monospace;
+    font-family: "Fira Code", "Lucida Console", Monaco, monospace;
+    font-weight: 300;
 }
 
 .viewOutputHeading {
@@ -63,7 +64,8 @@ hr {
 }
 
 .viewOutputQuote {
-    font-family: "Fira Code Light", "Lucida Console", Monaco, monospace;
+    font-family: "Fira Code", "Lucida Console", Monaco, monospace;
+    font-weight: 300;
     font-style: italic;
 }
 
