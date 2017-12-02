@@ -246,12 +246,6 @@ function updateView(page) {
     }
 }
 
-function stripHTMLTags(text) {
-    let dummyBody = document.implementation.createHTMLDocument().body
-    dummyBody.innerHTML = text
-    return dummyBody.textContent
-}
-
 function onEditorInteract(page, pageIndex) {
     updateView(page)
     editorsHeightData[pageIndex] = page.editor.style.height
