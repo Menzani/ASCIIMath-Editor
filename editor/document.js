@@ -215,7 +215,7 @@ function updateView(page) {
     for (let line of page.editor.value.split(/\r?\n/)) {
         let trimmedLine = line.trim()
         let lineElement
-        let processLineElement = true
+        let lineElementContainsMath = true
         if (trimmedLine.startsWith("#")) {
             lineElement = document.createElement("p")
             lineElement.classList.add("viewOutputText", "viewOutputParagraph")
@@ -226,7 +226,7 @@ function updateView(page) {
             lineElement.textContent = trimmedLine.slice(1)
         } else if (trimmedLine === "-=-=-") {
             lineElement = document.createElement("hr")
-            processLineElement = false
+            lineElementContainsMath = false
         } else if (line.startsWith(" ")) { // Always at the end before outline math
             lineElement = document.createElement("p")
             lineElement.classList.add("viewOutputText", "viewOutputQuote")
@@ -234,11 +234,11 @@ function updateView(page) {
         } else if (trimmedLine.length > 0) {
             lineElement = document.createElement("div")
             lineElement.className = "viewOutputMath"
-            lineElement.appendChild(asciimath.parseMath(trimmedLine))
-            processLineElement = false
+            lineElement.appendChild(asciimath.parseMath(trimmedLine.replace(/ {2}/g, "\\ ")))
+            lineElementContainsMath = false
         }
         if (lineElement !== undefined) {
-            if (processLineElement) {
+            if (lineElementContainsMath) {
                 asciimath.processNode(lineElement)
             }
             page.viewOutput.appendChild(lineElement)
