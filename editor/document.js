@@ -211,25 +211,39 @@ function doRemovePage() {
 }
 
 function updateView(page) {
-    let result = ""
+    page.viewOutput.innerHTML = ""
     for (let line of page.editor.value.split(/\r?\n/)) {
-        let trimmedLine = stripHTMLTags(line.trim())
-        let untrimmedLine = stripHTMLTags(line)
+        let trimmedLine = line.trim()
+        let lineElement
+        let processLineElement = true
         if (trimmedLine.startsWith("#")) {
-            result += ("<p class=\"viewOutputText viewOutputParagraph\">" + trimmedLine.slice(1) + "</p>")
+            lineElement = document.createElement("p")
+            lineElement.classList.add("viewOutputText", "viewOutputParagraph")
+            lineElement.textContent = trimmedLine.slice(1)
         } else if (trimmedLine.startsWith("*")) {
-            result += ("<p class=\"viewOutputText viewOutputHeading\">" + trimmedLine.slice(1) + "</p>")
+            lineElement = document.createElement("p")
+            lineElement.classList.add("viewOutputText", "viewOutputHeading")
+            lineElement.textContent = trimmedLine.slice(1)
         } else if (trimmedLine === "-=-=-") {
-            result += "<hr>"
-        } else if (untrimmedLine.startsWith(" ")) { // Always at the end before outline math
-            result += ("<p class=\"viewOutputText viewOutputQuote\">" + untrimmedLine.slice(1) + "</p>")
+            lineElement = document.createElement("hr")
+            processLineElement = false
+        } else if (line.startsWith(" ")) { // Always at the end before outline math
+            lineElement = document.createElement("p")
+            lineElement.classList.add("viewOutputText", "viewOutputQuote")
+            lineElement.textContent = line.slice(1)
         } else if (trimmedLine.length > 0) {
-            trimmedLine = trimmedLine.replace(/°/g, "\\°").replace(/\\+$/, "")
-            result += ("<div class=\"viewOutputMath\">°" + trimmedLine + "°</div>")
+            lineElement = document.createElement("div")
+            lineElement.className = "viewOutputMath"
+            lineElement.appendChild(asciimath.parseMath(trimmedLine))
+            processLineElement = false
+        }
+        if (lineElement !== undefined) {
+            if (processLineElement) {
+                asciimath.AMprocessNode(lineElement)
+            }
+            page.viewOutput.appendChild(lineElement)
         }
     }
-    page.viewOutput.innerHTML = result
-    asciimath.AMprocessNode(page.viewOutput)
 }
 
 function stripHTMLTags(text) {
