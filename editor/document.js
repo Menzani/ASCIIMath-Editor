@@ -372,7 +372,7 @@ function saveDocument() {
 function openTestDocument() {
     getResource("resources/test-document-data.txt").then(function (data) {
         deleteDocument(function () {
-            let lines = data.split(/\r\n/)
+            let lines = data.split(/\r?\n/)
             localStorage.windowScrollY = lines[0]
             localStorage.pageCount = lines[1]
             localStorage.currentPageIndex = lines[2]
