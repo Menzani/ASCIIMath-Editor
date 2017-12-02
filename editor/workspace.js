@@ -349,14 +349,14 @@ function showWallpaper() {
     }, 3000)
 }
 
-function downloadFirefox(event) {
-    location.href = "https://www.mozilla.org/it/firefox/new/"
+function visitFirefoxDownloadPage(event) {
+    window.open("https://www.mozilla.org/it/firefox/new/")
     if (event) {
         event.preventDefault()
     }
 }
 
-function visitASCIIMathWebsite(event) {
+function visitASCIIMathHomepage(event) {
     window.open("http://asciimath.org/")
     event.preventDefault()
 }

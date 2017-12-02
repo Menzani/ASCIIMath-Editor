@@ -46,7 +46,8 @@
 </div>
 <div id="browserMessage" class="card menu popup">
     <p id="browserMessageText" class="messageText">
-        This app is designed to run on <a class="messageLink" href="#" onclick="downloadFirefox(event)">Firefox</a>
+        This app is designed to run on <a class="messageLink" href="#"
+                                          onclick="visitFirefoxDownloadPage(event)">Firefox</a>
         and currently does not support other browsers.
         <a class="messageLink" href="#" onclick="showBrowserInform(event)">Find out why</a>
     </p>
@@ -757,7 +758,8 @@
 <div id="browserInform" class="card menu popup">
     <h4 class="browserInformQuestion">Why is Firefox required in order to use this app?</h4>
     <p>
-        This app is built on top of <a class="browserInformLink" href="#" onclick="visitASCIIMathWebsite(event)">ASCIIMath</a>,
+        This app is built on top of <a class="browserInformLink" href="#"
+                                       onclick="visitASCIIMathHomepage(event)">ASCIIMath</a>,
         a powerful tool that can convert mathematical objects written in plain text and using an intuitive syntax to
         high-quality mathematical content that is rendered directly in your browser.
     </p>
@@ -779,7 +781,7 @@
         <p id="browserInformClose">
             <a class="browserInformLink" href="#" onclick="hideBrowserInform(event)">&lt;&lt; Go Back</a>
         </p>
-        <input id="browserInformDownload" type="button" value="Download Firefox" onclick="downloadFirefox()">
+        <input id="browserInformDownload" type="button" value="Download Firefox" onclick="visitFirefoxDownloadPage()">
     </div>
 </div>
 <div id="about" class="card menu popup">
@@ -798,7 +800,7 @@
             Stay productive while remaining in the flow!
         </p>
         <p>
-            Powered by <a class="aboutLink" href="#" onclick="visitASCIIMathWebsite(event)">ASCIIMath</a>
+            Powered by <a class="aboutLink" href="#" onclick="visitASCIIMathHomepage(event)">ASCIIMath</a>
         </p>
         <p>
             Icons by <a class="aboutLink" href="#" onclick="showFlaticon(event)">Flaticon</a>
@@ -813,56 +815,58 @@
 </div>
 <div id="flaticon" class="card menu popup">
     <div>
-        Icons made by <a class="flaticonLink" href="https://www.freepik.com/" title="Freepik">Freepik</a>
+        Icons made by <a class="flaticonLink" href="https://www.freepik.com/"
+                         title="Freepik" target="_blank">Freepik</a>
         from <a class="flaticonLink" href="https://www.flaticon.com/"
-                title="Flaticon">www.flaticon.com</a> is licensed by
+                title="Flaticon" target="_blank">www.flaticon.com</a> is licensed by
         <a class="flaticonLink" href="https://creativecommons.org/licenses/by/3.0/"
            title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
     </div>
     <div>
-        Icons made by <a class="flaticonLink" href="https://www.flaticon.com/authors/picol" title="Picol">Picol</a>
+        Icons made by <a class="flaticonLink" href="https://www.flaticon.com/authors/picol"
+                         title="Picol" target="_blank">Picol</a>
         from <a class="flaticonLink" href="https://www.flaticon.com/"
-                title="Flaticon">www.flaticon.com</a> is licensed by
+                title="Flaticon" target="_blank">www.flaticon.com</a> is licensed by
         <a class="flaticonLink" href="https://creativecommons.org/licenses/by/3.0/"
            title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
     </div>
     <div>
         Icons made by <a class="flaticonLink" href="https://www.flaticon.com/authors/prosymbols"
-                         title="Prosymbols">Prosymbols</a>
+                         title="Prosymbols" target="_blank">Prosymbols</a>
         from <a class="flaticonLink" href="https://www.flaticon.com/"
-                title="Flaticon">www.flaticon.com</a> is licensed by
+                title="Flaticon" target="_blank">www.flaticon.com</a> is licensed by
         <a class="flaticonLink" href="https://creativecommons.org/licenses/by/3.0/"
            title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
     </div>
     <div>
         Icons made by <a class="flaticonLink" href="https://www.flaticon.com/authors/smashicons"
-                         title="Smashicons">Smashicons</a>
+                         title="Smashicons" target="_blank">Smashicons</a>
         from <a class="flaticonLink" href="https://www.flaticon.com/"
-                title="Flaticon">www.flaticon.com</a> is licensed by
+                title="Flaticon" target="_blank">www.flaticon.com</a> is licensed by
         <a class="flaticonLink" href="https://creativecommons.org/licenses/by/3.0/"
            title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
     </div>
     <div>
         Icons made by <a class="flaticonLink" href="https://www.flaticon.com/authors/smartline"
-                         title="Smartline">Smartline</a>
+                         title="Smartline" target="_blank">Smartline</a>
         from <a class="flaticonLink" href="https://www.flaticon.com/"
-                title="Flaticon">www.flaticon.com</a> is licensed by
+                title="Flaticon" target="_blank">www.flaticon.com</a> is licensed by
         <a class="flaticonLink" href="https://creativecommons.org/licenses/by/3.0/"
            title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
     </div>
     <div>
         Icons made by <a class="flaticonLink" href="https://www.flaticon.com/authors/gregor-cresnar"
-                         title="Gregor Cresnar">Gregor Cresnar</a>
+                         title="Gregor Cresnar" target="_blank">Gregor Cresnar</a>
         from <a class="flaticonLink" href="https://www.flaticon.com/"
-                title="Flaticon">www.flaticon.com</a> is licensed by
+                title="Flaticon" target="_blank">www.flaticon.com</a> is licensed by
         <a class="flaticonLink" href="https://creativecommons.org/licenses/by/3.0/"
            title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
     </div>
     <div>
         Icons made by <a class="flaticonLink" href="https://www.flaticon.com/authors/sergiu-bagrin"
-                         title="Sergiu Bagrin">Sergiu Bagrin</a>
+                         title="Sergiu Bagrin" target="_blank">Sergiu Bagrin</a>
         from <a class="flaticonLink" href="https://www.flaticon.com/"
-                title="Flaticon">www.flaticon.com</a> is licensed by
+                title="Flaticon" target="_blank">www.flaticon.com</a> is licensed by
         <a class="flaticonLink" href="https://creativecommons.org/licenses/by/3.0/"
            title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
     </div>
