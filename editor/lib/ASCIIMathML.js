@@ -32,16 +32,6 @@ var asciimath = {};
         return node
     }
 
-    function newcommand(oldstr, newstr) {
-        AMsymbols.push({input: oldstr, tag: "mo", output: newstr, tex: null, ttype: DEFINITION})
-        refreshSymbols()
-    }
-
-    function newsymbol(symbolobj) {
-        AMsymbols.push(symbolobj)
-        refreshSymbols()
-    }
-
 // character lists for Mozilla/Netscape fonts
     var AMcal = ["\uD835\uDC9C", "\u212C", "\uD835\uDC9E", "\uD835\uDC9F", "\u2130", "\u2131", "\uD835\uDCA2", "\u210B", "\u2110", "\uD835\uDCA5", "\uD835\uDCA6", "\u2112", "\u2133", "\uD835\uDCA9", "\uD835\uDCAA", "\uD835\uDCAB", "\uD835\uDCAC", "\u211B", "\uD835\uDCAE", "\uD835\uDCAF", "\uD835\uDCB0", "\uD835\uDCB1", "\uD835\uDCB2", "\uD835\uDCB3", "\uD835\uDCB4", "\uD835\uDCB5", "\uD835\uDCB6", "\uD835\uDCB7", "\uD835\uDCB8", "\uD835\uDCB9", "\u212F", "\uD835\uDCBB", "\u210A", "\uD835\uDCBD", "\uD835\uDCBE", "\uD835\uDCBF", "\uD835\uDCC0", "\uD835\uDCC1", "\uD835\uDCC2", "\uD835\uDCC3", "\u2134", "\uD835\uDCC5", "\uD835\uDCC6", "\uD835\uDCC7", "\uD835\uDCC8", "\uD835\uDCC9", "\uD835\uDCCA", "\uD835\uDCCB", "\uD835\uDCCC", "\uD835\uDCCD", "\uD835\uDCCE", "\uD835\uDCCF"]
 
@@ -414,17 +404,10 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
         }
     ]
 
-    function compareNames(s1, s2) {
-        if (s1.input > s2.input) return 1
-        else return -1
-    }
-
     var AMnames = [] //list of input symbols
 
     function initSymbols() {
-        var i
-        var symlen = AMsymbols.length
-        for (i = 0; i < symlen; i++) {
+        for (var i = 0; i < AMsymbols.length; i++) {
             if (AMsymbols[i].tex) {
                 AMsymbols.push({
                     input: AMsymbols[i].tex,
@@ -433,13 +416,12 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
                 })
             }
         }
-        refreshSymbols()
-    }
 
-    function refreshSymbols() {
-        var i
-        AMsymbols.sort(compareNames)
-        for (i = 0; i < AMsymbols.length; i++) AMnames[i] = AMsymbols[i].input
+        AMsymbols.sort(function (s1, s2) {
+            if (s1.input > s2.input) return 1
+            else return -1
+        })
+        for (var j = 0; j < AMsymbols.length; j++) AMnames[j] = AMsymbols[j].input
     }
 
     function AMremoveCharsAndBlanks(str, n) {
@@ -1016,8 +998,6 @@ Each terminal symbol is translated into a corresponding mathml node.*/
     window.addEventListener("load", initSymbols, false)
 
 //expose some functions to outside
-    asciimath.newcommand = newcommand
-    asciimath.newsymbol = newsymbol
     asciimath.AMprocesssNode = AMprocessNode
     asciimath.parseMath = parseMath
 })()
