@@ -16,16 +16,11 @@
 var asciimath = {};
 
 (function () {
-    var translateOnLoad = true    // set to false to do call translators from js
-    var translateASCIIMath = true // false to preserve `..`
     var AMdelimiter1 = "`", AMescape1 = "\\\\`" // can use other characters
-    var AMdocumentId = "wikitext" // PmWiki element containing math (default=body)
 
     /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
     var isIE = (navigator.appName.slice(0, 9) == "Microsoft")
-    var translated = false
-
     if (isIE) { // add MathPlayer info to IE webpages
         document.write("<object id=\"mathplayer\"\
   classid=\"clsid:32F66A20-7614-11D4-BD11-00104BD3F987\"></object>")
@@ -41,21 +36,13 @@ var asciimath = {};
         return true
     }
 
-    function translate(spanclassAM) {
-        if (!translated) { // run this only once
-            translated = true
-            var body = document.getElementsByTagName("body")[0]
-            var processN = document.getElementById(AMdocumentId)
-            if (translateASCIIMath) AMprocessNode((processN != null ? processN : body), false, spanclassAM)
-        }
-    }
-
     function createElementXHTML(t) {
         if (isIE) return document.createElement(t)
         else return document.createElementNS("http://www.w3.org/1999/xhtml", t)
     }
 
     var AMmathml = "http://www.w3.org/1998/Math/MathML"
+
     function createMmlNode(t, frag) {
         var node
         if (isIE) node = document.createElement("m:" + t)
@@ -473,6 +460,7 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
         AMsymbols.sort(compareNames)
         for (i = 0; i < AMsymbols.length; i++) AMnames[i] = AMsymbols[i].input
     }
+
     function AMremoveCharsAndBlanks(str, n) {
 //remove n characters and any following blanks
         var st
@@ -1045,9 +1033,6 @@ Each terminal symbol is translated into a corresponding mathml node.*/
 
     function generic() {
         if (!init()) return
-        if (translateOnLoad) {
-            translate()
-        }
     }
 
 //setup onload function
@@ -1085,5 +1070,4 @@ Each terminal symbol is translated into a corresponding mathml node.*/
     asciimath.newsymbol = newsymbol
     asciimath.AMprocesssNode = AMprocessNode
     asciimath.parseMath = parseMath
-    asciimath.translate = translate
 })()
