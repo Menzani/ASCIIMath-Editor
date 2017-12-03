@@ -192,6 +192,8 @@ const asciimath = {};
         {input: "/_", tag: "mo", output: "\u2220", tex: "angle", ttype: CONST},
         {input: "/_\\", tag: "mo", output: "\u25B3", tex: "triangle", ttype: CONST},
         {input: "'", tag: "mo", output: "\u2032", tex: "prime", ttype: CONST},
+        {input: "''", tag: "mi", output: "\u2033", tex: "dprime", ttype: CONST},
+        {input: "'''", tag: "mi", output: "\u2034", tex: "trprime", ttype: CONST},
         {input: "tilde", tag: "mover", output: "~", tex: null, ttype: UNARY, acc: true},
         {input: "\\ ", tag: "mo", output: "\u00A0", tex: null, ttype: CONST},
         {input: "frown", tag: "mo", output: "\u2322", tex: null, ttype: CONST},
