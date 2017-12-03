@@ -440,7 +440,8 @@ const asciimath = {};
             h = arr.length
             while (n + 1 < h) {
                 m = (n + h) >> 1
-                if (arr[m] < str) n = m else h = m
+                if (arr[m] < str) n = m
+                else h = m
             }
             return h
         } else
