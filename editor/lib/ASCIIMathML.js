@@ -20,33 +20,14 @@ var asciimath = {};
 
     /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-    var isIE = (navigator.appName.slice(0, 9) == "Microsoft")
-    if (isIE) { // add MathPlayer info to IE webpages
-        document.write("<object id=\"mathplayer\"\
-  classid=\"clsid:32F66A20-7614-11D4-BD11-00104BD3F987\"></object>")
-        document.write("<?import namespace=\"m\" implementation=\"#mathplayer\"?>")
-    }
-
-    function init() {
-        if (document.getElementById == null) {
-            alert("This webpage requires a recent browser such as Mozilla Firefox")
-            return null
-        }
-        initSymbols()
-        return true
-    }
-
     function createElementXHTML(t) {
-        if (isIE) return document.createElement(t)
-        else return document.createElementNS("http://www.w3.org/1999/xhtml", t)
+        return document.createElementNS("http://www.w3.org/1999/xhtml", t)
     }
 
     var AMmathml = "http://www.w3.org/1998/Math/MathML"
 
     function createMmlNode(t, frag) {
-        var node
-        if (isIE) node = document.createElement("m:" + t)
-        else node = document.createElementNS(AMmathml, t)
+        var node = document.createElementNS(AMmathml, t)
         if (frag) node.appendChild(frag)
         return node
     }
@@ -676,7 +657,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                     node.appendChild(accnode)
                     return [node, result[1]]
                 } else {                        // font change command
-                    if (!isIE && typeof symbol.codes != "undefined") {
+                    if (typeof symbol.codes != "undefined") {
                         for (i = 0; i < result[0].childNodes.length; i++)
                             if (result[0].childNodes[i].nodeName == "mi" || result[0].nodeName == "mi") {
                                 st = (result[0].nodeName == "mi" ? result[0].firstChild.nodeValue :
@@ -1031,39 +1012,8 @@ Each terminal symbol is translated into a corresponding mathml node.*/
         }
     }
 
-    function generic() {
-        if (!init()) return
-    }
-
 //setup onload function
-    if (typeof window.addEventListener != "undefined") {
-        //.. gecko, safari, konqueror and standard
-        window.addEventListener("load", generic, false)
-    }
-    else if (typeof document.addEventListener != "undefined") {
-        //.. opera 7
-        document.addEventListener("load", generic, false)
-    }
-    else if (typeof window.attachEvent != "undefined") {
-        //.. win/ie
-        window.attachEvent("onload", generic)
-    } else {
-        //.. mac/ie5 and anything else that gets this far
-        //if there's an existing onload function
-        if (typeof window.onload == "function") {
-            //store it
-            var existing = onload
-            //add new onload handler
-            window.onload = function () {
-                //call existing onload function
-                existing()
-                //call generic onload function
-                generic()
-            }
-        } else {
-            window.onload = generic
-        }
-    }
+    window.addEventListener("load", initSymbols, false)
 
 //expose some functions to outside
     asciimath.newcommand = newcommand
