@@ -16,9 +16,6 @@
 var asciimath = {};
 
 (function () {
-    var checkForMathML = true     // check if browser can display MathML
-    var notifyIfNoMathML = true   // display note at top if no MathML capability
-    var alertIfNoMathML = false   // show alert box if no MathML capability
     var translateOnLoad = true    // set to false to do call translators from js
     var translateASCIIMath = true // false to preserve `..`
     var AMdelimiter1 = "`", AMescape1 = "\\\\`" // can use other characters
@@ -27,7 +24,7 @@ var asciimath = {};
     /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
     var isIE = (navigator.appName.slice(0, 9) == "Microsoft")
-    var noMathML = false, translated = false
+    var translated = false
 
     if (isIE) { // add MathPlayer info to IE webpages
         document.write("<object id=\"mathplayer\"\
@@ -35,95 +32,13 @@ var asciimath = {};
         document.write("<?import namespace=\"m\" implementation=\"#mathplayer\"?>")
     }
 
-// Add a stylesheet, replacing any previous custom stylesheet (adapted from TW)
-    function setStylesheet(s) {
-        var id = "AMMLcustomStyleSheet"
-        var n = document.getElementById(id)
-        if (document.createStyleSheet) {
-            // Test for IE's non-standard createStyleSheet method
-            if (n)
-                n.parentNode.removeChild(n)
-            // This failed without the &nbsp;
-            document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeEnd", "&nbsp;<style id='" + id + "'>" + s + "</style>")
-        } else {
-            if (n) {
-                n.replaceChild(document.createTextNode(s), n.firstChild)
-            } else {
-                n = document.createElement("style")
-                n.type = "text/css"
-                n.id = id
-                n.appendChild(document.createTextNode(s))
-                document.getElementsByTagName("head")[0].appendChild(n)
-            }
-        }
-    }
-
-    setStylesheet("#AMMLcloseDiv \{font-size:0.8em; padding-top:1em; color:#014\}\n#AMMLwarningBox \{position:absolute; width:100%; top:0; left:0; z-index:200; text-align:center; font-size:1em; font-weight:bold; padding:0.5em 0 0.5em 0; color:#ffc; background:#c30\}")
-
     function init() {
-        var msg, warnings = []
         if (document.getElementById == null) {
             alert("This webpage requires a recent browser such as Mozilla Firefox")
             return null
         }
-        if (checkForMathML && (msg = checkMathML())) warnings.push(msg)
-        if (warnings.length > 0) displayWarnings(warnings)
-        if (!noMathML) initSymbols()
+        initSymbols()
         return true
-    }
-
-    function checkMathML() {
-        if (navigator.appName.slice(0, 8) == "Netscape")
-            if (navigator.appVersion.slice(0, 1) >= "5") noMathML = null
-            else noMathML = true
-        else if (navigator.appName.slice(0, 9) == "Microsoft")
-            try {
-                noMathML = null
-            } catch (e) {
-                noMathML = true
-            }
-        else if (navigator.appName.slice(0, 5) == "Opera")
-            if (navigator.appVersion.slice(0, 3) >= "9.5") noMathML = null
-            else noMathML = true
-//noMathML = true; //uncomment to check
-        if (noMathML && notifyIfNoMathML) {
-            var msg = "To view the ASCIIMathML notation use Internet Explorer + MathPlayer or Mozilla Firefox 2.0 or later."
-            if (alertIfNoMathML)
-                alert(msg)
-            else return msg
-        }
-    }
-
-    function hideWarning() {
-        var body = document.getElementsByTagName("body")[0]
-        body.removeChild(document.getElementById("AMMLwarningBox"))
-        body.onclick = null
-    }
-
-    function displayWarnings(warnings) {
-        var i, frag, nd = createElementXHTML("div")
-        var body = document.getElementsByTagName("body")[0]
-        body.onclick = hideWarning
-        nd.id = "AMMLwarningBox"
-        for (i = 0; i < warnings.length; i++) {
-            frag = createElementXHTML("div")
-            frag.appendChild(document.createTextNode(warnings[i]))
-            frag.style.paddingBottom = "1.0em"
-            nd.appendChild(frag)
-        }
-        nd.appendChild(createElementXHTML("p"))
-        nd.appendChild(document.createTextNode("For instructions see the "))
-        var an = createElementXHTML("a")
-        an.appendChild(document.createTextNode("ASCIIMathML"))
-        an.setAttribute("href", "http://www.chapman.edu/~jipsen/asciimath.html")
-        nd.appendChild(an)
-        nd.appendChild(document.createTextNode(" homepage"))
-        an = createElementXHTML("div")
-        an.id = "AMMLcloseDiv"
-        an.appendChild(document.createTextNode("(click anywhere to close this warning)"))
-        nd.appendChild(an)
-        var body = document.getElementsByTagName("body")[0]
-        body.insertBefore(nd, body.childNodes[0])
     }
 
     function translate(spanclassAM) {
@@ -1093,12 +1008,10 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                             arr[i] = arr[i].replace(/AMescape1/g, AMdelimiter1)
                     }
                     if (arr.length > 1 || mtch) {
-                        if (!noMathML) {
-                            frg = strarr2docFrag(arr, n.nodeType == 8)
-                            var len = frg.childNodes.length
-                            n.parentNode.replaceChild(frg, n)
-                            return len - 1
-                        } else return 0
+                        frg = strarr2docFrag(arr, n.nodeType == 8)
+                        var len = frg.childNodes.length
+                        n.parentNode.replaceChild(frg, n)
+                        return len - 1
                     }
                 }
             } else return 0
