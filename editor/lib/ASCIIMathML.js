@@ -148,6 +148,7 @@ const asciimath = {};
         {input: "<=>", tag: "mo", output: "\u21D4", tex: "iff", ttype: CONST},
         {input: "AA", tag: "mo", output: "\u2200", tex: "forall", ttype: CONST},
         {input: "EE", tag: "mo", output: "\u2203", tex: "exists", ttype: CONST},
+        {input: "!EE", tag: "mo", output: "\u2204", tex: "nexists", ttype: CONST},
         {input: "_|_", tag: "mo", output: "\u22A5", tex: "bot", ttype: CONST},
         {input: "TT", tag: "mo", output: "\u22A4", tex: "top", ttype: CONST},
         {input: "|--", tag: "mo", output: "\u22A2", tex: "vdash", ttype: CONST},
