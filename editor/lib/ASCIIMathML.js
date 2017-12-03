@@ -21,12 +21,8 @@ var asciimath = {};
     var alertIfNoMathML = false   // show alert box if no MathML capability
     var translateOnLoad = true    // set to false to do call translators from js
     var translateASCIIMath = true // false to preserve `..`
-    var displaystyle = true      // puts limits above and below large operators
-    var showasciiformulaonhover = true // helps students learn ASCIIMath
-    var decimalsign = "."        // change to "," if you like, beware of `(1,2)`!
     var AMdelimiter1 = "`", AMescape1 = "\\\\`" // can use other characters
     var AMdocumentId = "wikitext" // PmWiki element containing math (default=body)
-    var fixphi = true  		//false to return to legacy phi/varphi mapping
 
     /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
@@ -201,8 +197,8 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
         {input: "nu", tag: "mi", output: "\u03BD", tex: null, ttype: CONST},
         {input: "omega", tag: "mi", output: "\u03C9", tex: null, ttype: CONST},
         {input: "Omega", tag: "mo", output: "\u03A9", tex: null, ttype: CONST},
-        {input: "phi", tag: "mi", output: fixphi ? "\u03D5" : "\u03C6", tex: null, ttype: CONST},
-        {input: "varphi", tag: "mi", output: fixphi ? "\u03C6" : "\u03D5", tex: null, ttype: CONST},
+        {input: "phi", tag: "mi", output: "\u03D5", tex: null, ttype: CONST},
+        {input: "varphi", tag: "mi", output: "\u03C6", tex: null, ttype: CONST},
         {input: "Phi", tag: "mo", output: "\u03A6", tex: null, ttype: CONST},
         {input: "pi", tag: "mi", output: "\u03C0", tex: null, ttype: CONST},
         {input: "Pi", tag: "mo", output: "\u03A0", tex: null, ttype: CONST},
@@ -626,7 +622,7 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
             st = str.slice(k, k + 1)
             k++
         }
-        if (st == decimalsign) {
+        if (st == ".") {
             st = str.slice(k, k + 1)
             if ("0" <= st && st <= "9") {
                 integ = false
@@ -1041,9 +1037,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
         frag = AMparseExpr(str.replace(/^\s+/g, ""), false)[0]
 
         node = createMmlNode("math", frag)
-        if (displaystyle) node.setAttribute("displaystyle", "true")
-        if (showasciiformulaonhover)                      //fixed by djhsu so newline
-            node.setAttribute("title", str.replace(/\s+/g, " "))//does not show in Gecko
+        node.setAttribute("displaystyle", "true")
         return node
     }
 
