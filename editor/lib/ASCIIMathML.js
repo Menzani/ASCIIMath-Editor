@@ -13,10 +13,10 @@
  */
 "use strict"
 
-var asciimath = {};
+const asciimath = {}
 
 (function () {
-    var AMdelimiter1 = "`", AMescape1 = "\\\\`" // can use other characters
+    const AMdelimiter1 = "`", AMescape1 = "\\\\`" // can use other characters
 
     /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
@@ -24,31 +24,31 @@ var asciimath = {};
         return document.createElementNS("http://www.w3.org/1999/xhtml", t)
     }
 
-    var AMmathml = "http://www.w3.org/1998/Math/MathML"
+    const AMmathml = "http://www.w3.org/1998/Math/MathML"
 
     function createMmlNode(t, frag) {
-        var node = document.createElementNS(AMmathml, t)
+        const node = document.createElementNS(AMmathml, t)
         if (frag) node.appendChild(frag)
         return node
     }
 
 // character lists for Mozilla/Netscape fonts
-    var AMcal = ["\uD835\uDC9C", "\u212C", "\uD835\uDC9E", "\uD835\uDC9F", "\u2130", "\u2131", "\uD835\uDCA2", "\u210B", "\u2110", "\uD835\uDCA5", "\uD835\uDCA6", "\u2112", "\u2133", "\uD835\uDCA9", "\uD835\uDCAA", "\uD835\uDCAB", "\uD835\uDCAC", "\u211B", "\uD835\uDCAE", "\uD835\uDCAF", "\uD835\uDCB0", "\uD835\uDCB1", "\uD835\uDCB2", "\uD835\uDCB3", "\uD835\uDCB4", "\uD835\uDCB5", "\uD835\uDCB6", "\uD835\uDCB7", "\uD835\uDCB8", "\uD835\uDCB9", "\u212F", "\uD835\uDCBB", "\u210A", "\uD835\uDCBD", "\uD835\uDCBE", "\uD835\uDCBF", "\uD835\uDCC0", "\uD835\uDCC1", "\uD835\uDCC2", "\uD835\uDCC3", "\u2134", "\uD835\uDCC5", "\uD835\uDCC6", "\uD835\uDCC7", "\uD835\uDCC8", "\uD835\uDCC9", "\uD835\uDCCA", "\uD835\uDCCB", "\uD835\uDCCC", "\uD835\uDCCD", "\uD835\uDCCE", "\uD835\uDCCF"]
+    const AMcal = ["\uD835\uDC9C", "\u212C", "\uD835\uDC9E", "\uD835\uDC9F", "\u2130", "\u2131", "\uD835\uDCA2", "\u210B", "\u2110", "\uD835\uDCA5", "\uD835\uDCA6", "\u2112", "\u2133", "\uD835\uDCA9", "\uD835\uDCAA", "\uD835\uDCAB", "\uD835\uDCAC", "\u211B", "\uD835\uDCAE", "\uD835\uDCAF", "\uD835\uDCB0", "\uD835\uDCB1", "\uD835\uDCB2", "\uD835\uDCB3", "\uD835\uDCB4", "\uD835\uDCB5", "\uD835\uDCB6", "\uD835\uDCB7", "\uD835\uDCB8", "\uD835\uDCB9", "\u212F", "\uD835\uDCBB", "\u210A", "\uD835\uDCBD", "\uD835\uDCBE", "\uD835\uDCBF", "\uD835\uDCC0", "\uD835\uDCC1", "\uD835\uDCC2", "\uD835\uDCC3", "\u2134", "\uD835\uDCC5", "\uD835\uDCC6", "\uD835\uDCC7", "\uD835\uDCC8", "\uD835\uDCC9", "\uD835\uDCCA", "\uD835\uDCCB", "\uD835\uDCCC", "\uD835\uDCCD", "\uD835\uDCCE", "\uD835\uDCCF"]
 
-    var AMfrk = ["\uD835\uDD04", "\uD835\uDD05", "\u212D", "\uD835\uDD07", "\uD835\uDD08", "\uD835\uDD09", "\uD835\uDD0A", "\u210C", "\u2111", "\uD835\uDD0D", "\uD835\uDD0E", "\uD835\uDD0F", "\uD835\uDD10", "\uD835\uDD11", "\uD835\uDD12", "\uD835\uDD13", "\uD835\uDD14", "\u211C", "\uD835\uDD16", "\uD835\uDD17", "\uD835\uDD18", "\uD835\uDD19", "\uD835\uDD1A", "\uD835\uDD1B", "\uD835\uDD1C", "\u2128", "\uD835\uDD1E", "\uD835\uDD1F", "\uD835\uDD20", "\uD835\uDD21", "\uD835\uDD22", "\uD835\uDD23", "\uD835\uDD24", "\uD835\uDD25", "\uD835\uDD26", "\uD835\uDD27", "\uD835\uDD28", "\uD835\uDD29", "\uD835\uDD2A", "\uD835\uDD2B", "\uD835\uDD2C", "\uD835\uDD2D", "\uD835\uDD2E", "\uD835\uDD2F", "\uD835\uDD30", "\uD835\uDD31", "\uD835\uDD32", "\uD835\uDD33", "\uD835\uDD34", "\uD835\uDD35", "\uD835\uDD36", "\uD835\uDD37"]
+    const AMfrk = ["\uD835\uDD04", "\uD835\uDD05", "\u212D", "\uD835\uDD07", "\uD835\uDD08", "\uD835\uDD09", "\uD835\uDD0A", "\u210C", "\u2111", "\uD835\uDD0D", "\uD835\uDD0E", "\uD835\uDD0F", "\uD835\uDD10", "\uD835\uDD11", "\uD835\uDD12", "\uD835\uDD13", "\uD835\uDD14", "\u211C", "\uD835\uDD16", "\uD835\uDD17", "\uD835\uDD18", "\uD835\uDD19", "\uD835\uDD1A", "\uD835\uDD1B", "\uD835\uDD1C", "\u2128", "\uD835\uDD1E", "\uD835\uDD1F", "\uD835\uDD20", "\uD835\uDD21", "\uD835\uDD22", "\uD835\uDD23", "\uD835\uDD24", "\uD835\uDD25", "\uD835\uDD26", "\uD835\uDD27", "\uD835\uDD28", "\uD835\uDD29", "\uD835\uDD2A", "\uD835\uDD2B", "\uD835\uDD2C", "\uD835\uDD2D", "\uD835\uDD2E", "\uD835\uDD2F", "\uD835\uDD30", "\uD835\uDD31", "\uD835\uDD32", "\uD835\uDD33", "\uD835\uDD34", "\uD835\uDD35", "\uD835\uDD36", "\uD835\uDD37"]
 
-    var AMbbb = ["\uD835\uDD38", "\uD835\uDD39", "\u2102", "\uD835\uDD3B", "\uD835\uDD3C", "\uD835\uDD3D", "\uD835\uDD3E", "\u210D", "\uD835\uDD40", "\uD835\uDD41", "\uD835\uDD42", "\uD835\uDD43", "\uD835\uDD44", "\u2115", "\uD835\uDD46", "\u2119", "\u211A", "\u211D", "\uD835\uDD4A", "\uD835\uDD4B", "\uD835\uDD4C", "\uD835\uDD4D", "\uD835\uDD4E", "\uD835\uDD4F", "\uD835\uDD50", "\u2124", "\uD835\uDD52", "\uD835\uDD53", "\uD835\uDD54", "\uD835\uDD55", "\uD835\uDD56", "\uD835\uDD57", "\uD835\uDD58", "\uD835\uDD59", "\uD835\uDD5A", "\uD835\uDD5B", "\uD835\uDD5C", "\uD835\uDD5D", "\uD835\uDD5E", "\uD835\uDD5F", "\uD835\uDD60", "\uD835\uDD61", "\uD835\uDD62", "\uD835\uDD63", "\uD835\uDD64", "\uD835\uDD65", "\uD835\uDD66", "\uD835\uDD67", "\uD835\uDD68", "\uD835\uDD69", "\uD835\uDD6A", "\uD835\uDD6B"]
+    const AMbbb = ["\uD835\uDD38", "\uD835\uDD39", "\u2102", "\uD835\uDD3B", "\uD835\uDD3C", "\uD835\uDD3D", "\uD835\uDD3E", "\u210D", "\uD835\uDD40", "\uD835\uDD41", "\uD835\uDD42", "\uD835\uDD43", "\uD835\uDD44", "\u2115", "\uD835\uDD46", "\u2119", "\u211A", "\u211D", "\uD835\uDD4A", "\uD835\uDD4B", "\uD835\uDD4C", "\uD835\uDD4D", "\uD835\uDD4E", "\uD835\uDD4F", "\uD835\uDD50", "\u2124", "\uD835\uDD52", "\uD835\uDD53", "\uD835\uDD54", "\uD835\uDD55", "\uD835\uDD56", "\uD835\uDD57", "\uD835\uDD58", "\uD835\uDD59", "\uD835\uDD5A", "\uD835\uDD5B", "\uD835\uDD5C", "\uD835\uDD5D", "\uD835\uDD5E", "\uD835\uDD5F", "\uD835\uDD60", "\uD835\uDD61", "\uD835\uDD62", "\uD835\uDD63", "\uD835\uDD64", "\uD835\uDD65", "\uD835\uDD66", "\uD835\uDD67", "\uD835\uDD68", "\uD835\uDD69", "\uD835\uDD6A", "\uD835\uDD6B"]
     /*var AMcal = [0xEF35,0x212C,0xEF36,0xEF37,0x2130,0x2131,0xEF38,0x210B,0x2110,0xEF39,0xEF3A,0x2112,0x2133,0xEF3B,0xEF3C,0xEF3D,0xEF3E,0x211B,0xEF3F,0xEF40,0xEF41,0xEF42,0xEF43,0xEF44,0xEF45,0xEF46];
 var AMfrk = [0xEF5D,0xEF5E,0x212D,0xEF5F,0xEF60,0xEF61,0xEF62,0x210C,0x2111,0xEF63,0xEF64,0xEF65,0xEF66,0xEF67,0xEF68,0xEF69,0xEF6A,0x211C,0xEF6B,0xEF6C,0xEF6D,0xEF6E,0xEF6F,0xEF70,0xEF71,0x2128];
 var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF93,0xEF94,0xEF95,0xEF96,0x2115,0xEF97,0x2119,0x211A,0x211D,0xEF98,0xEF99,0xEF9A,0xEF9B,0xEF9C,0xEF9D,0xEF9E,0x2124];*/
 
-    var CONST = 0, UNARY = 1, BINARY = 2, INFIX = 3, LEFTBRACKET = 4,
+    const CONST = 0, UNARY = 1, BINARY = 2, INFIX = 3, LEFTBRACKET = 4,
         RIGHTBRACKET = 5, SPACE = 6, UNDEROVER = 7, DEFINITION = 8,
         LEFTRIGHT = 9, TEXT = 10, UNARYUNDEROVER = 15 // token types
 
-    var AMquote = {input: "\"", tag: "mtext", output: "mbox", tex: null, ttype: TEXT}
+    const AMquote = {input: "\"", tag: "mtext", output: "mbox", tex: null, ttype: TEXT}
 
-    var AMsymbols = [
+    const AMsymbols = [
 //some greek symbols
         {input: "alpha", tag: "mi", output: "\u03B1", tex: null, ttype: CONST},
         {input: "beta", tag: "mi", output: "\u03B2", tex: null, ttype: CONST},
@@ -404,10 +404,10 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
         }
     ]
 
-    var AMnames = [] //list of input symbols
+    const AMnames = [] //list of input symbols
 
     function initSymbols() {
-        for (var i = 0; i < AMsymbols.length; i++) {
+        for (let i = 0; i < AMsymbols.length; i++) {
             if (AMsymbols[i].tex) {
                 AMsymbols.push({
                     input: AMsymbols[i].tex,
@@ -421,12 +421,12 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
             if (s1.input > s2.input) return 1
             else return -1
         })
-        for (var j = 0; j < AMsymbols.length; j++) AMnames[j] = AMsymbols[j].input
+        for (let j = 0; j < AMsymbols.length; j++) AMnames[j] = AMsymbols[j].input
     }
 
     function AMremoveCharsAndBlanks(str, n) {
 //remove n characters and any following blanks
-        var st
+        let st
         if (str.charAt(n) == "\\" && str.charAt(n + 1) != "\\" && str.charAt(n + 1) != " ")
             st = str.slice(n + 1)
         else st = str.slice(n)
@@ -439,7 +439,7 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
 // return position >=n where str appears or would be inserted
 // assumes arr is sorted
         if (n == 0) {
-            var h, m
+            let h, m
             n = -1
             h = arr.length
             while (n + 1 < h) {
@@ -456,14 +456,14 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
     function AMgetSymbol(str) {
 //return maximal initial substring of str that appears in names
 //return null if there is none
-        var k = 0 //new pos
-        var j = 0 //old pos
-        var mk //match pos
-        var st
-        var tagst
-        var match = ""
-        var more = true
-        for (var i = 1; i <= str.length && more; i++) {
+        let k = 0 //new pos
+        let j = 0 //old pos
+        let mk  //match pos
+        let st
+        let tagst
+        let match = ""
+        let more = true
+        for (let i = 1; i <= str.length && more; i++) {
             st = str.slice(0, i) //initial substring of length i
             j = k
             k = position(AMnames, st, j)
@@ -483,7 +483,7 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
         AMcurrentSymbol = CONST
         k = 1
         st = str.slice(0, 1)
-        var integ = true
+        let integ = true
         while ("0" <= st && st <= "9" && k <= str.length) {
             st = str.slice(k, k + 1)
             k++
@@ -514,7 +514,7 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
     }
 
     function AMremoveBrackets(node) {
-        var st
+        let st
         if (!node.hasChildNodes()) {
             return
         }
@@ -542,7 +542,8 @@ Each terminal symbol is translated into a corresponding mathml node.*/
     var AMnestingDepth, AMpreviousSymbol, AMcurrentSymbol
 
     function AMparseSexpr(str) { //parses str and returns [node,tailstr]
-        var symbol, node, result, i, st, newFrag = document.createDocumentFragment()
+        let symbol, node, result, i, st
+        const newFrag = document.createDocumentFragment()
         str = AMremoveCharsAndBlanks(str, 0)
         symbol = AMgetSymbol(str)             //either a token or a bracket or empty
         if (symbol == null || symbol.ttype == RIGHTBRACKET && AMnestingDepth > 0) {
@@ -627,7 +628,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                     return [node, result[1]]
                 } else if (typeof symbol.acc == "boolean" && symbol.acc) {   // accent
                     node = createMmlNode(symbol.tag, result[0])
-                    var accnode = createMmlNode("mo", document.createTextNode(symbol.output))
+                    const accnode = createMmlNode("mo", document.createTextNode(symbol.output))
                     if (symbol.input == "vec" && (
                             (result[0].nodeName == "mrow" && result[0].childNodes.length == 1
                                 && result[0].firstChild.firstChild.nodeValue !== null
@@ -644,8 +645,8 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                             if (result[0].childNodes[i].nodeName == "mi" || result[0].nodeName == "mi") {
                                 st = (result[0].nodeName == "mi" ? result[0].firstChild.nodeValue :
                                     result[0].childNodes[i].firstChild.nodeValue)
-                                var newst = []
-                                for (var j = 0; j < st.length; j++)
+                                let newst = []
+                                for (let j = 0; j < st.length; j++)
                                     if (st.charCodeAt(j) > 64 && st.charCodeAt(j) < 91)
                                         newst = newst + symbol.codes[st.charCodeAt(j) - 65]
                                     else if (st.charCodeAt(j) > 96 && st.charCodeAt(j) < 123)
@@ -667,7 +668,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                 if (result[0] == null) return [createMmlNode("mo",
                     document.createTextNode(symbol.input)), str]
                 AMremoveBrackets(result[0])
-                var result2 = AMparseSexpr(result[1])
+                const result2 = AMparseSexpr(result[1])
                 if (result2[0] == null) return [createMmlNode("mo",
                     document.createTextNode(symbol.input)), str]
                 AMremoveBrackets(result2[0])
@@ -727,7 +728,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
     }
 
     function AMparseIexpr(str) {
-        var symbol, sym1, sym2, node, result, underover
+        let symbol, sym1, sym2, node, result, underover
         str = AMremoveCharsAndBlanks(str, 0)
         sym1 = AMgetSymbol(str)
         result = AMparseSexpr(str)
@@ -748,7 +749,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                 sym2 = AMgetSymbol(str)
                 if (sym2.input == "^") {
                     str = AMremoveCharsAndBlanks(str, sym2.input.length)
-                    var res2 = AMparseSexpr(str)
+                    const res2 = AMparseSexpr(str)
                     AMremoveBrackets(res2[0])
                     str = res2[1]
                     node = createMmlNode((underover ? "munderover" : "msubsup"), node)
@@ -780,7 +781,8 @@ Each terminal symbol is translated into a corresponding mathml node.*/
     }
 
     function AMparseExpr(str, rightbracket) {
-        var symbol, node, result, i, newFrag = document.createDocumentFragment()
+        let symbol, node, result, i
+        const newFrag = document.createDocumentFragment()
         do {
             str = AMremoveCharsAndBlanks(str, 0)
             result = AMparseIexpr(str)
@@ -806,21 +808,21 @@ Each terminal symbol is translated into a corresponding mathml node.*/
             || AMnestingDepth == 0) && symbol != null && symbol.output != "")
         if (symbol.ttype == RIGHTBRACKET || symbol.ttype == LEFTRIGHT) {
 //    if (AMnestingDepth > 0) AMnestingDepth--;
-            var len = newFrag.childNodes.length
+            const len = newFrag.childNodes.length
             if (len > 0 && newFrag.childNodes[len - 1].nodeName == "mrow"
                 && newFrag.childNodes[len - 1].lastChild
                 && newFrag.childNodes[len - 1].lastChild.firstChild) { //matrix
                 //removed to allow row vectors: //&& len>1 &&
                 //newFrag.childNodes[len-2].nodeName == "mo" &&
                 //newFrag.childNodes[len-2].firstChild.nodeValue == ","
-                var right = newFrag.childNodes[len - 1].lastChild.firstChild.nodeValue
+                const right = newFrag.childNodes[len - 1].lastChild.firstChild.nodeValue
                 if (right == ")" || right == "]") {
-                    var left = newFrag.childNodes[len - 1].firstChild.firstChild.nodeValue
+                    const left = newFrag.childNodes[len - 1].firstChild.firstChild.nodeValue
                     if (left == "(" && right == ")" && symbol.output != "}" ||
                         left == "[" && right == "]") {
-                        var pos = [] // positions of commas
-                        var matrix = true
-                        var m = newFrag.childNodes.length
+                        const pos = [] // positions of commas
+                        let matrix = true
+                        const m = newFrag.childNodes.length
                         for (i = 0; matrix && i < m; i = i + 2) {
                             pos[i] = []
                             node = newFrag.childNodes[i]
@@ -836,9 +838,10 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                             if (matrix && i > 1) matrix = pos[i].length == pos[i - 2].length
                         }
                         matrix = matrix && (pos.length > 1 || pos[0].length > 0)
-                        var columnlines = []
+                        const columnlines = []
                         if (matrix) {
-                            var row, frag, n, k, table = document.createDocumentFragment()
+                            let row, frag, n, k
+                            const table = document.createDocumentFragment()
                             for (i = 0; i < m; i = i + 2) {
                                 row = document.createDocumentFragment()
                                 frag = document.createDocumentFragment()
@@ -894,7 +897,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
     }
 
     function parseMath(str) {
-        var frag, node
+        let frag, node
         AMnestingDepth = 0
         //some basic cleanup for dealing with stuff editors like TinyMCE adds
         str = str.replace(/&nbsp;/g, "")
@@ -908,14 +911,14 @@ Each terminal symbol is translated into a corresponding mathml node.*/
     }
 
     function strarr2docFrag(arr, linebreaks) {
-        var newFrag = document.createDocumentFragment()
-        var expr = false
-        for (var i = 0; i < arr.length; i++) {
+        const newFrag = document.createDocumentFragment()
+        let expr = false
+        for (let i = 0; i < arr.length; i++) {
             if (expr) newFrag.appendChild(parseMath(arr[i]))
             else {
-                var arri = (linebreaks ? arr[i].split("\n\n") : [arr[i]])
+                const arri = (linebreaks ? arr[i].split("\n\n") : [arr[i]])
                 newFrag.appendChild(createElementXHTML("span").appendChild(document.createTextNode(arri[0])))
-                for (var j = 1; j < arri.length; j++) {
+                for (let j = 1; j < arri.length; j++) {
                     newFrag.appendChild(createElementXHTML("p"))
                     newFrag.appendChild(createElementXHTML("span").appendChild(document.createTextNode(arri[j])))
                 }
@@ -926,7 +929,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
     }
 
     function processNodeR(n, linebreaks, latex) {
-        var mtch, str, arr, frg, i
+        let mtch, str, arr, frg, i
         if (n.childNodes.length == 0) {
             if ((n.nodeType != 8 || linebreaks) &&
                 n.parentNode.nodeName != "form" && n.parentNode.nodeName != "FORM" &&
@@ -960,7 +963,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                     }
                     if (arr.length > 1 || mtch) {
                         frg = strarr2docFrag(arr, n.nodeType == 8)
-                        var len = frg.childNodes.length
+                        const len = frg.childNodes.length
                         n.parentNode.replaceChild(frg, n)
                         return len - 1
                     }
@@ -974,10 +977,10 @@ Each terminal symbol is translated into a corresponding mathml node.*/
     }
 
     function AMprocessNode(n, linebreaks, spanclassAM) {
-        var frag, st
+        let frag, st
         if (spanclassAM != null) {
             frag = document.getElementsByTagName("span")
-            for (var i = 0; i < frag.length; i++)
+            for (let i = 0; i < frag.length; i++)
                 if (frag[i].className == "AM")
                     processNodeR(frag[i], linebreaks, false)
         } else {
