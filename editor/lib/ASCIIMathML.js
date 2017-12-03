@@ -16,7 +16,7 @@
 const asciimath = {};
 
 (function () {
-    const AMdelimiter1 = "`", AMescape1 = "\\\\`"
+    const AMdelimiter1 = "°", AMescape1 = "\\\\°"
 
     /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
