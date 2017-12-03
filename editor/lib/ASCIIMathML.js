@@ -427,7 +427,7 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
     function AMremoveCharsAndBlanks(str, n) {
 //remove n characters and any following blanks
         let st
-        if (str.charAt(n) == "\\" && str.charAt(n + 1) != "\\" && str.charAt(n + 1) != " ")
+        if (str.charAt(n) === "\\" && str.charAt(n + 1) !== "\\" && str.charAt(n + 1) !== " ")
             st = str.slice(n + 1)
         else st = str.slice(n)
         for (var i = 0; i < st.length && st.charCodeAt(i) <= 32; i = i + 1) {
@@ -438,7 +438,7 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
     function position(arr, str, n) {
 // return position >=n where str appears or would be inserted
 // assumes arr is sorted
-        if (n == 0) {
+        if (n === 0) {
             let h, m
             n = -1
             h = arr.length
@@ -467,7 +467,7 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
             st = str.slice(0, i) //initial substring of length i
             j = k
             k = position(AMnames, st, j)
-            if (k < AMnames.length && str.slice(0, AMnames[k].length) == AMnames[k]) {
+            if (k < AMnames.length && str.slice(0, AMnames[k].length) === AMnames[k]) {
                 match = AMnames[k]
                 mk = k
                 i = match.length
@@ -475,7 +475,7 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
             more = k < AMnames.length && str.slice(0, AMnames[k].length) >= AMnames[k]
         }
         AMpreviousSymbol = AMcurrentSymbol
-        if (match != "") {
+        if (match !== "") {
             AMcurrentSymbol = AMsymbols[mk].ttype
             return AMsymbols[mk]
         }
@@ -488,7 +488,7 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
             st = str.slice(k, k + 1)
             k++
         }
-        if (st == ".") {
+        if (st === ".") {
             st = str.slice(k, k + 1)
             if ("0" <= st && st <= "9") {
                 integ = false
@@ -506,7 +506,7 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
             st = str.slice(0, 1) //take 1 character
             tagst = (("A" > st || st > "Z") && ("a" > st || st > "z") ? "mo" : "mi")
         }
-        if (st == "-" && AMpreviousSymbol == INFIX) {
+        if (st === "-" && AMpreviousSymbol === INFIX) {
             AMcurrentSymbol = INFIX  //trick "/" into recognizing "-" on second parse
             return {input: st, tag: tagst, output: st, ttype: UNARY, func: true}
         }
@@ -518,13 +518,13 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
         if (!node.hasChildNodes()) {
             return
         }
-        if (node.firstChild.hasChildNodes() && (node.nodeName == "mrow" || node.nodeName == "M:MROW")) {
+        if (node.firstChild.hasChildNodes() && (node.nodeName === "mrow" || node.nodeName === "M:MROW")) {
             st = node.firstChild.firstChild.nodeValue
-            if (st == "(" || st == "[" || st == "{") node.removeChild(node.firstChild)
+            if (st === "(" || st === "[" || st === "{") node.removeChild(node.firstChild)
         }
-        if (node.lastChild.hasChildNodes() && (node.nodeName == "mrow" || node.nodeName == "M:MROW")) {
+        if (node.lastChild.hasChildNodes() && (node.nodeName === "mrow" || node.nodeName === "M:MROW")) {
             st = node.lastChild.firstChild.nodeValue
-            if (st == ")" || st == "]" || st == "}") node.removeChild(node.lastChild)
+            if (st === ")" || st === "]" || st === "}") node.removeChild(node.lastChild)
         }
     }
 
@@ -546,10 +546,10 @@ Each terminal symbol is translated into a corresponding mathml node.*/
         const newFrag = document.createDocumentFragment()
         str = AMremoveCharsAndBlanks(str, 0)
         symbol = AMgetSymbol(str)             //either a token or a bracket or empty
-        if (symbol == null || symbol.ttype == RIGHTBRACKET && AMnestingDepth > 0) {
+        if (symbol == null || symbol.ttype === RIGHTBRACKET && AMnestingDepth > 0) {
             return [null, str]
         }
-        if (symbol.ttype == DEFINITION) {
+        if (symbol.ttype === DEFINITION) {
             str = symbol.output + AMremoveCharsAndBlanks(str, symbol.input.length)
             symbol = AMgetSymbol(str)
         }
@@ -564,7 +564,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                 str = AMremoveCharsAndBlanks(str, symbol.input.length)
                 result = AMparseExpr(str, true)
                 AMnestingDepth--
-                if (typeof symbol.invisible == "boolean" && symbol.invisible)
+                if (typeof symbol.invisible === "boolean" && symbol.invisible)
                     node = createMmlNode("mrow", result[0])
                 else {
                     node = createMmlNode("mo", document.createTextNode(symbol.output))
@@ -573,22 +573,22 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                 }
                 return [node, result[1]]
             case TEXT:
-                if (symbol != AMquote) str = AMremoveCharsAndBlanks(str, symbol.input.length)
-                if (str.charAt(0) == "{") i = str.indexOf("}")
-                else if (str.charAt(0) == "(") i = str.indexOf(")")
-                else if (str.charAt(0) == "[") i = str.indexOf("]")
-                else if (symbol == AMquote) i = str.slice(1).indexOf("\"") + 1
+                if (symbol !== AMquote) str = AMremoveCharsAndBlanks(str, symbol.input.length)
+                if (str.charAt(0) === "{") i = str.indexOf("}")
+                else if (str.charAt(0) === "(") i = str.indexOf(")")
+                else if (str.charAt(0) === "[") i = str.indexOf("]")
+                else if (symbol === AMquote) i = str.slice(1).indexOf("\"") + 1
                 else i = 0
-                if (i == -1) i = str.length
+                if (i === -1) i = str.length
                 st = str.slice(1, i)
-                if (st.charAt(0) == " ") {
+                if (st.charAt(0) === " ") {
                     node = createMmlNode("mspace")
                     node.setAttribute("width", "1ex")
                     newFrag.appendChild(node)
                 }
                 newFrag.appendChild(
                     createMmlNode(symbol.tag, document.createTextNode(st)))
-                if (st.charAt(st.length - 1) == " ") {
+                if (st.charAt(st.length - 1) === " ") {
                     node = createMmlNode("mspace")
                     node.setAttribute("width", "1ex")
                     newFrag.appendChild(node)
@@ -601,10 +601,10 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                 result = AMparseSexpr(str)
                 if (result[0] == null) return [createMmlNode(symbol.tag,
                     document.createTextNode(symbol.output)), str]
-                if (typeof symbol.func == "boolean" && symbol.func) { // functions hack
+                if (typeof symbol.func === "boolean" && symbol.func) { // functions hack
                     st = str.charAt(0)
-                    if (st == "^" || st == "_" || st == "/" || st == "|" || st == "," ||
-                        (symbol.input.length == 1 && symbol.input.match(/\w/) && st != "(")) {
+                    if (st === "^" || st === "_" || st === "/" || st === "|" || st === "," ||
+                        (symbol.input.length === 1 && symbol.input.match(/\w/) && st !== "(")) {
                         return [createMmlNode(symbol.tag,
                             document.createTextNode(symbol.output)), str]
                     } else {
@@ -615,35 +615,35 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                     }
                 }
                 AMremoveBrackets(result[0])
-                if (symbol.input == "sqrt") {           // sqrt
+                if (symbol.input === "sqrt") {           // sqrt
                     return [createMmlNode(symbol.tag, result[0]), result[1]]
-                } else if (typeof symbol.rewriteleftright != "undefined") {    // abs, floor, ceil
+                } else if (typeof symbol.rewriteleftright !== "undefined") {    // abs, floor, ceil
                     node = createMmlNode("mrow", createMmlNode("mo", document.createTextNode(symbol.rewriteleftright[0])))
                     node.appendChild(result[0])
                     node.appendChild(createMmlNode("mo", document.createTextNode(symbol.rewriteleftright[1])))
                     return [node, result[1]]
-                } else if (symbol.input == "cancel") {   // cancel
+                } else if (symbol.input === "cancel") {   // cancel
                     node = createMmlNode(symbol.tag, result[0])
                     node.setAttribute("notation", "updiagonalstrike")
                     return [node, result[1]]
-                } else if (typeof symbol.acc == "boolean" && symbol.acc) {   // accent
+                } else if (typeof symbol.acc === "boolean" && symbol.acc) {   // accent
                     node = createMmlNode(symbol.tag, result[0])
                     const accnode = createMmlNode("mo", document.createTextNode(symbol.output))
-                    if (symbol.input == "vec" && (
-                            (result[0].nodeName == "mrow" && result[0].childNodes.length == 1
+                    if (symbol.input === "vec" && (
+                            (result[0].nodeName === "mrow" && result[0].childNodes.length === 1
                                 && result[0].firstChild.firstChild.nodeValue !== null
-                                && result[0].firstChild.firstChild.nodeValue.length == 1) ||
+                                && result[0].firstChild.firstChild.nodeValue.length === 1) ||
                             (result[0].firstChild.nodeValue !== null
-                                && result[0].firstChild.nodeValue.length == 1))) {
+                                && result[0].firstChild.nodeValue.length === 1))) {
                         accnode.setAttribute("stretchy", false)
                     }
                     node.appendChild(accnode)
                     return [node, result[1]]
                 } else {                        // font change command
-                    if (typeof symbol.codes != "undefined") {
+                    if (typeof symbol.codes !== "undefined") {
                         for (i = 0; i < result[0].childNodes.length; i++)
-                            if (result[0].childNodes[i].nodeName == "mi" || result[0].nodeName == "mi") {
-                                st = (result[0].nodeName == "mi" ? result[0].firstChild.nodeValue :
+                            if (result[0].childNodes[i].nodeName === "mi" || result[0].nodeName === "mi") {
+                                st = (result[0].nodeName === "mi" ? result[0].firstChild.nodeValue :
                                     result[0].childNodes[i].firstChild.nodeValue)
                                 let newst = []
                                 for (let j = 0; j < st.length; j++)
@@ -652,7 +652,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                                     else if (st.charCodeAt(j) > 96 && st.charCodeAt(j) < 123)
                                         newst = newst + symbol.codes[st.charCodeAt(j) - 71]
                                     else newst = newst + st.charAt(j)
-                                if (result[0].nodeName == "mi")
+                                if (result[0].nodeName === "mi")
                                     result[0] = createMmlNode("mo").appendChild(document.createTextNode(newst))
                                 else result[0].replaceChild(createMmlNode("mo").appendChild(document.createTextNode(newst)),
                                     result[0].childNodes[i])
@@ -672,19 +672,19 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                 if (result2[0] == null) return [createMmlNode("mo",
                     document.createTextNode(symbol.input)), str]
                 AMremoveBrackets(result2[0])
-                if (symbol.input == "color") {
-                    if (str.charAt(0) == "{") i = str.indexOf("}")
-                    else if (str.charAt(0) == "(") i = str.indexOf(")")
-                    else if (str.charAt(0) == "[") i = str.indexOf("]")
+                if (symbol.input === "color") {
+                    if (str.charAt(0) === "{") i = str.indexOf("}")
+                    else if (str.charAt(0) === "(") i = str.indexOf(")")
+                    else if (str.charAt(0) === "[") i = str.indexOf("]")
                     st = str.slice(1, i)
                     node = createMmlNode(symbol.tag, result2[0])
                     node.setAttribute("mathcolor", st)
                     return [node, result2[1]]
                 }
-                if (symbol.input == "root" || symbol.output == "stackrel")
+                if (symbol.input === "root" || symbol.output === "stackrel")
                     newFrag.appendChild(result2[0])
                 newFrag.appendChild(result[0])
-                if (symbol.input == "frac") newFrag.appendChild(result2[0])
+                if (symbol.input === "frac") newFrag.appendChild(result2[0])
                 return [createMmlNode(symbol.tag, newFrag), result2[1]]
             case INFIX:
                 str = AMremoveCharsAndBlanks(str, symbol.input.length)
@@ -709,7 +709,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                 st = ""
                 if (result[0].lastChild != null)
                     st = result[0].lastChild.firstChild.nodeValue
-                if (st == "|" && str.charAt(0) !== ",") { // its an absolute value subterm
+                if (st === "|" && str.charAt(0) !== ",") { // its an absolute value subterm
                     node = createMmlNode("mo", document.createTextNode(symbol.output))
                     node = createMmlNode("mrow", node)
                     node.appendChild(result[0])
@@ -735,7 +735,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
         node = result[0]
         str = result[1]
         symbol = AMgetSymbol(str)
-        if (symbol.ttype == INFIX && symbol.input != "/") {
+        if (symbol.ttype === INFIX && symbol.input !== "/") {
             str = AMremoveCharsAndBlanks(str, symbol.input.length)
 //    if (symbol.input == "/") result = AMparseIexpr(str); else ...
             result = AMparseSexpr(str)
@@ -744,10 +744,10 @@ Each terminal symbol is translated into a corresponding mathml node.*/
             else AMremoveBrackets(result[0])
             str = result[1]
 //    if (symbol.input == "/") AMremoveBrackets(node);
-            underover = (sym1.ttype == UNDEROVER || sym1.ttype == UNARYUNDEROVER)
-            if (symbol.input == "_") {
+            underover = (sym1.ttype === UNDEROVER || sym1.ttype === UNARYUNDEROVER)
+            if (symbol.input === "_") {
                 sym2 = AMgetSymbol(str)
-                if (sym2.input == "^") {
+                if (sym2.input === "^") {
                     str = AMremoveCharsAndBlanks(str, sym2.input.length)
                     const res2 = AMparseSexpr(str)
                     AMremoveBrackets(res2[0])
@@ -760,16 +760,16 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                     node = createMmlNode((underover ? "munder" : "msub"), node)
                     node.appendChild(result[0])
                 }
-            } else if (symbol.input == "^" && underover) {
+            } else if (symbol.input === "^" && underover) {
                 node = createMmlNode("mover", node)
                 node.appendChild(result[0])
             } else {
                 node = createMmlNode(symbol.tag, node)
                 node.appendChild(result[0])
             }
-            if (typeof sym1.func != "undefined" && sym1.func) {
+            if (typeof sym1.func !== "undefined" && sym1.func) {
                 sym2 = AMgetSymbol(str)
-                if (sym2.ttype != INFIX && sym2.ttype != RIGHTBRACKET) {
+                if (sym2.ttype !== INFIX && sym2.ttype !== RIGHTBRACKET) {
                     result = AMparseIexpr(str)
                     node = createMmlNode("mrow", node)
                     node.appendChild(result[0])
@@ -789,7 +789,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
             node = result[0]
             str = result[1]
             symbol = AMgetSymbol(str)
-            if (symbol.ttype == INFIX && symbol.input == "/") {
+            if (symbol.ttype === INFIX && symbol.input === "/") {
                 str = AMremoveCharsAndBlanks(str, symbol.input.length)
                 result = AMparseIexpr(str)
                 if (result[0] == null) // show box in place of missing argument
@@ -803,39 +803,39 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                 symbol = AMgetSymbol(str)
             }
             else if (node != undefined) newFrag.appendChild(node)
-        } while ((symbol.ttype != RIGHTBRACKET &&
-            (symbol.ttype != LEFTRIGHT || rightbracket)
-            || AMnestingDepth == 0) && symbol != null && symbol.output != "")
-        if (symbol.ttype == RIGHTBRACKET || symbol.ttype == LEFTRIGHT) {
+        } while ((symbol.ttype !== RIGHTBRACKET &&
+            (symbol.ttype !== LEFTRIGHT || rightbracket)
+            || AMnestingDepth === 0) && symbol != null && symbol.output !== "")
+        if (symbol.ttype === RIGHTBRACKET || symbol.ttype === LEFTRIGHT) {
 //    if (AMnestingDepth > 0) AMnestingDepth--;
             const len = newFrag.childNodes.length
-            if (len > 0 && newFrag.childNodes[len - 1].nodeName == "mrow"
+            if (len > 0 && newFrag.childNodes[len - 1].nodeName === "mrow"
                 && newFrag.childNodes[len - 1].lastChild
                 && newFrag.childNodes[len - 1].lastChild.firstChild) { //matrix
                 //removed to allow row vectors: //&& len>1 &&
                 //newFrag.childNodes[len-2].nodeName == "mo" &&
                 //newFrag.childNodes[len-2].firstChild.nodeValue == ","
                 const right = newFrag.childNodes[len - 1].lastChild.firstChild.nodeValue
-                if (right == ")" || right == "]") {
+                if (right === ")" || right === "]") {
                     const left = newFrag.childNodes[len - 1].firstChild.firstChild.nodeValue
-                    if (left == "(" && right == ")" && symbol.output != "}" ||
-                        left == "[" && right == "]") {
+                    if (left === "(" && right === ")" && symbol.output !== "}" ||
+                        left === "[" && right === "]") {
                         const pos = [] // positions of commas
                         let matrix = true
                         const m = newFrag.childNodes.length
                         for (i = 0; matrix && i < m; i = i + 2) {
                             pos[i] = []
                             node = newFrag.childNodes[i]
-                            if (matrix) matrix = node.nodeName == "mrow" &&
-                                (i == m - 1 || node.nextSibling.nodeName == "mo" &&
-                                    node.nextSibling.firstChild.nodeValue == ",") &&
-                                node.firstChild.firstChild.nodeValue == left &&
-                                node.lastChild.firstChild.nodeValue == right
+                            if (matrix) matrix = node.nodeName === "mrow" &&
+                                (i === m - 1 || node.nextSibling.nodeName === "mo" &&
+                                    node.nextSibling.firstChild.nodeValue === ",") &&
+                                node.firstChild.firstChild.nodeValue === left &&
+                                node.lastChild.firstChild.nodeValue === right
                             if (matrix)
                                 for (var j = 0; j < node.childNodes.length; j++)
-                                    if (node.childNodes[j].firstChild.nodeValue == ",")
+                                    if (node.childNodes[j].firstChild.nodeValue === ",")
                                         pos[i][pos[i].length] = j
-                            if (matrix && i > 1) matrix = pos[i].length == pos[i - 2].length
+                            if (matrix && i > 1) matrix = pos[i].length === pos[i - 2].length
                         }
                         matrix = matrix && (pos.length > 1 || pos[0].length > 0)
                         const columnlines = []
@@ -850,19 +850,19 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                                 k = 0
                                 node.removeChild(node.firstChild) //remove (
                                 for (j = 1; j < n - 1; j++) {
-                                    if (typeof pos[i][k] != "undefined" && j == pos[i][k]) {
+                                    if (typeof pos[i][k] !== "undefined" && j === pos[i][k]) {
                                         node.removeChild(node.firstChild) //remove ,
-                                        if (node.firstChild.nodeName == "mrow" && node.firstChild.childNodes.length == 1 &&
-                                            node.firstChild.firstChild.firstChild.nodeValue == "\u2223") {
+                                        if (node.firstChild.nodeName === "mrow" && node.firstChild.childNodes.length === 1 &&
+                                            node.firstChild.firstChild.firstChild.nodeValue === "\u2223") {
                                             //is columnline marker - skip it
-                                            if (i == 0) {
+                                            if (i === 0) {
                                                 columnlines.push("solid")
                                             }
                                             node.removeChild(node.firstChild) //remove mrow
                                             node.removeChild(node.firstChild) //remove ,
                                             j += 2
                                             k++
-                                        } else if (i == 0) {
+                                        } else if (i === 0) {
                                             columnlines.push("none")
                                         }
                                         row.appendChild(createMmlNode("mtd", frag))
@@ -870,7 +870,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                                     } else frag.appendChild(node.firstChild)
                                 }
                                 row.appendChild(createMmlNode("mtd", frag))
-                                if (i == 0) {
+                                if (i === 0) {
                                     columnlines.push("none")
                                 }
                                 if (newFrag.childNodes.length > 2) {
@@ -881,14 +881,14 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                             }
                             node = createMmlNode("mtable", table)
                             node.setAttribute("columnlines", columnlines.join(" "))
-                            if (typeof symbol.invisible == "boolean" && symbol.invisible) node.setAttribute("columnalign", "left")
+                            if (typeof symbol.invisible === "boolean" && symbol.invisible) node.setAttribute("columnalign", "left")
                             newFrag.replaceChild(node, newFrag.firstChild)
                         }
                     }
                 }
             }
             str = AMremoveCharsAndBlanks(str, symbol.input.length)
-            if (typeof symbol.invisible != "boolean" || !symbol.invisible) {
+            if (typeof symbol.invisible !== "boolean" || !symbol.invisible) {
                 node = createMmlNode("mo", document.createTextNode(symbol.output))
                 newFrag.appendChild(node)
             }
@@ -930,10 +930,10 @@ Each terminal symbol is translated into a corresponding mathml node.*/
 
     function processNodeR(n, linebreaks, latex) {
         let mtch, str, arr, frg, i
-        if (n.childNodes.length == 0) {
-            if ((n.nodeType != 8 || linebreaks) &&
-                n.parentNode.nodeName != "form" && n.parentNode.nodeName != "FORM" &&
-                n.parentNode.nodeName != "textarea" && n.parentNode.nodeName != "TEXTAREA" /*&&
+        if (n.childNodes.length === 0) {
+            if ((n.nodeType !== 8 || linebreaks) &&
+                n.parentNode.nodeName !== "form" && n.parentNode.nodeName !== "FORM" &&
+                n.parentNode.nodeName !== "textarea" && n.parentNode.nodeName !== "TEXTAREA" /*&&
     n.parentNode.nodeName!="pre" && n.parentNode.nodeName!="PRE"*/) {
                 str = n.nodeValue
                 if (str != null) {
@@ -942,7 +942,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                     str = str.replace(/\s*\r\n/g, " ")
                     if (latex) {
 // DELIMITERS:
-                        mtch = (str.indexOf("\$") != -1)
+                        mtch = (str.indexOf("\$") !== -1)
                         str = str.replace(/([^\\])\$/g, "$1 \$")
                         str = str.replace(/^\$/, " \$")	// in case \$ at start of string
                         arr = str.split(" \$")
@@ -962,14 +962,14 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                             arr[i] = arr[i].replace(/AMescape1/g, AMdelimiter1)
                     }
                     if (arr.length > 1 || mtch) {
-                        frg = strarr2docFrag(arr, n.nodeType == 8)
+                        frg = strarr2docFrag(arr, n.nodeType === 8)
                         const len = frg.childNodes.length
                         n.parentNode.replaceChild(frg, n)
                         return len - 1
                     }
                 }
             } else return 0
-        } else if (n.nodeName != "math") {
+        } else if (n.nodeName !== "math") {
             for (i = 0; i < n.childNodes.length; i++)
                 i += processNodeR(n.childNodes[i], linebreaks, latex)
         }
@@ -981,7 +981,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
         if (spanclassAM != null) {
             frag = document.getElementsByTagName("span")
             for (let i = 0; i < frag.length; i++)
-                if (frag[i].className == "AM")
+                if (frag[i].className === "AM")
                     processNodeR(frag[i], linebreaks, false)
         } else {
             try {
@@ -990,8 +990,8 @@ Each terminal symbol is translated into a corresponding mathml node.*/
             }
 //alert(st)
             if (st == null ||
-                st.indexOf(AMdelimiter1 + " ") != -1 || st.slice(-1) == AMdelimiter1 ||
-                st.indexOf(AMdelimiter1 + "<") != -1 || st.indexOf(AMdelimiter1 + "\n") != -1) {
+                st.indexOf(AMdelimiter1 + " ") !== -1 || st.slice(-1) === AMdelimiter1 ||
+                st.indexOf(AMdelimiter1 + "<") !== -1 || st.indexOf(AMdelimiter1 + "\n") !== -1) {
                 processNodeR(n, linebreaks, false)
             }
         }
