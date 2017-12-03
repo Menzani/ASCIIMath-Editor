@@ -16,10 +16,6 @@
 var asciimath = {};
 
 (function () {
-    var mathcolor = "blue"        // change it to "" (to inherit) or another color
-    var mathfontsize = "1em"      // change to e.g. 1.2em for larger math
-    var mathfontfamily = "serif"  // change to "" to inherit (works in IE)
-    // or another family (e.g. "arial")
     var checkForMathML = true     // check if browser can display MathML
     var notifyIfNoMathML = true   // display note at top if no MathML capability
     var alertIfNoMathML = false   // show alert box if no MathML capability
@@ -1043,19 +1039,9 @@ Each terminal symbol is translated into a corresponding mathml node.*/
         str = str.replace(/&gt;/g, ">")
         str = str.replace(/&lt;/g, "<")
         frag = AMparseExpr(str.replace(/^\s+/g, ""), false)[0]
-        node = createMmlNode("mstyle", frag)
-        if (mathcolor != "") node.setAttribute("mathcolor", mathcolor)
-        if (mathfontsize != "") {
-            node.setAttribute("fontsize", mathfontsize)
-            node.setAttribute("mathsize", mathfontsize)
-        }
-        if (mathfontfamily != "") {
-            node.setAttribute("fontfamily", mathfontfamily)
-            node.setAttribute("mathvariant", mathfontfamily)
-        }
 
+        node = createMmlNode("math", frag)
         if (displaystyle) node.setAttribute("displaystyle", "true")
-        node = createMmlNode("math", node)
         if (showasciiformulaonhover)                      //fixed by djhsu so newline
             node.setAttribute("title", str.replace(/\s+/g, " "))//does not show in Gecko
         return node
