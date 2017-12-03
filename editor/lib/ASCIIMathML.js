@@ -928,7 +928,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
         return newFrag
     }
 
-    function processNodeR(n, linebreaks, latex) {
+    function processNodeR(n, linebreaks) {
         let mtch, str, arr, frg, i
         if (n.childNodes.length === 0) {
             if ((n.nodeType !== 8 || linebreaks) &&
@@ -940,27 +940,20 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                     str = str.replace(/\r\n\r\n/g, "\n\n")
                     str = str.replace(/\x20+/g, " ")
                     str = str.replace(/\s*\r\n/g, " ")
-                    if (latex) {
-// DELIMITERS:
-                        mtch = (str.indexOf("\$") !== -1)
-                        str = str.replace(/([^\\])\$/g, "$1 \$")
-                        str = str.replace(/^\$/, " \$")	// in case \$ at start of string
-                        arr = str.split(" \$")
-                        for (i = 0; i < arr.length; i++)
-                            arr[i] = arr[i].replace(/\\\$/g, "\$")
-                    } else {
+
                         mtch = false
                         str = str.replace(new RegExp(AMescape1, "g"),
                             function () {
                                 mtch = true
                                 return "AMescape1"
                             })
+
                         arr = str.split(AMdelimiter1)
                         str = arr.join(AMdelimiter1)
                         arr = str.split(AMdelimiter1)
                         for (i = 0; i < arr.length; i++) // this is a problem ************
                             arr[i] = arr[i].replace(/AMescape1/g, AMdelimiter1)
-                    }
+
                     if (arr.length > 1 || mtch) {
                         frg = strarr2docFrag(arr, n.nodeType === 8)
                         const len = frg.childNodes.length
@@ -971,7 +964,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
             } else return 0
         } else if (n.nodeName !== "math") {
             for (i = 0; i < n.childNodes.length; i++)
-                i += processNodeR(n.childNodes[i], linebreaks, latex)
+                i += processNodeR(n.childNodes[i], linebreaks)
         }
         return 0
     }
@@ -982,7 +975,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
             frag = document.getElementsByTagName("span")
             for (let i = 0; i < frag.length; i++)
                 if (frag[i].className === "AM")
-                    processNodeR(frag[i], linebreaks, false)
+                    processNodeR(frag[i], linebreaks)
         } else {
             try {
                 st = n.innerHTML // look for AMdelimiter on page
@@ -992,7 +985,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
             if (st == null ||
                 st.indexOf(AMdelimiter1 + " ") !== -1 || st.slice(-1) === AMdelimiter1 ||
                 st.indexOf(AMdelimiter1 + "<") !== -1 || st.indexOf(AMdelimiter1 + "\n") !== -1) {
-                processNodeR(n, linebreaks, false)
+                processNodeR(n, linebreaks)
             }
         }
     }
