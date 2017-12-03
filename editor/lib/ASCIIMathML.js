@@ -70,7 +70,7 @@ var asciimath = {};
     setStylesheet("#AMMLcloseDiv \{font-size:0.8em; padding-top:1em; color:#014\}\n#AMMLwarningBox \{position:absolute; width:100%; top:0; left:0; z-index:200; text-align:center; font-size:1em; font-weight:bold; padding:0.5em 0 0.5em 0; color:#ffc; background:#c30\}")
 
     function init() {
-        var msg, warnings = new Array()
+        var msg, warnings = []
         if (document.getElementById == null) {
             alert("This webpage requires a recent browser such as Mozilla Firefox")
             return null
@@ -87,7 +87,6 @@ var asciimath = {};
             else noMathML = true
         else if (navigator.appName.slice(0, 9) == "Microsoft")
             try {
-                var ActiveX = new ActiveXObject("MathPlayer.Factory.1")
                 noMathML = null
             } catch (e) {
                 noMathML = true
@@ -151,12 +150,6 @@ var asciimath = {};
     }
 
     var AMmathml = "http://www.w3.org/1998/Math/MathML"
-
-    function AMcreateElementMathML(t) {
-        if (isIE) return document.createElement("m:" + t)
-        else return document.createElementNS(AMmathml, t)
-    }
-
     function createMmlNode(t, frag) {
         var node
         if (isIE) node = document.createElement("m:" + t)
@@ -187,8 +180,7 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
 
     var CONST = 0, UNARY = 1, BINARY = 2, INFIX = 3, LEFTBRACKET = 4,
         RIGHTBRACKET = 5, SPACE = 6, UNDEROVER = 7, DEFINITION = 8,
-        LEFTRIGHT = 9, TEXT = 10, BIG = 11, LONG = 12, STRETCHY = 13,
-        MATRIX = 14, UNARYUNDEROVER = 15 // token types
+        LEFTRIGHT = 9, TEXT = 10, UNARYUNDEROVER = 15 // token types
 
     var AMquote = {input: "\"", tag: "mtext", output: "mbox", tex: null, ttype: TEXT}
 
@@ -575,12 +567,6 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
         AMsymbols.sort(compareNames)
         for (i = 0; i < AMsymbols.length; i++) AMnames[i] = AMsymbols[i].input
     }
-
-    function define(oldstr, newstr) {
-        AMsymbols.push({input: oldstr, tag: "mo", output: newstr, tex: null, ttype: DEFINITION})
-        refreshSymbols() // this may be a problem if many symbols are defined!
-    }
-
     function AMremoveCharsAndBlanks(str, n) {
 //remove n characters and any following blanks
         var st
@@ -660,7 +646,6 @@ var AMbbb = [0xEF8C,0xEF8D,0x2102,0xEF8E,0xEF8F,0xEF90,0xEF91,0x210D,0xEF92,0xEF
             st = str.slice(0, k - 1)
             tagst = "mn"
         } else {
-            k = 2
             st = str.slice(0, 1) //take 1 character
             tagst = (("A" > st || st > "Z") && ("a" > st || st > "z") ? "mo" : "mi")
         }
@@ -1051,7 +1036,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
         return [newFrag, str]
     }
 
-    function parseMath(str, latex) {
+    function parseMath(str) {
         var frag, node
         AMnestingDepth = 0
         //some basic cleanup for dealing with stuff editors like TinyMCE adds
@@ -1077,11 +1062,11 @@ Each terminal symbol is translated into a corresponding mathml node.*/
         return node
     }
 
-    function strarr2docFrag(arr, linebreaks, latex) {
+    function strarr2docFrag(arr, linebreaks) {
         var newFrag = document.createDocumentFragment()
         var expr = false
         for (var i = 0; i < arr.length; i++) {
-            if (expr) newFrag.appendChild(parseMath(arr[i], latex))
+            if (expr) newFrag.appendChild(parseMath(arr[i]))
             else {
                 var arri = (linebreaks ? arr[i].split("\n\n") : [arr[i]])
                 newFrag.appendChild(createElementXHTML("span").appendChild(document.createTextNode(arri[0])))
@@ -1134,13 +1119,13 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                 n.parentNode.nodeName != "textarea" && n.parentNode.nodeName != "TEXTAREA" /*&&
     n.parentNode.nodeName!="pre" && n.parentNode.nodeName!="PRE"*/) {
                 str = n.nodeValue
-                if (!(str == null)) {
+                if (str != null) {
                     str = str.replace(/\r\n\r\n/g, "\n\n")
                     str = str.replace(/\x20+/g, " ")
                     str = str.replace(/\s*\r\n/g, " ")
                     if (latex) {
 // DELIMITERS:
-                        mtch = (str.indexOf("\$") == -1 ? false : true)
+                        mtch = (str.indexOf("\$") != -1)
                         str = str.replace(/([^\\])\$/g, "$1 \$")
                         str = str.replace(/^\$/, " \$")	// in case \$ at start of string
                         arr = str.split(" \$")
@@ -1176,7 +1161,7 @@ Each terminal symbol is translated into a corresponding mathml node.*/
                     }
                     if (arr.length > 1 || mtch) {
                         if (!noMathML) {
-                            frg = strarr2docFrag(arr, n.nodeType == 8, latex)
+                            frg = strarr2docFrag(arr, n.nodeType == 8)
                             var len = frg.childNodes.length
                             n.parentNode.replaceChild(frg, n)
                             return len - 1
