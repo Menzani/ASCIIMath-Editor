@@ -239,7 +239,7 @@ function updateView(page) {
         }
         if (lineElement !== undefined) {
             if (processLineElement) {
-                asciimath.AMprocessNode(lineElement)
+                asciimath.processNode(lineElement)
             }
             page.viewOutput.appendChild(lineElement)
         }

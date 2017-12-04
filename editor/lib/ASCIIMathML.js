@@ -950,6 +950,6 @@ const asciimath = {};
     window.addEventListener("load", initSymbols, false)
 
 //expose some functions to outside
-    asciimath.AMprocessNode = AMprocessNode
+    asciimath.processNode = AMprocessNode
     asciimath.parseMath = parseMath
 })()

@@ -82,7 +82,7 @@ function initialize() {
         showBrowserMessage()
     }
 
-    asciimath.AMprocessNode(syntaxASCIIMath)
+    asciimath.processNode(syntaxASCIIMath)
     selectSyntaxTab(syntaxTabsASCIIMath)
 
     openDocument()
