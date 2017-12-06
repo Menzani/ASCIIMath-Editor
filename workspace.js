@@ -7,7 +7,7 @@ const BACKGROUNDS = [
     "linear-gradient(to top, rgba(0, 250, 154, 0), rgba(46, 139, 87, 1))"
 ]
 const WALLPAPERS = [
-    "abstract1.jpg", "abstract2.jpg",
+    "abstract1.jpg", "abstract2.jpg", "abstract3.jpg",
     "lake1.jpg", "lake2.jpg",
     "river1.jpg", "river2.jpg", "river3.jpg",
     "forest1.jpg", "forest2.jpg",
