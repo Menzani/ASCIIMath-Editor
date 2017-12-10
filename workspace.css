@@ -361,11 +361,11 @@ img.topBar-element:hover {
 #donate {
     background-color: #48CCCD;
     color: #F5F5F5;
-    width: 350px;
+    width: 466px;
     padding: 10px;
     font-size: 14px;
-    margin: 450px auto;
-    left: 20px;
+    margin: 310px auto;
+    left: 0;
     right: 0;
 }
 
