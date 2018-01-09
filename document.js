@@ -408,7 +408,10 @@ function getResource(url) {
         let request = new XMLHttpRequest()
         request.open("GET", url)
         request.onreadystatechange = function () {
-            if (request.readyState !== 4 || (request.status !== 200 && request.status !== 0)) {
+            if (request.readyState !== 4 || request.status !== 200) {
+                if (request.status === 0) {
+                    reject("HTTP request status = 0")
+                }
                 return
             }
             resolve(request.response)
