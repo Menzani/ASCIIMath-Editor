@@ -435,11 +435,3 @@ function resolveShortcut(event) {
         }
     }
 }
-
-function selectRandomly(array) {
-    return array[nextRandomNumber(0, array.length)]
-}
-
-function nextRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min
-}

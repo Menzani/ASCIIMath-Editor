@@ -322,18 +322,6 @@ function downloadPagePreview() {
     })
 }
 
-function downloadFile(blob, fileName) {
-    let dummyLink = document.createElement("a")
-    dummyLink.style.display = "none"
-    let url = URL.createObjectURL(blob)
-    dummyLink.href = url
-    dummyLink.download = fileName
-    document.body.appendChild(dummyLink)
-    dummyLink.click()
-    document.body.removeChild(dummyLink)
-    URL.revokeObjectURL(url)
-}
-
 function saveDocument() {
     let oldWindowScrollY = localStorage.windowScrollY
     let oldPageCount = localStorage.pageCount
@@ -401,26 +389,6 @@ function deleteDocument(initTask) {
         initTask()
     }
     location.reload(true)
-}
-
-function getResource(url) {
-    return new Promise((resolve, reject) => {
-        let request = new XMLHttpRequest()
-        request.open("GET", url)
-        request.onreadystatechange = function () {
-            if (request.readyState !== 4 || request.status !== 200) {
-                if (request.status === 0) {
-                    reject("HTTP request status = 0")
-                }
-                return
-            }
-            resolve(request.response)
-        }
-        request.onerror = function () {
-            reject(request.statusText)
-        }
-        request.send()
-    })
 }
 
 function logEvent(name, pageIndex, calledMethodName) {
