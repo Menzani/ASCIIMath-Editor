@@ -52,8 +52,8 @@ document.addEventListener("DOMContentLoaded", function () {
     syntax = document.getElementById("syntax")
     syntaxTabsASCIIMath = document.getElementById("syntaxTabsASCIIMath")
     syntaxTabsFormatting = document.getElementById("syntaxTabsFormatting")
-    syntaxASCIIMath = document.getElementById("syntaxASCIIMath")
-    syntaxFormatting = document.getElementById("syntaxFormatting")
+    syntaxASCIIMath = undefined // In composeHTML()
+    syntaxFormatting = undefined // In composeHTML()
     infoMessage = document.getElementById("infoMessage")
     infoMessageText = document.getElementById("infoMessageText")
     browserInform = document.getElementById("browserInform")
@@ -78,12 +78,14 @@ function initialize() {
     loadWallpaper()
     WALLPAPERS.loadTaskId = setInterval(loadWallpaper, 10 * 60 * 1000)
 
-    if (navigator.userAgent.indexOf("Firefox") === -1) {
+    if (!navigator.userAgent.includes("Firefox")) {
         showBrowserMessage()
     }
 
-    asciimath.processNode(syntaxASCIIMath)
-    selectSyntaxTab(syntaxTabsASCIIMath)
+    composeHTML().then(function () {
+        asciimath.processNode(syntaxASCIIMath)
+        selectSyntaxTab(syntaxTabsASCIIMath)
+    })
 
     openDocument()
 }
@@ -339,12 +341,12 @@ function showWallpaper() {
     setTimeout(function () {
         if (currentBackgroundLayer) {
             backgroundLayer1.classList.add("backgroundLayerAnimation")
-            backgroundLayer1.style.zIndex = -1
-            backgroundLayer2.style.zIndex = -2
+            backgroundLayer1.style.zIndex = "-1"
+            backgroundLayer2.style.zIndex = "-2"
         } else {
             backgroundLayer2.classList.add("backgroundLayerAnimation")
-            backgroundLayer2.style.zIndex = -1
-            backgroundLayer1.style.zIndex = -2
+            backgroundLayer2.style.zIndex = "-1"
+            backgroundLayer1.style.zIndex = "-2"
         }
     }, 3000)
 }
@@ -359,6 +361,16 @@ function visitFirefoxDownloadPage(event) {
 function visitASCIIMathHomepage(event) {
     window.open("http://asciimath.org/")
     event.preventDefault()
+}
+
+function composeHTML() {
+    return getResource("syntax.html").then(function (data) {
+        data = data.substring(data.search(LINE_SEPARATOR) + 1) // Remove file copyright notice
+        syntax.insertAdjacentHTML("beforeend", data)
+
+        syntaxASCIIMath = document.getElementById("syntaxASCIIMath")
+        syntaxFormatting = document.getElementById("syntaxFormatting")
+    })
 }
 
 function selectSyntaxTab(tab) {

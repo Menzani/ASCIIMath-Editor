@@ -212,7 +212,7 @@ function doRemovePage() {
 
 function updateView(page) {
     page.viewOutput.innerHTML = ""
-    for (let line of page.editor.value.split(/\r?\n/)) {
+    for (let line of page.editor.value.split(LINE_SEPARATOR)) {
         let trimmedLine = line.trim()
         let lineElement
         let lineElementContainsMath = true
@@ -368,7 +368,7 @@ function saveDocument() {
 function openTestDocument() {
     getResource("resources/test-document-data.txt").then(function (data) {
         deleteDocument(function () {
-            let lines = data.split(/\r?\n/)
+            let lines = data.split(LINE_SEPARATOR)
             localStorage.windowScrollY = lines[0]
             localStorage.pageCount = lines[1]
             localStorage.currentPageIndex = lines[2]
