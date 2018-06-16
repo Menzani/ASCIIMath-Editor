@@ -49,6 +49,9 @@ function openDocument() {
         jumpTo(pages[currentPageIndex])
     }
     window.scrollTo(0, windowScrollY)
+
+    const isNew = localStorage.length === 0
+    savingStatus.innerText = isNew ? "Not saved yet" : "Not modified"
 }
 
 function addPage(pageIndex, animate) {
@@ -344,6 +347,8 @@ function saveDocument() {
         localStorage.editorsScrollTopData = JSON.stringify(editorsScrollTopData)
         localStorage.viewsScrollTopData = JSON.stringify(viewsScrollTopData)
         localStorage.viewsScrollLeftData = JSON.stringify(viewsScrollLeftData)
+
+        savingStatus.innerText = "Saved locally"
     } catch (e) {
         localStorage.clear()
         localStorage.windowScrollY = oldWindowScrollY
@@ -356,6 +361,8 @@ function saveDocument() {
         localStorage.editorsScrollTopData = oldEditorsScrollTopData
         localStorage.viewsScrollTopData = oldViewsScrollTopData
         localStorage.viewsScrollLeftData = oldViewsScrollLeftData
+
+        savingStatus.innerText = "Modified, not saved"
         if (e.name === "NS_ERROR_DOM_QUOTA_REACHED") {
             showErrorMessage(ERROR_DOCUMENT_SAVE_STORAGE)
         } else {

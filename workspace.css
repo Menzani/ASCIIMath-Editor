@@ -205,9 +205,11 @@ img.topBar-element:hover {
     right: 0;
 }
 
-#topBar-savedStatus {
+#topBar-savingStatus {
     margin-top: 8px;
     margin-left: 10px;
+    color: slategray;
+    font-size: 14px;
 }
 
 #topBar-lowerBar {

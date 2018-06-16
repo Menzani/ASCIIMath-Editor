@@ -23,6 +23,7 @@ let currentWallpaperIndex
 let backgroundLayer1
 let backgroundLayer2
 let topBar
+let savingStatus
 let browserMessage
 let syntax
 let syntaxTabsASCIIMath
@@ -48,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
     backgroundLayer1 = document.getElementById("backgroundLayer1")
     backgroundLayer2 = document.getElementById("backgroundLayer2")
     topBar = document.getElementById("topBar")
+    savingStatus = document.getElementById("topBar-savingStatus")
     browserMessage = document.getElementById("browserMessage")
     syntax = document.getElementById("syntax")
     syntaxTabsASCIIMath = document.getElementById("syntaxTabsASCIIMath")
