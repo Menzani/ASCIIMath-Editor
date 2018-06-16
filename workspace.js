@@ -181,12 +181,11 @@ function hideAbout(event) {
     event.preventDefault()
 }
 
-function showAbout(event) {
+function showAbout() {
     for (let aboutLink of about.querySelectorAll(".aboutLink")) {
         aboutLink.classList.add("aboutLinkAnimation")
     }
     showPopup(about)
-    event.preventDefault()
 }
 
 function hideFlaticon(event) {
@@ -349,6 +348,10 @@ function showWallpaper() {
             backgroundLayer1.style.zIndex = "-2"
         }
     }, 3000)
+}
+
+function visitHomepage() {
+    window.open("https://asciimatheditor.eu/")
 }
 
 function visitFirefoxDownloadPage(event) {
