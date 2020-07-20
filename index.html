@@ -1,4 +1,4 @@
-<!--ASCIIMath Editor | © 2017 Francesco Menzani – francescomenzani99@gmail.com | https://www.gnu.org/licenses/agpl-3.0.txt-->
+<!--ASCIIMath Editor | © 2017 Francesco Menzani – asciimatheditor@menzani.eu | https://www.gnu.org/licenses/agpl-3.0.txt-->
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,12 +6,28 @@
     <meta name="description" content="Online document editor for ASCIIMath designed to work with Firefox">
 
     <link rel="stylesheet" href="index.css" type="text/css">
+    <link rel="stylesheet" href="https://www.menzani.eu/cdn/lib/clear/1.0/clear.css" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" type="text/css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <script src="index.js" type="text/javascript"></script>
 
     <link rel="icon" href="resources/favicon.ico" type="image/x-icon">
     <title>ASCIIMath Editor for Firefox</title>
 </head>
 <body>
+<a id="button" class="button blue" href="editor">
+    <i class="fas fa-angle-double-right"></i>
+    Open <strong>editor</strong>
+</a>
 
+<div id="showcase">
+    <div id="showcase-video" class="card original">
+        <video id="showcase-video-player" preload="auto" controls>
+            <source src="resources/showcase.webm" type="video/webm">
+            <source src="resources/showcase.mp4" type="video/mp4">
+            <p><a href="resources/showcase.mp4" download>Watch video</a></p>
+        </video>
+    </div>
+</div>
 </body>
 </html>
